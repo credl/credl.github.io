@@ -117,12 +117,3 @@ div.content {
   width: device-width;
   zoom: 1.0;
 }
-
-@media handheld {
-	div.menu li a {
-			font-size: 18pt;
-	}
-	div.footer li a {
-			font-size: 18pt;
-	}
-}
