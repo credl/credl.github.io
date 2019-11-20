@@ -82,7 +82,7 @@ div.software tr:nth-child(even) {
 }
 
 td.softwarename {
-	white-space: nowrap;
+	/*white-space: nowrap;*/
 }
 
 td.softwarepic {
