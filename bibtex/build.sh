@@ -1,0 +1,11 @@
+bibtex2html pub-redl-2010.bib
+bibtex2html pub-redl-2011.bib
+bibtex2html pub-redl-2012.bib
+bibtex2html pub-redl-2013.bib
+bibtex2html pub-redl-2014.bib
+bibtex2html pub-redl-2015.bib
+bibtex2html pub-redl-2016.bib
+bibtex2html pub-redl-2017.bib
+bibtex2html pub-redl-2018.bib
+bibtex2html pub-redl-2019.bib
+bibtex2html pub-redl-all.bib

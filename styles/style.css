@@ -15,10 +15,12 @@ td
 	font: 10pt helvetica, arial, sans-serif;
 }
 
+/*
 img
 {
 	border: none;
 }
+*/
 
 a {
 	color: #555;
@@ -33,6 +35,53 @@ a:hover {
 a:active {
 	color: #F55;
 	font-weight: bold;
+}
+
+.photo {
+	box-shadow: 3px 3px 3px 3px grey;
+	margin: 10px;
+}
+
+div.contactdiv {
+	display: inline-block;
+	vertical-align: text-top;
+}
+
+div.photodiv {
+	display: inline-block;
+	vertical-align: text-top;
+}
+
+div.software {
+	width: 100%;
+}
+
+div.software table {
+	width: 100%;	
+}
+
+div.software tr:nth-child(odd) {
+	background-color: #EEE;
+}
+
+div.software tr:nth-child(even) {
+	background-color: #FFF;
+}
+
+div.softwarepic {
+	display: inline-block;
+	vertical-align: text-top;
+}
+
+div.softwaretext {
+	display: inline-block;
+	vertical-align: text-top;
+}
+
+div.softwarepic img {
+	width: 300px;
+	box-shadow: 5px 5px 5px 5px grey;
+	margin: 10px;
 }
 
 div.menu {
