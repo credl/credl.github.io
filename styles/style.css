@@ -113,12 +113,3 @@ div.content {
 	margin-top: 70px;
 	margin-bottom: 50px;
 }
-
-@media handheld {
-	div.menu li a {
-			font-size: 18pt;
-	}
-	div.footer li a {
-			font-size: 18pt;
-	}
-}
