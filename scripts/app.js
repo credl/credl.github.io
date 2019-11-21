@@ -49,9 +49,9 @@ function initLanguage() {
 	langbuttons = document.getElementsByClassName("langbutton");
 	for (i = 0; i < langbuttons.length; i++) {
 		if (langbuttons[i].getAttribute("id") === ("langbutton" + selectedlanguage)) {
-			langbutton.setAttribute("class", "selectedbutton");
+			langbuttons[i].setAttribute("class", "selectedbutton");
 		}else{
-			langbutton.setAttribute("class", "");			
+			langbuttons[i].setAttribute("class", "");			
 		}
 	}
 
