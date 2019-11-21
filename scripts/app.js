@@ -34,16 +34,23 @@ function getCookie(cname) {
 }
 						
 function applyLanguage(selectedlanguage) {
-	//var selectedlanguage = getParameterByName('lang');
+	// cookie handling
 	setCookie("language", selectedlanguage, 365);
 	if (selectedlanguage == null) {
 		selectedlanguage = "english";
 	}
-	langbutton = document.getElementById("langbutton" + selectedlanguage);
-	if (langbutton) {
-		langbutton.setAttribute("class", "selectedbutton");
+
+	// select correct language button
+	langbuttons = document.getElementsById("langbutton*");
+	for (i = 0; i < langbuttons.length; i++) {
+		if (langbuttons[i].getAttribute("id") === ("langbutton" + selectedlanguage)) {
+			langbutton.setAttribute("class", "selectedbutton");
+		}else{
+			langbutton.setAttribute("class", "");			
+		}
 	}
 
+	// section visibility
 	var languages = ["german", "english"];
 	for (language in languages) {
 		var langdepsections = document.getElementsByClassName(languages[language]);
