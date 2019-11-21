@@ -44,17 +44,31 @@ a:active {
 .photo {
 	box-shadow: 3px 3px 3px 3px grey;
 	margin: 10px;
-	margin-left: 100%;
 }
 
 div.contactdiv {
-	display: inline-block;
+/*	display: inline-block;*/
 	vertical-align: text-top;
 }
 
 div.photodiv {
-	display: inline-block;
+/*	display: inline-block;*/
 	vertical-align: text-top;
+}
+
+
+@media only screen and (min-width: 1000px) {
+	div.contactdiv {
+		display: inline-block;
+	}
+
+	div.photodiv {
+		display: inline-block;
+	}
+	
+	.photodiv {
+		margin-right: 100px;
+	}
 }
 
 div.software {
@@ -186,7 +200,10 @@ div.content {
   transition: 0.3s;
 }
 
-.thumbnail:hover {opacity: 0.7;}
+.thumbnail:hover {
+	opacity: 0.7;
+	cursor: pointer;
+}
 
 /* The Modal (background) */
 .modal {
