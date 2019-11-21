@@ -61,7 +61,6 @@ function initLanguage() {
 }
 
 function includeExtHtml() {
-		/*
 	var divs, div, i, exthtmlfile, xhttp;
 	// for all divs with ext-html attribute
 	divs = document.getElementsByTagName("div");
@@ -87,5 +86,4 @@ function includeExtHtml() {
 			xhttp.send();
 		}
 	}
-		*/
 }
