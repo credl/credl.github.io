@@ -65,6 +65,7 @@ function includeHTML() {
 	// for all divs with ext-html attribute
 	divs = document.getElementsByTagName("div");
 	for (i = 0; i < divs.length; i++) {
+		/*
 		div = divs[i];
 		// extract ext-html attribute
 		exthtmlfile = div.getAttribute("ext-html");
@@ -78,12 +79,13 @@ function includeHTML() {
 					} else if (this.status == 404) {
 						div.innerHTML = "Menu page not found";
 					}
-					/* remove the ext-html attribute (non-recursive version of this function suffices) */
+					// remove the ext-html attribute (non-recursive version of this function suffices)
 					div.removeAttribute("ext-html");
 				}
 			}
 			xhttp.open("GET", file, false);
 			xhttp.send();
 		}
+		*/
 	}
 }
