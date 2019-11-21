@@ -69,6 +69,7 @@ div.photodiv {
 	color: red;
 	text-align: center;
 	font-size: xx-large;
+	margin: 10%;
 }
 
 @media only screen and (min-width: 1000px) {
