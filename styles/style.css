@@ -62,6 +62,10 @@ div.photodiv {
 	text-align: left;
 }
 
+german {
+	display: none;	
+}
+
 @media only screen and (min-width: 1000px) {
 	div.contactdiv {
 		display: inline-block;
@@ -220,7 +224,6 @@ div.menu {
 	position: fixed;
 	top: 0;
 	left: 0;
-	width: 100%;
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
