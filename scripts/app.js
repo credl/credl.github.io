@@ -67,19 +67,19 @@ function includeHTML() {
 	for (i = 0; i < divs.length; i++) {
 		div = divs[i];
 		// extract ext-html attribute
-		exthtmlfile = elmnt.getAttribute("ext-html");
+		exthtmlfile = div.getAttribute("ext-html");
 		if (exthtmlfile) {
 			// HTTP request to this file
 			xhttp = new XMLHttpRequest();
 			xhttp.onreadystatechange = function() {
 				if (this.readyState == 4) {
 					if (this.status == 200) {
-						elmnt.innerHTML = this.responseText;
+						div.innerHTML = this.responseText;
 					} else if (this.status == 404) {
-						elmnt.innerHTML = "Menu page not found";
+						div.innerHTML = "Menu page not found";
 					}
 					/* remove the ext-html attribute (non-recursive version of this function suffices) */
-					elmnt.removeAttribute("ext-html");
+					div.removeAttribute("ext-html");
 				}
 			}
 			xhttp.open("GET", file, false);
