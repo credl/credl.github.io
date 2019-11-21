@@ -65,6 +65,12 @@ div.photodiv {
 	display: none;	
 }
 
+.warning {
+	color: red;
+	text-align: center;
+	font-size: xx-large;
+}
+
 @media only screen and (min-width: 1000px) {
 	div.contactdiv {
 		display: inline-block;
