@@ -8,6 +8,34 @@ function getParameterByName(name, url) {
 	return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
+function includeExtHtml() {
+	var divs, div, i, exthtmlfile, xhttp;
+	// for all divs with ext-html attribute
+	divs = document.getElementsByTagName("div");
+	for (i = 0; i < divs.length; i++) {
+		div = divs[i];
+		// extract ext-html attribute
+		exthtmlfile = div.getAttribute("ext-html");
+		if (exthtmlfile) {
+			// HTTP request to this file
+			xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4) {
+					if (this.status == 200) {
+						div.innerHTML = this.responseText;
+					} else if (this.status == 404) {
+						div.innerHTML = "Menu page not found";
+					}
+					// remove the ext-html attribute (non-recursive version of this function suffices)
+					div.removeAttribute("ext-html");
+				}
+			}
+			xhttp.open("GET", exthtmlfile, false);
+			xhttp.send();
+		}
+	}
+}
+
 function setCookie(cname, cvalue, exdays) {
 	var d = new Date();
 	d.setTime(d.getTime() + (exdays*24*60*60*1000));
@@ -32,7 +60,7 @@ function getCookie(cname) {
 	}
 	return null;
 }
-						
+
 function initLanguage(changelanguage) {
 	// change language has first priority
 	if (changelanguage != null) {
@@ -79,30 +107,8 @@ function setPageButton(pageId) {
 	}
 }
 
-function includeExtHtml() {
-	var divs, div, i, exthtmlfile, xhttp;
-	// for all divs with ext-html attribute
-	divs = document.getElementsByTagName("div");
-	for (i = 0; i < divs.length; i++) {
-		div = divs[i];
-		// extract ext-html attribute
-		exthtmlfile = div.getAttribute("ext-html");
-		if (exthtmlfile) {
-			// HTTP request to this file
-			xhttp = new XMLHttpRequest();
-			xhttp.onreadystatechange = function() {
-				if (this.readyState == 4) {
-					if (this.status == 200) {
-						div.innerHTML = this.responseText;
-					} else if (this.status == 404) {
-						div.innerHTML = "Menu page not found";
-					}
-					// remove the ext-html attribute (non-recursive version of this function suffices)
-					div.removeAttribute("ext-html");
-				}
-			}
-			xhttp.open("GET", exthtmlfile, false);
-			xhttp.send();
-		}
-	}
+function initPage(pageId) {
+	includeExtHtml();
+	initLanguage();
+	setPageButton(pageId);
 }
