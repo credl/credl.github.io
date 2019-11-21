@@ -63,7 +63,7 @@ function initLanguage() {
 function setPageButton(pageId) {
 	btn = document.getElementById("pageButton" + pageId);
 	if (btn) {
-		btn.class = "selectedbutton";		
+		btn.setAttribute("class", "selectedbutton");
 	}
 }
 
