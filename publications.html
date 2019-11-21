@@ -4,569 +4,592 @@
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="./styles/style.css" media="all" type="text/css">
-		<title>Christoph Redl</title>
+		<title>Christoph Redl | Website</title>
+		<script src="./scripts/app.js"></script>
 	</head>
-
 	<body>
 		<div class="menu">
-			<ul>
-				<li><a href="index.html">Home</a></li>
-				<li><a href="information.html">Information</a></li>
-				<li><a href="publications.html">Publications</a></li>
-				<li><a href="software.html">Software</a></li>
-			</ul>
+			<div class="english">
+				<div class="pagebuttons">
+					<a href="index.html">Home</a><a href="information.html">Information</a><a class="selectedbutton" href="publications.html">Publications</a><a href="software.html">Software</a>
+				</div>
+				<div class="langbuttons">
+					<a class="selectedbutton" onclick="applyLanguage('english');">ENG</a><a onclick="applyLanguage('german');">GER</a>
+				</div>
+			</div>
+			<div class="german">
+				<div class="pagebuttons">
+					<a href="index.html">Start</a><a href="information.html">Informationen</a><a class="selectedbutton" href="publications.html">Publikatioen</a><a href="software.html">Software</a>
+				</div>
+				<div class="langbuttons">
+					<a onclick="applyLanguage('english');">ENG</a><a class="selectedbutton" onclick="applyLanguage('german');">GER</a>
+				</div>
+			</div>
 		</div>
 
-		<div class="content">
+		<div class="main">
+			<div class="content english">
+				<h1>Publications</h1>
 
-			<h1>Publications</h1>
+				<p>
+					The bib file with my publications can be downloaded here: <a href="bibtex/pub-redl-all.bib">pub-redl-all.bib</a>.
+				</p>
+			</div>
 
-			<h2>2019</h2>
+			<div class="content german">
+				<h1>Publikatikonen</h1>
 
-			<p class="bib"><a name="r2018-tplp"></a>
-			Christoph Redl.<br>
-			 <b>Inlining External Sources in Answer Set Programs</b>.<br>
-			 Theory and Practice of Logic Programming, 19(3):360-411, 2019.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2019_bib.html#r2019-inlining-tplp">bib</a>&nbsp;<!--|
-			<a href="./r2019-tplp.pdf">paper</a>&nbsp;-->]
-			</p>
+				<p>
+					Die bib-Datei mit den Referenzen meiner Publikationen kann hier heruntergeladen werden: <a href="bibtex/pub-redl-all.bib">pub-redl-all.bib</a>.
+				</p>
+			</div>
 
-			<h2>2018</h2>
+			<div class="content">
+				<h2>2019</h2>
 
-			<p class="bib"><a name="ekrw2018-jair"></a>
-			Thomas Eiter, Tobias Kaminski, Christoph Redl, and Antonius Weinzierl.<br>
-			 <b>Exploiting Partial Assignments for Efficient Evaluation of Answer Set Programs with External Sources</b>.<br>
-			 In <em>Journal of Artificial Intelligence Research</em>, volume 62, pages 665-727, July 2018.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2018_bib.html#ekrw2018-jair">bib</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/ekrw2018-jair.pdf">paper</a>&nbsp;]
-			</p>
-			
-			<p class="bib"><a name="r2018-rr-1923-18-01"></a>
-			Christoph Redl.<br>
-			 <b>Inconsistency in Answer Set Programs and Extensions</b>.<br>
-			 Technical Report LOGCOMP RR-1923-18-04, Institut f&uuml;r
-			  Logic and Computation, TU Wien, Favoritenstra&szlig;e 9-11, A-1040 Vienna,
-			  June 2018.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2018_bib.html#r2018-inconsistency-tr">bib</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/r2018-rr-1923-18-04.pdf">paper</a>&nbsp;]
-			</p>
+				<p class="bib"><a name="r2018-tplp"></a>
+				Christoph Redl.<br>
+				 <b>Inlining External Sources in Answer Set Programs</b>.<br>
+				 Theory and Practice of Logic Programming, 19(3):360-411, 2019.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2019_bib.html#r2019-inlining-tplp">bib</a>&nbsp;<!--|
+				<a href="./r2019-tplp.pdf">paper</a>&nbsp;-->]
+				</p>
 
-			<p class="bib"><a name="eggkrsw2018-ki"></a>
-			Thomas Eiter, Stefano Germano, Giovambattista Ianni, Tobias Kaminski, Christoph Redl, Peter Sch&uuml;ller and Antonius Weinzierl.<br>
-			 <b>The DLVHEX System</b>.<br>
-			 KI - K&uuml;nstliche Intelligenz, volume 32, number 2-3, pages 187-189, August 15, 2018.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2018_bib.html#eggkrsw2018-ki">bib</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/eggkrsw2018-ki.pdf">paper</a>&nbsp;]
-			</p>
+				<h2>2018</h2>
 
-			<p class="bib"><a name="ekrw2018-rr-1923-18-02"></a>
-			Thomas Eiter, Tobias Kaminski, Christoph Redl, and Antonius Weinzierl.<br>
-			 <b>Exploiting Partial Assignments for Efficient Evaluation of Answer Set Programs with External Sources</b>.<br>
-			 Technical Report LOGCOMP RR-1923-18-02, Institut f&uuml;r
-			  Logic and Computation, TU Wien, Favoritenstra&szlig;e 9-11, A-1040 Vienna,
-			  January 2018.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2018_bib.html#ekrw2018-partial-tr">bib</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/ekrw2018-rr-1923-18-02.pdf">paper</a>&nbsp;]
-			</p>
+				<p class="bib"><a name="ekrw2018-jair"></a>
+				Thomas Eiter, Tobias Kaminski, Christoph Redl, and Antonius Weinzierl.<br>
+				 <b>Exploiting Partial Assignments for Efficient Evaluation of Answer Set Programs with External Sources</b>.<br>
+				 In <em>Journal of Artificial Intelligence Research</em>, volume 62, pages 665-727, July 2018.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2018_bib.html#ekrw2018-jair">bib</a>&nbsp;| 
+				<a href="./publications/ekrw2018-jair.pdf">paper</a>&nbsp;]
+				</p>
+				
+				<p class="bib"><a name="r2018-rr-1923-18-01"></a>
+				Christoph Redl.<br>
+				 <b>Inconsistency in Answer Set Programs and Extensions</b>.<br>
+				 Technical Report LOGCOMP RR-1923-18-04, Institut f&uuml;r
+				  Logic and Computation, TU Wien, Favoritenstra&szlig;e 9-11, A-1040 Vienna,
+				  June 2018.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2018_bib.html#r2018-inconsistency-tr">bib</a>&nbsp;| 
+				<a href="./publications/r2018-rr-1923-18-04.pdf">paper</a>&nbsp;]
+				</p>
 
-			<p class="bib"><a name="r2018-rr-1923-18-01"></a>
-			Christoph Redl.<br>
-			 <b>Inlining External Sources in Answer Set Programs</b>.<br>
-			 Technical Report LOGCOMP RR-1923-18-01, Institut f&uuml;r
-			  Logic and Computation, TU Wien, Favoritenstra&szlig;e 9-11, A-1040 Vienna,
-			  January 2018.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2018_bib.html#r2018-inlining-tr">bib</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/r2018-rr-1923-18-01.pdf">paper</a>&nbsp;]
-			</p>
+				<p class="bib"><a name="eggkrsw2018-ki"></a>
+				Thomas Eiter, Stefano Germano, Giovambattista Ianni, Tobias Kaminski, Christoph Redl, Peter Sch&uuml;ller and Antonius Weinzierl.<br>
+				 <b>The DLVHEX System</b>.<br>
+				 KI - K&uuml;nstliche Intelligenz, volume 32, number 2-3, pages 187-189, August 15, 2018.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2018_bib.html#eggkrsw2018-ki">bib</a>&nbsp;| 
+				<a href="./publications/eggkrsw2018-ki.pdf">paper</a>&nbsp;]
+				</p>
 
-			<h2>2017</h2>
+				<p class="bib"><a name="ekrw2018-rr-1923-18-02"></a>
+				Thomas Eiter, Tobias Kaminski, Christoph Redl, and Antonius Weinzierl.<br>
+				 <b>Exploiting Partial Assignments for Efficient Evaluation of Answer Set Programs with External Sources</b>.<br>
+				 Technical Report LOGCOMP RR-1923-18-02, Institut f&uuml;r
+				  Logic and Computation, TU Wien, Favoritenstra&szlig;e 9-11, A-1040 Vienna,
+				  January 2018.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2018_bib.html#ekrw2018-partial-tr">bib</a>&nbsp;| 
+				<a href="./publications/ekrw2018-rr-1923-18-02.pdf">paper</a>&nbsp;]
+				</p>
 
-			<p class="bib"><a name="r2017-ijcai"></a>
-			Christoph Redl.<br>
-			 <b>Conflict-driven ASP Solving with External Sources and Program Splits</b>.<br>
-			 Proceedings of the Twenty-Sixth International Joint Conference on Artificial Intelligence (IJCAI 2017), August 19-25, 2017, Melbourne, Australia.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2017_bib.html#r2017-ijcai">bib</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/r2017-ijcai-poster.pdf">poster</a>&nbsp;|
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/r2017-ijcai-slides.pdf">slides</a>&nbsp;|
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/r2017-ijcai.pdf">paper</a>&nbsp;]
-			</p>
+				<p class="bib"><a name="r2018-rr-1923-18-01"></a>
+				Christoph Redl.<br>
+				 <b>Inlining External Sources in Answer Set Programs</b>.<br>
+				 Technical Report LOGCOMP RR-1923-18-01, Institut f&uuml;r
+				  Logic and Computation, TU Wien, Favoritenstra&szlig;e 9-11, A-1040 Vienna,
+				  January 2018.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2018_bib.html#r2018-inlining-tr">bib</a>&nbsp;| 
+				<a href="./publications/r2018-rr-1923-18-01.pdf">paper</a>&nbsp;]
+				</p>
 
-			<p class="bib"><a name="ekrsw2017-rw"></a>
-			Thomas Eiter, Tobias Kaminski, Peter Sch&uuml;ller, Christoph Redl, and Antonius Weinzierl.<br>
-			<b>Answer Set Programming with External Source Access</b>.<br>
-			Reasoning Web. Semantic Interoperability on the Web - 13th International Summer School 2017, London, UK, July 7-11, 2017, pages 204-275, Tutorial Lectures.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2017_bib.html#ekrsw2017-rw">bib</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/ekrsw2017-rw-slides.pdf">slides</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/ekrsw2017-rw.pdf">paper</a>&nbsp;]
-			</p>
+				<h2>2017</h2>
 
-			<p class="bib"><a name="r2017b-lpnmr"></a>
-			Christoph Redl.<br>
-			<b>Explaining Inconsistency in Answer Set Programs and Extensions</b>.<br>
-			Proceedings of the Fourteenth International Conference on Logic Programming and Nonmonotonic Reasoning (LPNMR 2017), July 3-6, 2017, Helsinki, Finland.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2017_bib.html#r2017a-lpnmr">bib</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/r2017a-lpnmr-slides.pdf">slides</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/r2017a-lpnmr.pdf">paper</a>&nbsp;]
-			</p>
+				<p class="bib"><a name="r2017-ijcai"></a>
+				Christoph Redl.<br>
+				 <b>Conflict-driven ASP Solving with External Sources and Program Splits</b>.<br>
+				 Proceedings of the Twenty-Sixth International Joint Conference on Artificial Intelligence (IJCAI 2017), August 19-25, 2017, Melbourne, Australia.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2017_bib.html#r2017-ijcai">bib</a>&nbsp;| 
+				<a href="./publications/r2017-ijcai-poster.pdf">poster</a>&nbsp;|
+				<a href="./publications/r2017-ijcai-slides.pdf">slides</a>&nbsp;|
+				<a href="./publications/r2017-ijcai.pdf">paper</a>&nbsp;]
+				</p>
 
-			<p class="bib"><a name="r2017a-lpnmr"></a>
-			Christoph Redl.<br>
-			<b>Answer Set Programs with Queries over Subprograms</b>.<br>
-			Proceedings of the Fourteenth International Conference on Logic Programming and Nonmonotonic Reasoning (LPNMR 2017), July 3-6, 2017, Helsinki, Finland.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2017_bib.html#r2017a-lpnmr">bib</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/r2017a-lpnmr-slides.pdf">slides</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/r2017a-lpnmr.pdf">paper</a>&nbsp;]
-			</p>
+				<p class="bib"><a name="ekrsw2017-rw"></a>
+				Thomas Eiter, Tobias Kaminski, Peter Sch&uuml;ller, Christoph Redl, and Antonius Weinzierl.<br>
+				<b>Answer Set Programming with External Source Access</b>.<br>
+				Reasoning Web. Semantic Interoperability on the Web - 13th International Summer School 2017, London, UK, July 7-11, 2017, pages 204-275, Tutorial Lectures.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2017_bib.html#ekrsw2017-rw">bib</a>&nbsp;| 
+				<a href="./publications/ekrsw2017-rw-slides.pdf">slides</a>&nbsp;| 
+				<a href="./publications/ekrsw2017-rw.pdf">paper</a>&nbsp;]
+				</p>
 
-			<p class="bib"><a name="r2017b-aaai"></a>
-			Christoph Redl.<br>
-			<b>On Equivalance and Inconsistency of Answer Set Programs with External Sources</b>.<br>
-			Proceedings of the Thirty-First AAAI Conference on Artificial Intelligence (AAAI 2017), February 4-9, 2017, San Francisco, California, USA.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2017_bib.html#r2017b-aaai">bib</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/r2017b-aaai-poster.pdf">poster</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/r2017b-aaai.pdf">paper</a>&nbsp;]
-			</p>
+				<p class="bib"><a name="r2017b-lpnmr"></a>
+				Christoph Redl.<br>
+				<b>Explaining Inconsistency in Answer Set Programs and Extensions</b>.<br>
+				Proceedings of the Fourteenth International Conference on Logic Programming and Nonmonotonic Reasoning (LPNMR 2017), July 3-6, 2017, Helsinki, Finland.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2017_bib.html#r2017a-lpnmr">bib</a>&nbsp;| 
+				<a href="./publications/r2017a-lpnmr-slides.pdf">slides</a>&nbsp;| 
+				<a href="./publications/r2017a-lpnmr.pdf">paper</a>&nbsp;]
+				</p>
 
-			<p class="bib"><a name="r2017a-aaai"></a>
-			Christoph Redl.<br>
-			<b>Efficient Evaluation of Answer Set Programs with External Sources Based on External Source Inlining</b>.<br>
-			Proceedings of the Thirty-First AAAI Conference on Artificial Intelligence (AAAI 2017), February 4-9, 2017, San Francisco, California, USA.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2017_bib.html#r2017a-aaai">bib</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/r2017a-aaai-poster.pdf">poster</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/r2017a-aaai.pdf">paper</a>&nbsp;]
-			</p>
+				<p class="bib"><a name="r2017a-lpnmr"></a>
+				Christoph Redl.<br>
+				<b>Answer Set Programs with Queries over Subprograms</b>.<br>
+				Proceedings of the Fourteenth International Conference on Logic Programming and Nonmonotonic Reasoning (LPNMR 2017), July 3-6, 2017, Helsinki, Finland.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2017_bib.html#r2017a-lpnmr">bib</a>&nbsp;| 
+				<a href="./publications/r2017a-lpnmr-slides.pdf">slides</a>&nbsp;| 
+				<a href="./publications/r2017a-lpnmr.pdf">paper</a>&nbsp;]
+				</p>
 
-			<p class="bib"><a name="r2017-padl"></a>
-			Christoph Redl.<br>
-			<b>Extending Answer Set Programs with Interpreted Functions as First-class Citizens</b>.<br>
-			Proceedings of the Nineteenth International Symposium on Practical Aspects of Declarative Languages (PADL 2017), January 16-17, 2017, Paris, France.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2017_bib.html#rr2017-padl">bib</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/r2017-padl-slides.pdf">slides</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/r2017-padl.pdf">paper</a>&nbsp;]
-			</p>
+				<p class="bib"><a name="r2017b-aaai"></a>
+				Christoph Redl.<br>
+				<b>On Equivalance and Inconsistency of Answer Set Programs with External Sources</b>.<br>
+				Proceedings of the Thirty-First AAAI Conference on Artificial Intelligence (AAAI 2017), February 4-9, 2017, San Francisco, California, USA.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2017_bib.html#r2017b-aaai">bib</a>&nbsp;| 
+				<a href="./publications/r2017b-aaai-poster.pdf">poster</a>&nbsp;| 
+				<a href="./publications/r2017b-aaai.pdf">paper</a>&nbsp;]
+				</p>
 
-			<p class="bib"><a name="rr2017-padl"></a>
-			Jakob Rath and Christoph Redl.<br>
-			<b>Integrating Answer Set Programming with Procedural Languages</b>.<br>
-			Proceedings of the Nineteenth International Symposium on Practical Aspects of Declarative Languages (PADL 2017), January 16-17, 2017, Paris, France.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2017_bib.html#rr2017-padl">bib</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/rr2017-padl-slides.pdf">slides</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/rr2017-padl.pdf">paper</a>&nbsp;]
-			</p>
+				<p class="bib"><a name="r2017a-aaai"></a>
+				Christoph Redl.<br>
+				<b>Efficient Evaluation of Answer Set Programs with External Sources Based on External Source Inlining</b>.<br>
+				Proceedings of the Thirty-First AAAI Conference on Artificial Intelligence (AAAI 2017), February 4-9, 2017, San Francisco, California, USA.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2017_bib.html#r2017a-aaai">bib</a>&nbsp;| 
+				<a href="./publications/r2017a-aaai-poster.pdf">poster</a>&nbsp;| 
+				<a href="./publications/r2017a-aaai.pdf">paper</a>&nbsp;]
+				</p>
 
-			<h2>2016</h2>
+				<p class="bib"><a name="r2017-padl"></a>
+				Christoph Redl.<br>
+				<b>Extending Answer Set Programs with Interpreted Functions as First-class Citizens</b>.<br>
+				Proceedings of the Nineteenth International Symposium on Practical Aspects of Declarative Languages (PADL 2017), January 16-17, 2017, Paris, France.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2017_bib.html#rr2017-padl">bib</a>&nbsp;| 
+				<a href="./publications/r2017-padl-slides.pdf">slides</a>&nbsp;| 
+				<a href="./publications/r2017-padl.pdf">paper</a>&nbsp;]
+				</p>
 
-			<p class="bib"><a name="r2016-rcrp"></a>
-			Christoph Redl.<br>
-			<b>Automated Benchmarking of KR-Systems</b>.<br>
-			Proceedings of the Twenty-Third RCRA International Workshop on Experimental Evaluation of Algorithms for Solving Problems with Combinatorial Explosion, November 28, 2016, Genova, Italy.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2016_bib.html#r2016-rcra">bib</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/r2016-rcra-slides.pdf">slides</a>&nbsp;|
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/r2016-rcra.pdf">paper</a>&nbsp;]
-			</p>
+				<p class="bib"><a name="rr2017-padl"></a>
+				Jakob Rath and Christoph Redl.<br>
+				<b>Integrating Answer Set Programming with Procedural Languages</b>.<br>
+				Proceedings of the Nineteenth International Symposium on Practical Aspects of Declarative Languages (PADL 2017), January 16-17, 2017, Paris, France.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2017_bib.html#rr2017-padl">bib</a>&nbsp;| 
+				<a href="./publications/rr2017-padl-slides.pdf">slides</a>&nbsp;| 
+				<a href="./publications/rr2017-padl.pdf">paper</a>&nbsp;]
+				</p>
 
-			<p class="bib"><a name="r2016-iclp"></a>
-			Christoph Redl.<br>
-			 <b>The DLVHEX System for Knowledge Representation and Reasoning (System Description)</b>.<br>
-			 Theory and Practice of Logic Programming, 16(4-5):866-883, 2016.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2016_bib.html#r2016-tplp">bib</a>&nbsp;|
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/r2016-tplp-slides.pdf">slides</a>&nbsp;|
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/r2016-tplp.pdf">paper</a>&nbsp;]
-			</p>
+				<h2>2016</h2>
 
-			<p class="bib"><a name="icghrstw2016-ieee"></a>
-			Giovambattista Ianni, Francesco Calimeri, Stefano Germano, Andreas Humenberger, Christoph Redl, Daria Stepanova, Andrea Tucci, and Anton Wimmer.<br>
-			 <b>Angry-HEX: an Artificial Player for Angry Birds Based on Declarative Knowledge Bases</b>.<br>
-			 IEEE Transactions on Computational Intelligence and AI in Games, 8(2):128-139, 2016.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2016_bib.html#icghrstw2016-ieee">bib</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/cfghirstw2016-tciaig.pdf">paper</a>&nbsp;]
-			</p>
+				<p class="bib"><a name="r2016-rcrp"></a>
+				Christoph Redl.<br>
+				<b>Automated Benchmarking of KR-Systems</b>.<br>
+				Proceedings of the Twenty-Third RCRA International Workshop on Experimental Evaluation of Algorithms for Solving Problems with Combinatorial Explosion, November 28, 2016, Genova, Italy.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2016_bib.html#r2016-rcra">bib</a>&nbsp;| 
+				<a href="./publications/r2016-rcra-slides.pdf">slides</a>&nbsp;|
+				<a href="./publications/r2016-rcra.pdf">paper</a>&nbsp;]
+				</p>
 
-			<p class="bib"><a name="efikrs2016-tplp"></a>
-			Thomas Eiter, Michael Fink, Giovambattista Ianni, Thomas Krennwallner, Christoph Redl, and Peter Sch&uuml;ller.<br>
-			 <b>A Model Building Framework for Answer Set Programming with External Computations</b>.<br>
-			 Theory and Practice of Logic Programming, 16(4):418-464, 2016<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2016_bib.html#efikrs2016-tplp">bib</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/efikrs2016-tplp.pdf">paper</a>&nbsp;]
-			</p>
+				<p class="bib"><a name="r2016-iclp"></a>
+				Christoph Redl.<br>
+				 <b>The DLVHEX System for Knowledge Representation and Reasoning (System Description)</b>.<br>
+				 Theory and Practice of Logic Programming, 16(4-5):866-883, 2016.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2016_bib.html#r2016-tplp">bib</a>&nbsp;|
+				<a href="./publications/r2016-tplp-slides.pdf">slides</a>&nbsp;|
+				<a href="./publications/r2016-tplp.pdf">paper</a>&nbsp;]
+				</p>
 
-			<p class="bib"><a name="ekrw2016-ijcai"></a>
-			Thomas Eiter, Tobias Kaminski, Christoph Redl, and Antonius Weinzierl.<br>
-			 <b>Exploiting Partial Assignments for Efficient Evaluation of Answer Set Programs with External Source Access</b>.<br>
-			 Proceedings of the Twenty-Fifth International Joint Conference on Artificial Intelligence (IJCAI 2016), July 9-15, 2016, New York, New York, USA.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2016_bib.html#ekrw2016-ijcai">bib</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/ekrw2016-ijcai-poster.pdf">poster</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/ekrw2016-ijcai.pdf">paper</a>&nbsp;]
-			</p>
-			
-			<p class="bib"><a name="ers2016-festschrift"></a>
-			Thomas Eiter, Christoph Redl, and Peter Sch&uuml;ller.<br>
-			 <b>Problem Solving Using the HEX Family</b>.<br>
-			In Christoph Beierle, Gerhard Brewka, and Matthias Thimm, editors,
-			<i>Computational Models of Rationality - Essays dedicated to Gabriele Kern-Isberner on the occasion of her 60th birthday</i>,
-			Tributes, pages 150-174. College Publications, January 2016.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2016_bib.html#ers2016-festschrift">bib</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/ers2016-festschrift.pdf">paper</a>&nbsp;]
-			</p>
-			
-			<p class="bib"><a name="efkrs2016-aij"></a>
-			Thomas Eiter, Michael Fink, Thomas Krennwallner, and Christoph Redl.<br>
-			 <b>Domain Expansion for ASP-Programs with External Sources</b>.<br>
-			 In <em>Artificial Intelligence</em>, volume 233, pages 84-121, 2016<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2016_bib.html#efkrs2016-aij">bib</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/efkrs2016-aij.pdf">paper</a>&nbsp;]
-			</p>
+				<p class="bib"><a name="icghrstw2016-ieee"></a>
+				Giovambattista Ianni, Francesco Calimeri, Stefano Germano, Andreas Humenberger, Christoph Redl, Daria Stepanova, Andrea Tucci, and Anton Wimmer.<br>
+				 <b>Angry-HEX: an Artificial Player for Angry Birds Based on Declarative Knowledge Bases</b>.<br>
+				 IEEE Transactions on Computational Intelligence and AI in Games, 8(2):128-139, 2016.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2016_bib.html#icghrstw2016-ieee">bib</a>&nbsp;| 
+				<a href="./publications/cfghirstw2016-tciaig.pdf">paper</a>&nbsp;]
+				</p>
 
-			<p class="bib"><a name="r2016-rr-1843-16-01.pdf"></a>
-			Christoph Redl.<br>
-			 <b>The ABC Benchmarking System - User Guide</b>.<br>
-			 Technical Report INFSYS RR-1843-16-01, Institut f&uuml;r
-			  Informationssysteme, TU Wien, Favoritenstra&szlig;e 9-11, A-1040 Vienna,
-			  January 2016.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2016_bib.html#r2016-rr-1843-16-01.pdf">bib</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/r2016-rr-1843-16-01.pdf">paper</a>&nbsp;]
-			</p>
+				<p class="bib"><a name="efikrs2016-tplp"></a>
+				Thomas Eiter, Michael Fink, Giovambattista Ianni, Thomas Krennwallner, Christoph Redl, and Peter Sch&uuml;ller.<br>
+				 <b>A Model Building Framework for Answer Set Programming with External Computations</b>.<br>
+				 Theory and Practice of Logic Programming, 16(4):418-464, 2016<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2016_bib.html#efikrs2016-tplp">bib</a>&nbsp;| 
+				<a href="./publications/efikrs2016-tplp.pdf">paper</a>&nbsp;]
+				</p>
 
-			<h2>2015</h2>
+				<p class="bib"><a name="ekrw2016-ijcai"></a>
+				Thomas Eiter, Tobias Kaminski, Christoph Redl, and Antonius Weinzierl.<br>
+				 <b>Exploiting Partial Assignments for Efficient Evaluation of Answer Set Programs with External Source Access</b>.<br>
+				 Proceedings of the Twenty-Fifth International Joint Conference on Artificial Intelligence (IJCAI 2016), July 9-15, 2016, New York, New York, USA.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2016_bib.html#ekrw2016-ijcai">bib</a>&nbsp;| 
+				<a href="./publications/ekrw2016-ijcai-poster.pdf">poster</a>&nbsp;| 
+				<a href="./publications/ekrw2016-ijcai.pdf">paper</a>&nbsp;]
+				</p>
+				
+				<p class="bib"><a name="ers2016-festschrift"></a>
+				Thomas Eiter, Christoph Redl, and Peter Sch&uuml;ller.<br>
+				 <b>Problem Solving Using the HEX Family</b>.<br>
+				In Christoph Beierle, Gerhard Brewka, and Matthias Thimm, editors,
+				<i>Computational Models of Rationality - Essays dedicated to Gabriele Kern-Isberner on the occasion of her 60th birthday</i>,
+				Tributes, pages 150-174. College Publications, January 2016.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2016_bib.html#ers2016-festschrift">bib</a>&nbsp;| 
+				<a href="./publications/ers2016-festschrift.pdf">paper</a>&nbsp;]
+				</p>
+				
+				<p class="bib"><a name="efkrs2016-aij"></a>
+				Thomas Eiter, Michael Fink, Thomas Krennwallner, and Christoph Redl.<br>
+				 <b>Domain Expansion for ASP-Programs with External Sources</b>.<br>
+				 In <em>Artificial Intelligence</em>, volume 233, pages 84-121, 2016<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2016_bib.html#efkrs2016-aij">bib</a>&nbsp;| 
+				<a href="./publications/efkrs2016-aij.pdf">paper</a>&nbsp;]
+				</p>
 
-			<p class="bib"><a name="ers2015-rr-1843-15-07"></a>
-			Thomas Eiter, Christoph Redl, and Peter Sch&uuml;ller.<br>
-			 <b>Problem Solving Using the HEX Family</b>.<br>
-			 Technical Report INFSYS RR-1843-15-07, Institut f&uuml;r
-			  Informationssysteme, TU Wien, Favoritenstra&szlig;e 9-11, A-1040 Vienna,
-			  December 2015.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2015_bib.html#efikrs2015-tr">bib</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/ers2015-rr-1843-15-07.pdf">paper</a>&nbsp;]
-			</p>
+				<p class="bib"><a name="r2016-rr-1843-16-01.pdf"></a>
+				Christoph Redl.<br>
+				 <b>The ABC Benchmarking System - User Guide</b>.<br>
+				 Technical Report INFSYS RR-1843-16-01, Institut f&uuml;r
+				  Informationssysteme, TU Wien, Favoritenstra&szlig;e 9-11, A-1040 Vienna,
+				  January 2016.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2016_bib.html#r2016-rr-1843-16-01.pdf">bib</a>&nbsp;| 
+				<a href="./publications/r2016-rr-1843-16-01.pdf">paper</a>&nbsp;]
+				</p>
 
-			<p class="bib"><a name="emrs2015-rr-1843-15-05.pdf"></a>
-			Thomas Eiter, Mustafa Mehuljic, Christoph Redl, and Peter Sch&uuml;ller.<br>
-			 <b>User Guide: dlvhex 2.X</b>.<br>
-			 Technical Report INFSYS RR-1843-15-05, Institut f&uuml;r
-			  Informationssysteme, TU Wien, Favoritenstra&szlig;e 9-11, A-1040 Vienna,
-			  September 2015.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2015_bib.html#emrs2015-rr-1843-15-05.pdf">bib</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/emrs2015-rr-1843-15-05.pdf">paper</a>&nbsp;]
-			</p>
+				<h2>2015</h2>
 
-			<p class="bib"><a name="derr2015-aspocp"></a>
-			Alessandro De Rosis, Thomas Eiter, Christoph Redl, and Francesco Ricca.<br>
-			 <b>Constraint Answer Set Programming based on HEX-Programs</b>.<br>
-			 In Eighth Workshop on Answer Set Programming and Other Computing Paradigms (ASPOCP 2015), August 31, 2015, Cork, Ireland, August 2015.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2015_bib.html#derr2015-aspocp">bib</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/derr2015-aspocp.pdf">paper</a>&nbsp;]
-			</p>
+				<p class="bib"><a name="ers2015-rr-1843-15-07"></a>
+				Thomas Eiter, Christoph Redl, and Peter Sch&uuml;ller.<br>
+				 <b>Problem Solving Using the HEX Family</b>.<br>
+				 Technical Report INFSYS RR-1843-15-07, Institut f&uuml;r
+				  Informationssysteme, TU Wien, Favoritenstra&szlig;e 9-11, A-1040 Vienna,
+				  December 2015.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2015_bib.html#efikrs2015-tr">bib</a>&nbsp;| 
+				<a href="./publications/ers2015-rr-1843-15-07.pdf">paper</a>&nbsp;]
+				</p>
 
-			<p class="bib"><a name="efikrs2015-rr-1843-15-01"></a>
-			Thomas Eiter, Michael Fink, Giovambattista Ianni, Thomas Krennwallner, Christoph Redl, and Peter Sch&uuml;ller.<br>
-			 <b>A Model Building Framework for Answer Set Programming with External Computations</b>.<br>
-			 Technical Report INFSYS RR-1843-15-01, Institut f&uuml;r
-			  Informationssysteme, TU Wien, Favoritenstra&szlig;e 9-11, A-1040 Vienna,
-			  January 2015.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2015_bib.html#efikrs2015-rr-1843-15-01">bib</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/efikrs2015-rr-1843-15-01.pdf">paper</a>&nbsp;]
-			</p>
+				<p class="bib"><a name="emrs2015-rr-1843-15-05.pdf"></a>
+				Thomas Eiter, Mustafa Mehuljic, Christoph Redl, and Peter Sch&uuml;ller.<br>
+				 <b>User Guide: dlvhex 2.X</b>.<br>
+				 Technical Report INFSYS RR-1843-15-05, Institut f&uuml;r
+				  Informationssysteme, TU Wien, Favoritenstra&szlig;e 9-11, A-1040 Vienna,
+				  September 2015.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2015_bib.html#emrs2015-rr-1843-15-05.pdf">bib</a>&nbsp;| 
+				<a href="./publications/emrs2015-rr-1843-15-05.pdf">paper</a>&nbsp;]
+				</p>
 
-			<h2>2014</h2>
+				<p class="bib"><a name="derr2015-aspocp"></a>
+				Alessandro De Rosis, Thomas Eiter, Christoph Redl, and Francesco Ricca.<br>
+				 <b>Constraint Answer Set Programming based on HEX-Programs</b>.<br>
+				 In Eighth Workshop on Answer Set Programming and Other Computing Paradigms (ASPOCP 2015), August 31, 2015, Cork, Ireland, August 2015.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2015_bib.html#derr2015-aspocp">bib</a>&nbsp;| 
+				<a href="./publications/derr2015-aspocp.pdf">paper</a>&nbsp;]
+				</p>
 
-			<p class="bib"><a name="efkrs2014-rr-1843-14-02"></a>
-			Thomas Eiter, Michael Fink, Thomas Krennwallner, and Christoph Redl.<br>
-			 <b>Domain Expansion for ASP-Programs with External Sources</b>.<br>
-			 Technical Report INFSYS RR-1843-14-02, Institut f&uuml;r
-			  Informationssysteme, TU Wien, Favoritenstra&szlig;e 9-11, A-1040 Vienna,
-			  September 2014.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2014_bib.html#efkrs2014-rr-1843-14-02">bib</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/efkrs2014-rr-1843-14-02.pdf">paper</a>&nbsp;]
-			</p>
+				<p class="bib"><a name="efikrs2015-rr-1843-15-01"></a>
+				Thomas Eiter, Michael Fink, Giovambattista Ianni, Thomas Krennwallner, Christoph Redl, and Peter Sch&uuml;ller.<br>
+				 <b>A Model Building Framework for Answer Set Programming with External Computations</b>.<br>
+				 Technical Report INFSYS RR-1843-15-01, Institut f&uuml;r
+				  Informationssysteme, TU Wien, Favoritenstra&szlig;e 9-11, A-1040 Vienna,
+				  January 2015.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2015_bib.html#efikrs2015-rr-1843-15-01">bib</a>&nbsp;| 
+				<a href="./publications/efikrs2015-rr-1843-15-01.pdf">paper</a>&nbsp;]
+				</p>
 
-			<p class="bib"><a name="cfghirst2014-ecai-angrybirds"></a>
-			Francesco Calimeri, Michael Fink, Stefano Germano, Andreas Humenberger, Giovambattista Ianni, Christoph Redl, Daria Stepanova, and Andrea Tucci.<br>
-			 <b>AngryHEX: an angry birds-playing agent based on HEX-programs</b>.<br>
-			 Poster presentation, <em>Angry Birds Competition 2014</em>.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2014_bib.html#cfghirst2014-ecai-angrybirds">bib</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/cfghirst2014-ecai-angrybirds.pdf">paper</a>&nbsp;]
-			</p>
+				<h2>2014</h2>
 
-			<p class="bib"><a name="r2014-phd"></a>
-			Christoph Redl.<br>
-			 <b>Answer Set Programming with External Sources: Algorithms and Efficient Evaluation</b>.<br>
-			 PhD Thesis, Vienna University of Technology, A-1040 Vienna, Karlsplatz 13, April 2014.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2014_bib.html#r2014-phd">bib</a><!--&nbsp;| 
-			<a href="./r2014-phd-slides.pdf">slides</a>&nbsp;| 
-			<a href="./r2014-phd.pdf">paper</a>-->&nbsp;]
-			</p>
+				<p class="bib"><a name="efkrs2014-rr-1843-14-02"></a>
+				Thomas Eiter, Michael Fink, Thomas Krennwallner, and Christoph Redl.<br>
+				 <b>Domain Expansion for ASP-Programs with External Sources</b>.<br>
+				 Technical Report INFSYS RR-1843-14-02, Institut f&uuml;r
+				  Informationssysteme, TU Wien, Favoritenstra&szlig;e 9-11, A-1040 Vienna,
+				  September 2014.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2014_bib.html#efkrs2014-rr-1843-14-02">bib</a>&nbsp;| 
+				<a href="./publications/efkrs2014-rr-1843-14-02.pdf">paper</a>&nbsp;]
+				</p>
 
-			<p class="bib"><a name="efrs2014-aaai"></a>
-			Thomas Eiter, Michael Fink, Christoph Redl, and Daria Stepanova<br>
-			 <b>Exploiting Support Sets for Answer Set Programs with External Evaluations</b>.<br>
-			 In <em>Twenty-Eighth
-			  AAAI Conference (AAAI 2014)</em>, July 27-31, 2014, Qu&#233;bec City, Qu&#233;bec, Canada,
-			  AAAI Press, July 2014.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2014_bib.html#efrs2014-aaai">bib</a>&nbsp;|
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/efrs2014-aaai.pdf">paper</a>&nbsp;]
-			</p>
-			
-			<p class="bib"><a name="efkr2014-inap13"></a>
-			Thomas Eiter, Michael Fink, Thomas Krennwallner, and Christoph Redl.<br>
-			 <b>HEX-Programs with Existential Quantification</b>.<br>
-			 In Ricardo Rocha, editor, <em>20th International Conference on
-			  Applications of Declarative Programming and Knowledge Management (INAP 2013),
-			  Kiel, Germany, September 11-13, 2013</em>. Post proceedings.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2014_bib.html#efkr2014-inap13">bib</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/efkr2013-inap-slides.pdf">slides</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/efkr2014-inap13.pdf">paper</a>&nbsp;]
-			</p>
+				<p class="bib"><a name="cfghirst2014-ecai-angrybirds"></a>
+				Francesco Calimeri, Michael Fink, Stefano Germano, Andreas Humenberger, Giovambattista Ianni, Christoph Redl, Daria Stepanova, and Andrea Tucci.<br>
+				 <b>AngryHEX: an angry birds-playing agent based on HEX-programs</b>.<br>
+				 Poster presentation, <em>Angry Birds Competition 2014</em>.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2014_bib.html#cfghirst2014-ecai-angrybirds">bib</a>&nbsp;| 
+				<a href="./publications/cfghirst2014-ecai-angrybirds.pdf">paper</a>&nbsp;]
+				</p>
 
-			<p class="bib"><a name="swdrkef2014-aij"></a>
-			Yi-Dong Shen and Kewen Wang and Jun Deng and Christoph Redl and Thomas Krennwallner and Thomas Eiter, and Michael Fink.<br>
-			 <b>FLP Answer Set Semantics without Circular Justifications for General Logic Programs</b>.<br>
-			 In <em>Artificial Intelligence</em>, volume 213, pages 1-41, May 2014<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2013_bib.html#swdrkef2014-aij">bib</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/swdrkef2014-aij.pdf">paper</a>&nbsp;]
-			</p>
+				<p class="bib"><a name="r2014-phd"></a>
+				Christoph Redl.<br>
+				 <b>Answer Set Programming with External Sources: Algorithms and Efficient Evaluation</b>.<br>
+				 PhD Thesis, Vienna University of Technology, A-1040 Vienna, Karlsplatz 13, April 2014.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2014_bib.html#r2014-phd">bib</a><!--&nbsp;| 
+				<a href="./r2014-phd-slides.pdf">slides</a>&nbsp;| 
+				<a href="./r2014-phd.pdf">paper</a>-->&nbsp;]
+				</p>
 
-			<p class="bib"><a name="efkrs2014-jair"></a>
-			Thomas Eiter and Michael Fink and Thomas Krennwallner and Christoph Redl, and Peter
-			  Sch&uuml;ller.<br>
-			 <b>Efficient HEX-Program Evaluation Based on Unfounded Sets</b>.<br>
-			 In <em>Journal of Artificial Intelligence Research</em>, volume 49, pages 269-321, February 2014.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2014_bib.html#efkrs2014-jair">bib</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/efkrs2014-jair.pdf">paper</a>&nbsp;]
-			</p>
+				<p class="bib"><a name="efrs2014-aaai"></a>
+				Thomas Eiter, Michael Fink, Christoph Redl, and Daria Stepanova<br>
+				 <b>Exploiting Support Sets for Answer Set Programs with External Evaluations</b>.<br>
+				 In <em>Twenty-Eighth
+				  AAAI Conference (AAAI 2014)</em>, July 27-31, 2014, Qu&#233;bec City, Qu&#233;bec, Canada,
+				  AAAI Press, July 2014.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2014_bib.html#efrs2014-aaai">bib</a>&nbsp;|
+				<a href="./publications/efrs2014-aaai.pdf">paper</a>&nbsp;]
+				</p>
+				
+				<p class="bib"><a name="efkr2014-inap13"></a>
+				Thomas Eiter, Michael Fink, Thomas Krennwallner, and Christoph Redl.<br>
+				 <b>HEX-Programs with Existential Quantification</b>.<br>
+				 In Ricardo Rocha, editor, <em>20th International Conference on
+				  Applications of Declarative Programming and Knowledge Management (INAP 2013),
+				  Kiel, Germany, September 11-13, 2013</em>. Post proceedings.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2014_bib.html#efkr2014-inap13">bib</a>&nbsp;| 
+				<a href="./publications/efkr2013-inap-slides.pdf">slides</a>&nbsp;| 
+				<a href="./publications/efkr2014-inap13.pdf">paper</a>&nbsp;]
+				</p>
 
-			<h2>2013</h2>
+				<p class="bib"><a name="swdrkef2014-aij"></a>
+				Yi-Dong Shen and Kewen Wang and Jun Deng and Christoph Redl and Thomas Krennwallner and Thomas Eiter, and Michael Fink.<br>
+				 <b>FLP Answer Set Semantics without Circular Justifications for General Logic Programs</b>.<br>
+				 In <em>Artificial Intelligence</em>, volume 213, pages 1-41, May 2014<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2013_bib.html#swdrkef2014-aij">bib</a>&nbsp;| 
+				<a href="./publications/swdrkef2014-aij.pdf">paper</a>&nbsp;]
+				</p>
 
-			<p class="bib"><a name="cfgirw2013-pai"></a>
-			Francesco Calimeri, Michael Fink, Stefano Germano, Giovambattista Ianni, Christoph Redl, and Anton Wimmer.<br>
-			 <b>AngryHEX: An Artificial Player for Angry Birds Based on Declarative Knowledge Bases</b>.<br>
-			 In Hans Tompits, editor, <em>National Workshop and Prize on Popularize Artificial Intelligence (PAI
-			  2013)</em>. Turin, Italy, December 2013.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2013_bib.html#cfgirw2013-pai">bib</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/cfgirw2013-pai.pdf">paper</a>&nbsp;]
-			</p>
+				<p class="bib"><a name="efkrs2014-jair"></a>
+				Thomas Eiter and Michael Fink and Thomas Krennwallner and Christoph Redl, and Peter
+				  Sch&uuml;ller.<br>
+				 <b>Efficient HEX-Program Evaluation Based on Unfounded Sets</b>.<br>
+				 In <em>Journal of Artificial Intelligence Research</em>, volume 49, pages 269-321, February 2014.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2014_bib.html#efkrs2014-jair">bib</a>&nbsp;| 
+				<a href="./publications/efkrs2014-jair.pdf">paper</a>&nbsp;]
+				</p>
 
-			<p class="bib"><a name="efkrs2012-rr-1843-12-08"></a>
-			Thomas Eiter, Michael Fink, Thomas Krennwallner, Christoph Redl, and Peter
-			  Sch&uuml;ller.<br>
-			 <b>Improving HEX-Program Evaluation based on Unfounded Sets</b>.<br>
-			 Technical Report INFSYS RR-1843-12-08, Institut f&uuml;r
-			  Informationssysteme, TU Wien, Favoritenstra&szlig;e 9-11, A-1040 Vienna,
-			  September 2012.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2013_bib.html#efkrs2012-rr-1843-12-08">bib</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/efkrs2012-rr-1843-12-08.pdf">paper</a>&nbsp;]
-			</p>
-			
-			<p class="bib"><a name="cfgirw2013-ijcai-angrybirds"></a>
-			Francesco Calimeri, Michael Fink, Stefano Germano, Giovambattista Ianni, Christoph Redl, and Anton Wimmer.<br>
-			 <b>AngryHEX: an angry birds-playing agent based on HEX-programs</b>.<br>
-			 Poster presentation, <em>Angry Birds Competition 2013</em>.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2013_bib.html#cfgirw2013-ijcai-angrybirds">bib</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/cfgirw2013-ijcai-angrybirds.pdf">paper</a>&nbsp;]
-			</p>
-			
-			<p class="bib"><a name="ekr2013-inap11"></a>
-			Thomas Eiter, Thomas Krennwallner, and Christoph Redl.<br>
-			 <b>HEX-Programs with Nested Program Calls</b>.<br>
-			 In Hans Tompits, editor, <em>19th International Conference on
-			  Applications of Declarative Programming and Knowledge Management (INAP
-			  2011)</em>, volume 7773 of <em>LNAI</em>, pages 1-10. Springer, October 2013.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2013_bib.html#ekr2013-inap11">bib</a>&nbsp;| 
-			<a href="http://dx.doi.org/10.1007/978-3-642-41524-1_15">DOI</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/ekr2013-inap11.pdf">paper</a>&nbsp;]
-			</p>
+				<h2>2013</h2>
 
-			<p class="bib"><a name="efkr2013-inap"></a>
-			Thomas Eiter, Michael Fink, Thomas Krennwallner, and Christoph Redl.<br>
-			 <b>HEX-Programs with Existential Quantification</b>.<br>
-			 In Ricardo Rocha, editor, <em>20th International Conference on
-			  Applications of Declarative Programming and Knowledge Management (INAP 2013),
-			  Kiel, Germany, September 11-13, 2013</em>, September 2013.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2013_bib.html#efkr2013-inap">bib</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/efkr2013-inap-slides.pdf">slides</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/efkr2013-inap.pdf">paper</a>&nbsp;]
-			</p>
+				<p class="bib"><a name="cfgirw2013-pai"></a>
+				Francesco Calimeri, Michael Fink, Stefano Germano, Giovambattista Ianni, Christoph Redl, and Anton Wimmer.<br>
+				 <b>AngryHEX: An Artificial Player for Angry Birds Based on Declarative Knowledge Bases</b>.<br>
+				 In Hans Tompits, editor, <em>National Workshop and Prize on Popularize Artificial Intelligence (PAI
+				  2013)</em>. Turin, Italy, December 2013.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2013_bib.html#cfgirw2013-pai">bib</a>&nbsp;| 
+				<a href="./publications/cfgirw2013-pai.pdf">paper</a>&nbsp;]
+				</p>
 
-			<p class="bib"><a name="efkr2013-gttv"></a>
-			Thomas Eiter, Michael Fink, Thomas Krennwallner, and Christoph Redl.<br>
-			 <b>Grounding HEX-Programs with Expanding Domains</b>.<br>
-			 In David Pearce, Shahab Tasharrofi, Evgenia Ternovska, and
-			  Concepci&#243;n Vidal, editors, <em>2nd Workshop on Grounding and
-			  Transformations for Theories with Variables (GTTV 2013), Corunna, Spain,
-			  September 15, 2013</em>, pages 3-15, September 2013.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2013_bib.html#efkr2013-gttv">bib</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/efkr2013-gttv-slides.pdf">slides</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/efkr2013-gttv.pdf">paper</a>&nbsp;]
-			</p>
+				<p class="bib"><a name="efkrs2012-rr-1843-12-08"></a>
+				Thomas Eiter, Michael Fink, Thomas Krennwallner, Christoph Redl, and Peter
+				  Sch&uuml;ller.<br>
+				 <b>Improving HEX-Program Evaluation based on Unfounded Sets</b>.<br>
+				 Technical Report INFSYS RR-1843-12-08, Institut f&uuml;r
+				  Informationssysteme, TU Wien, Favoritenstra&szlig;e 9-11, A-1040 Vienna,
+				  September 2012.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2013_bib.html#efkrs2012-rr-1843-12-08">bib</a>&nbsp;| 
+				<a href="./publications/efkrs2012-rr-1843-12-08.pdf">paper</a>&nbsp;]
+				</p>
+				
+				<p class="bib"><a name="cfgirw2013-ijcai-angrybirds"></a>
+				Francesco Calimeri, Michael Fink, Stefano Germano, Giovambattista Ianni, Christoph Redl, and Anton Wimmer.<br>
+				 <b>AngryHEX: an angry birds-playing agent based on HEX-programs</b>.<br>
+				 Poster presentation, <em>Angry Birds Competition 2013</em>.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2013_bib.html#cfgirw2013-ijcai-angrybirds">bib</a>&nbsp;| 
+				<a href="./publications/cfgirw2013-ijcai-angrybirds.pdf">paper</a>&nbsp;]
+				</p>
+				
+				<p class="bib"><a name="ekr2013-inap11"></a>
+				Thomas Eiter, Thomas Krennwallner, and Christoph Redl.<br>
+				 <b>HEX-Programs with Nested Program Calls</b>.<br>
+				 In Hans Tompits, editor, <em>19th International Conference on
+				  Applications of Declarative Programming and Knowledge Management (INAP
+				  2011)</em>, volume 7773 of <em>LNAI</em>, pages 1-10. Springer, October 2013.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2013_bib.html#ekr2013-inap11">bib</a>&nbsp;| 
+				<a href="http://dx.doi.org/10.1007/978-3-642-41524-1_15">DOI</a>&nbsp;| 
+				<a href="./publications/ekr2013-inap11.pdf">paper</a>&nbsp;]
+				</p>
 
-			<p class="bib"><a name="accddikkopprrssswx2013-lpnmr"></a>
-			Mario Alviano, Francesco Calimeri, G&uuml;nther Charwat, Minh Dao-Tran, Carmine
-			  Dodaro, Giovambattista Ianni, Thomas Krennwallner, Martin Kronegger, Johannes
-			  Oetsch, Andreas Pfandler, J&ouml;rg P&uuml;hrer, Christoph Redl, Francesco
-			  Ricca, Patrik Schneider, Martin Schwengerer, Lara Katharina Spendier,
-			  Johannes Peter Wallner, and Guohui Xiao.<br>
-			 <b>The Fourth Answer Set Programming Competition: Preliminary
-			  Report</b>.<br>
-			 In Pedro Cabalar and Tran&nbsp;Cao Son, editors, <em>12th International
-			  Conference on Logic Programming and Nonmonotonic Reasoning, Corunna, Spain,
-			  September 15-19, 2013</em>, volume 8148 of <em>LNCS</em>, pages 42-53. Springer,
-			  September 2013.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2013_bib.html#accddikkopprrssswx2013-lpnmr">bib</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/accddikkopprrssswx2013-lpnmr.pdf">paper</a>&nbsp;]
-			</p>
+				<p class="bib"><a name="efkr2013-inap"></a>
+				Thomas Eiter, Michael Fink, Thomas Krennwallner, and Christoph Redl.<br>
+				 <b>HEX-Programs with Existential Quantification</b>.<br>
+				 In Ricardo Rocha, editor, <em>20th International Conference on
+				  Applications of Declarative Programming and Knowledge Management (INAP 2013),
+				  Kiel, Germany, September 11-13, 2013</em>, September 2013.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2013_bib.html#efkr2013-inap">bib</a>&nbsp;| 
+				<a href="./publications/efkr2013-inap-slides.pdf">slides</a>&nbsp;| 
+				<a href="./publications/efkr2013-inap.pdf">paper</a>&nbsp;]
+				</p>
 
-			<p class="bib"><a name="cikkprsswx2013-lpnmr"></a>
-			G&uuml;nther Charwat, Giovambattista Ianni, Thomas Krennwallner, Martin
-			  Kronegger, Andreas Pfandler, Christoph Redl, Martin Schwengerer, Lara
-			  Spendier, Johannes&nbsp;Peter Wallner, and Guohui Xiao.<br>
-			 <b>VCWC: A Versioning Competition Workflow Compiler</b>.<br>
-			 In Pedro Cabalar and Tran&nbsp;Cao Son, editors, <em>12th International
-			  Conference on Logic Programming and Nonmonotonic Reasoning, Corunna, Spain,
-			  September 15-19, 2013</em>, volume 8148 of <em>LNCS</em>, pages 233-238. Springer,
-			  September 2013.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2013_bib.html#cikkprsswx2013-lpnmr">bib</a>&nbsp;|  
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/cikkprsswx2013-lpnmr.pdf">paper</a>&nbsp;]
-			</p>
-			
-			<p class="bib"><a name="fgirs2013-lpnmr"></a>
-			Michael Fink, Stefano Germano, Giovambattista Ianni, Christoph Redl, and Peter Sch&uuml;ller.<br>
-			 <b>ActHEX: implementing HEX programs with action atoms</b>.<br>
-			 In Pedro Cabalar and TranCao Son, editors
-			 <em>Proceedings of the Twelfth International Conference on Logic Programming and Nonmonotonic Reasoning (LPNMR 2013),
-			 September 15-19, 2013, Corunna, Spain</em>, 
-			 volume 8148 of Lecture Notes in Computer Science, pages 317–322. Springer Berlin Heidelberg, 2013.
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2013_bib.html#fgirs2013-lpnmr">bib</a>&nbsp;|
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/fgirs2013-lpnmr.pdf">paper</a>&nbsp;]
-			</p>
-			
-			<p class="bib"><a name="efkr2013-aaai"></a>
-			Thomas Eiter, Michael Fink, Thomas Krennwallner, and Christoph Redl.<br>
-			 <b>Liberal Safety for Answer Set Programs with External Sources</b>.<br>
-			 In Marie desJardins and Michael Littman, editors, <em>Twenty-Seventh
-			  AAAI Conference (AAAI 2013), July 14-18, 2013, Bellevue, Washington, USA</em>,
-			  pages 267-275. AAAI Press, July 2013.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2013_bib.html#efkr2013-aaai">bib</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/efkr2013-aaai-slides.pdf">slides</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/efkr2013-aaai.pdf">paper</a>&nbsp;]
-			</p>
-			
-			<h2>2012</h2>
+				<p class="bib"><a name="efkr2013-gttv"></a>
+				Thomas Eiter, Michael Fink, Thomas Krennwallner, and Christoph Redl.<br>
+				 <b>Grounding HEX-Programs with Expanding Domains</b>.<br>
+				 In David Pearce, Shahab Tasharrofi, Evgenia Ternovska, and
+				  Concepci&#243;n Vidal, editors, <em>2nd Workshop on Grounding and
+				  Transformations for Theories with Variables (GTTV 2013), Corunna, Spain,
+				  September 15, 2013</em>, pages 3-15, September 2013.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2013_bib.html#efkr2013-gttv">bib</a>&nbsp;| 
+				<a href="./publications/efkr2013-gttv-slides.pdf">slides</a>&nbsp;| 
+				<a href="./publications/efkr2013-gttv.pdf">paper</a>&nbsp;]
+				</p>
 
-			<p class="bib"><a name="efkrs2012-jelia"></a>
-			Thomas Eiter, Michael Fink, Thomas Krennwallner, Christoph Redl, and Peter
-			  Sch&uuml;ller.<br>
-			 <b>Exploiting Unfounded Sets for HEX-Program Evaluation</b>.<br>
-			 In Luis&nbsp;Fari&#241;as del Cerro, Andreas Herzig, and J&#233;r&#244;me
-			  Mengin, editors, <em>13th European Conference on Logics in Artificial
-			  Intelligence (JELIA 2012), September 26-28, 2012, Toulouse, France</em>, volume
-			  7519 of <em>LNCS</em>, pages 160-175. Springer, September 2012.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2012_bib.html#efkrs2012-jelia">bib</a>&nbsp;| 
-			<a href="http://dx.doi.org/10.1007/978-3-642-33353-8_13">DOI</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/efkrs2012-jelia-slides.pdf">slides</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/efkrs2012-jelia.pdf">paper</a>&nbsp;]
-			</p>
-			
-			<p class="bib"><a name="efkrs2012-aspocp"></a>
-			Thomas Eiter, Michael Fink, Thomas Krennwallner, Christoph Redl, and Peter
-			  Sch&uuml;ller.<br>
-			 <b>Eliminating Unfounded Set Checking for HEX-Programs</b>.<br>
-			 In Michael Fink and Yuliya Lierler, editors, <em>5th Workshop on
-			  Answer Set Programming and Other Computing Paradigms (ASPOCP 2012), September
-			  4, 2012, Budapest, Hungary</em>, pages 83-97, September 2012.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2012_bib.html#efkrs2012-aspocp">bib</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/efkrs2012-aspocp-slides.pdf">slides</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/efkrs2012-aspocp.pdf">paper</a>&nbsp;]
-			</p>
-			
-			<p class="bib"><a name="r2012-iclp-dc"></a>
-			Christoph Redl.<br>
-			 <b>Answer Set Programming with External Sources</b>.<br>
-			 <em>In Eighth ICLP Doctoral Consortium, Budapest, Hungary, September 4, 2012</em>,
-			 pages 469-475.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2012_bib.html#r2012-iclp-dc">bib</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/r2012-iclp-dc-slides.pdf">slides</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/r2012-iclp-dc.pdf">paper</a>&nbsp;]
-			</p>
-			
-			<p class="bib"><a name="efkr2012-tplp"></a>
-			Thomas Eiter, Michael Fink, Thomas Krennwallner, and Christoph Redl.<br>
-			 <b>Conflict-driven ASP solving with external sources</b>.<br>
-			 <em>Theory and Practice of Logic Programming: Special Issue 28th
-			  International Conference on Logic Programming (ICLP 2012)</em>,
-			  12(4-5):659-679, July 2012.<br>
-			 Published online: 05 September 2012.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2012_bib.html#efkr2012-tplp">bib</a>&nbsp;| 
-			<a href="http://dx.doi.org/10.1017/S1471068412000233">DOI</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/efkr2012-tplp-slides.pdf">slides</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/efkr2012-tplp.pdf">paper</a>&nbsp;]
-			</p>
-			
-			<h2>2011</h2>
+				<p class="bib"><a name="accddikkopprrssswx2013-lpnmr"></a>
+				Mario Alviano, Francesco Calimeri, G&uuml;nther Charwat, Minh Dao-Tran, Carmine
+				  Dodaro, Giovambattista Ianni, Thomas Krennwallner, Martin Kronegger, Johannes
+				  Oetsch, Andreas Pfandler, J&ouml;rg P&uuml;hrer, Christoph Redl, Francesco
+				  Ricca, Patrik Schneider, Martin Schwengerer, Lara Katharina Spendier,
+				  Johannes Peter Wallner, and Guohui Xiao.<br>
+				 <b>The Fourth Answer Set Programming Competition: Preliminary
+				  Report</b>.<br>
+				 In Pedro Cabalar and Tran&nbsp;Cao Son, editors, <em>12th International
+				  Conference on Logic Programming and Nonmonotonic Reasoning, Corunna, Spain,
+				  September 15-19, 2013</em>, volume 8148 of <em>LNCS</em>, pages 42-53. Springer,
+				  September 2013.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2013_bib.html#accddikkopprrssswx2013-lpnmr">bib</a>&nbsp;| 
+				<a href="./publications/accddikkopprrssswx2013-lpnmr.pdf">paper</a>&nbsp;]
+				</p>
 
-			<p class="bib"><a name="ekr2011-inap"></a>
-			Thomas Eiter, Thomas Krennwallner, and Christoph Redl.<br>
-			 <b>Nested HEX-Programs</b>.<br>
-			 In Hans Tompits, editor, <em>19th International Conference on
-			  Applications of Declarative Programming and Knowledge Management (INAP 2011),
-			  Vienna, Austria, September 28-30, 2011</em>, number arXiv:1108.5626v1 in arXiv.<br>
-			  Computing Research Repository (CoRR), September 2011.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2011_bib.html#ekr2011-inap">bib</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/ekr2011-inap-slides.pdf">slides</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/ekr2011-inap.pdf">paper</a>&nbsp;]
-			</p>
+				<p class="bib"><a name="cikkprsswx2013-lpnmr"></a>
+				G&uuml;nther Charwat, Giovambattista Ianni, Thomas Krennwallner, Martin
+				  Kronegger, Andreas Pfandler, Christoph Redl, Martin Schwengerer, Lara
+				  Spendier, Johannes&nbsp;Peter Wallner, and Guohui Xiao.<br>
+				 <b>VCWC: A Versioning Competition Workflow Compiler</b>.<br>
+				 In Pedro Cabalar and Tran&nbsp;Cao Son, editors, <em>12th International
+				  Conference on Logic Programming and Nonmonotonic Reasoning, Corunna, Spain,
+				  September 15-19, 2013</em>, volume 8148 of <em>LNCS</em>, pages 233-238. Springer,
+				  September 2013.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2013_bib.html#cikkprsswx2013-lpnmr">bib</a>&nbsp;|  
+				<a href="./publications/cikkprsswx2013-lpnmr.pdf">paper</a>&nbsp;]
+				</p>
+				
+				<p class="bib"><a name="fgirs2013-lpnmr"></a>
+				Michael Fink, Stefano Germano, Giovambattista Ianni, Christoph Redl, and Peter Sch&uuml;ller.<br>
+				 <b>ActHEX: implementing HEX programs with action atoms</b>.<br>
+				 In Pedro Cabalar and TranCao Son, editors
+				 <em>Proceedings of the Twelfth International Conference on Logic Programming and Nonmonotonic Reasoning (LPNMR 2013),
+				 September 15-19, 2013, Corunna, Spain</em>, 
+				 volume 8148 of Lecture Notes in Computer Science, pages 317–322. Springer Berlin Heidelberg, 2013.
+				[&nbsp;<a href="./bibtex/pub-redl-2013_bib.html#fgirs2013-lpnmr">bib</a>&nbsp;|
+				<a href="./publications/fgirs2013-lpnmr.pdf">paper</a>&nbsp;]
+				</p>
+				
+				<p class="bib"><a name="efkr2013-aaai"></a>
+				Thomas Eiter, Michael Fink, Thomas Krennwallner, and Christoph Redl.<br>
+				 <b>Liberal Safety for Answer Set Programs with External Sources</b>.<br>
+				 In Marie desJardins and Michael Littman, editors, <em>Twenty-Seventh
+				  AAAI Conference (AAAI 2013), July 14-18, 2013, Bellevue, Washington, USA</em>,
+				  pages 267-275. AAAI Press, July 2013.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2013_bib.html#efkr2013-aaai">bib</a>&nbsp;| 
+				<a href="./publications/efkr2013-aaai-slides.pdf">slides</a>&nbsp;| 
+				<a href="./publications/efkr2013-aaai.pdf">paper</a>&nbsp;]
+				</p>
+				
+				<h2>2012</h2>
 
-			<p class="bib"><a name="ekr2011-wcb"></a>
-			Thomas Eiter, Thomas Krennwallner, and Christoph Redl.<br>
-			 <b>Declarative merging of and reasoning about decision
-			  diagrams</b>.<br>
-			 In Alessandro&nbsp;Dal Pal&#249;, Agostino Dovier, and Andrea Formisano,
-			  editors, <em>Workshop on Constraint Based Methods for Bioinformatics (WCB
-			  2011), Perugia, Italy, September 12, 2011</em>, pages 3-15. Dipartimento di
-			  Matematica e Informatica, Universita degli Studi di Perugia, September 2011.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2011_bib.html#ekr2011-wcb">bib</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/ekr2011-wcb-slides.pdf">slides</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/ekr2011-wcb.pdf">paper</a>&nbsp;]
-			</p>
+				<p class="bib"><a name="efkrs2012-jelia"></a>
+				Thomas Eiter, Michael Fink, Thomas Krennwallner, Christoph Redl, and Peter
+				  Sch&uuml;ller.<br>
+				 <b>Exploiting Unfounded Sets for HEX-Program Evaluation</b>.<br>
+				 In Luis&nbsp;Fari&#241;as del Cerro, Andreas Herzig, and J&#233;r&#244;me
+				  Mengin, editors, <em>13th European Conference on Logics in Artificial
+				  Intelligence (JELIA 2012), September 26-28, 2012, Toulouse, France</em>, volume
+				  7519 of <em>LNCS</em>, pages 160-175. Springer, September 2012.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2012_bib.html#efkrs2012-jelia">bib</a>&nbsp;| 
+				<a href="http://dx.doi.org/10.1007/978-3-642-33353-8_13">DOI</a>&nbsp;| 
+				<a href="./publications/efkrs2012-jelia-slides.pdf">slides</a>&nbsp;| 
+				<a href="./publications/efkrs2012-jelia.pdf">paper</a>&nbsp;]
+				</p>
+				
+				<p class="bib"><a name="efkrs2012-aspocp"></a>
+				Thomas Eiter, Michael Fink, Thomas Krennwallner, Christoph Redl, and Peter
+				  Sch&uuml;ller.<br>
+				 <b>Eliminating Unfounded Set Checking for HEX-Programs</b>.<br>
+				 In Michael Fink and Yuliya Lierler, editors, <em>5th Workshop on
+				  Answer Set Programming and Other Computing Paradigms (ASPOCP 2012), September
+				  4, 2012, Budapest, Hungary</em>, pages 83-97, September 2012.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2012_bib.html#efkrs2012-aspocp">bib</a>&nbsp;| 
+				<a href="./publications/efkrs2012-aspocp-slides.pdf">slides</a>&nbsp;| 
+				<a href="./publications/efkrs2012-aspocp.pdf">paper</a>&nbsp;]
+				</p>
+				
+				<p class="bib"><a name="r2012-iclp-dc"></a>
+				Christoph Redl.<br>
+				 <b>Answer Set Programming with External Sources</b>.<br>
+				 <em>In Eighth ICLP Doctoral Consortium, Budapest, Hungary, September 4, 2012</em>,
+				 pages 469-475.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2012_bib.html#r2012-iclp-dc">bib</a>&nbsp;| 
+				<a href="./publications/r2012-iclp-dc-slides.pdf">slides</a>&nbsp;| 
+				<a href="./publications/r2012-iclp-dc.pdf">paper</a>&nbsp;]
+				</p>
+				
+				<p class="bib"><a name="efkr2012-tplp"></a>
+				Thomas Eiter, Michael Fink, Thomas Krennwallner, and Christoph Redl.<br>
+				 <b>Conflict-driven ASP solving with external sources</b>.<br>
+				 <em>Theory and Practice of Logic Programming: Special Issue 28th
+				  International Conference on Logic Programming (ICLP 2012)</em>,
+				  12(4-5):659-679, July 2012.<br>
+				 Published online: 05 September 2012.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2012_bib.html#efkr2012-tplp">bib</a>&nbsp;| 
+				<a href="http://dx.doi.org/10.1017/S1471068412000233">DOI</a>&nbsp;| 
+				<a href="./publications/efkr2012-tplp-slides.pdf">slides</a>&nbsp;| 
+				<a href="./publications/efkr2012-tplp.pdf">paper</a>&nbsp;]
+				</p>
+				
+				<h2>2011</h2>
 
-			<p class="bib"><a name="rek2011-padl"></a>
-			Christoph Redl, Thomas Eiter, and Thomas Krennwallner.<br>
-			 <b>Declarative Belief Set Merging using Merging Plans</b>.<br>
-			 In Ricardo Rocha and John Launchbury, editors, <em>13th
-			  International Symposium on Practical Aspects of Declarative Languages (PADL
-			  2011), Austin, Texas, U.S.A., January 24-25, 2011</em>, volume 6539 of <em>
-			  LNCS</em>, pages 99-114. Springer, January 2011.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2011_bib.html#rek2011-padl">bib</a>&nbsp;| 
-			<a href="http://dx.doi.org/10.1007/978-3-642-18378-2_10">DOI</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/rek2011-padl-slides.pdf">slides</a>&nbsp;| 
-			<a href="http://www.kr.tuwien.ac.at/staff/redl/publications/rek2011-padl.pdf">paper</a>&nbsp;]
-			</p>
-			
-			<h2>2010</h2>
+				<p class="bib"><a name="ekr2011-inap"></a>
+				Thomas Eiter, Thomas Krennwallner, and Christoph Redl.<br>
+				 <b>Nested HEX-Programs</b>.<br>
+				 In Hans Tompits, editor, <em>19th International Conference on
+				  Applications of Declarative Programming and Knowledge Management (INAP 2011),
+				  Vienna, Austria, September 28-30, 2011</em>, number arXiv:1108.5626v1 in arXiv.<br>
+				  Computing Research Repository (CoRR), September 2011.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2011_bib.html#ekr2011-inap">bib</a>&nbsp;| 
+				<a href="./publications/ekr2011-inap-slides.pdf">slides</a>&nbsp;| 
+				<a href="./publications/ekr2011-inap.pdf">paper</a>&nbsp;]
+				</p>
 
-			<p class="bib"><a name="r2010-mi"></a>
-			Christoph Redl.<br>
-			 <b>Merging of Biomedical Decision Diagrams</b>.<br>
-			 Master's Thesis, Vienna University of Technology, A-1040 Vienna, Karlsplatz 13, October 2010.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2010_bib.html#r2010-mi">bib</a><!--&nbsp;| 
-			<a href="./r2010-mi-slides.pdf">slides</a>&nbsp;| 
-			<a href="./r2010-mi-poster.pdf">poster</a>&nbsp;| 
-			<a href="./r2010-mi.pdf">paper</a>-->&nbsp;]
-			</p>
+				<p class="bib"><a name="ekr2011-wcb"></a>
+				Thomas Eiter, Thomas Krennwallner, and Christoph Redl.<br>
+				 <b>Declarative merging of and reasoning about decision
+				  diagrams</b>.<br>
+				 In Alessandro&nbsp;Dal Pal&#249;, Agostino Dovier, and Andrea Formisano,
+				  editors, <em>Workshop on Constraint Based Methods for Bioinformatics (WCB
+				  2011), Perugia, Italy, September 12, 2011</em>, pages 3-15. Dipartimento di
+				  Matematica e Informatica, Universita degli Studi di Perugia, September 2011.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2011_bib.html#ekr2011-wcb">bib</a>&nbsp;| 
+				<a href="./publications/ekr2011-wcb-slides.pdf">slides</a>&nbsp;| 
+				<a href="./publications/ekr2011-wcb.pdf">paper</a>&nbsp;]
+				</p>
 
-			<p class="bib"><a name="r2010-ci"></a>
-			Christoph Redl.<br>
-			 <b>Development of a Belief Merging Framework for dlvhex</b>.<br>
-			 Master's Thesis, Vienna University of Technology, A-1040 Vienna, Karlsplatz 13, July 2010.<br>
-			[&nbsp;<a href="http://www.kr.tuwien.ac.at/staff/redl/pub-redl/pub-redl-2010_bib.html#r2010-ci">bib</a><!--&nbsp;| 
-			<a href="./r2010-ci-slides.pdf">slides</a>&nbsp;| 
-			<a href="./r2010-ci-poster.pdf">poster</a>&nbsp;| 
-			<a href="./r2010-ci.pdf">paper</a>-->&nbsp;]
-			</p>
+				<p class="bib"><a name="rek2011-padl"></a>
+				Christoph Redl, Thomas Eiter, and Thomas Krennwallner.<br>
+				 <b>Declarative Belief Set Merging using Merging Plans</b>.<br>
+				 In Ricardo Rocha and John Launchbury, editors, <em>13th
+				  International Symposium on Practical Aspects of Declarative Languages (PADL
+				  2011), Austin, Texas, U.S.A., January 24-25, 2011</em>, volume 6539 of <em>
+				  LNCS</em>, pages 99-114. Springer, January 2011.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2011_bib.html#rek2011-padl">bib</a>&nbsp;| 
+				<a href="http://dx.doi.org/10.1007/978-3-642-18378-2_10">DOI</a>&nbsp;| 
+				<a href="./publications/rek2011-padl-slides.pdf">slides</a>&nbsp;| 
+				<a href="./publications/rek2011-padl.pdf">paper</a>&nbsp;]
+				</p>
+				
+				<h2>2010</h2>
+
+				<p class="bib"><a name="r2010-mi"></a>
+				Christoph Redl.<br>
+				 <b>Merging of Biomedical Decision Diagrams</b>.<br>
+				 Master's Thesis, Vienna University of Technology, A-1040 Vienna, Karlsplatz 13, October 2010.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2010_bib.html#r2010-mi">bib</a><!--&nbsp;| 
+				<a href="./r2010-mi-slides.pdf">slides</a>&nbsp;| 
+				<a href="./r2010-mi-poster.pdf">poster</a>&nbsp;| 
+				<a href="./r2010-mi.pdf">paper</a>-->&nbsp;]
+				</p>
+
+				<p class="bib"><a name="r2010-ci"></a>
+				Christoph Redl.<br>
+				 <b>Development of a Belief Merging Framework for dlvhex</b>.<br>
+				 Master's Thesis, Vienna University of Technology, A-1040 Vienna, Karlsplatz 13, July 2010.<br>
+				[&nbsp;<a href="./bibtex/pub-redl-2010_bib.html#r2010-ci">bib</a><!--&nbsp;| 
+				<a href="./r2010-ci-slides.pdf">slides</a>&nbsp;| 
+				<a href="./r2010-ci-poster.pdf">poster</a>&nbsp;| 
+				<a href="./r2010-ci.pdf">paper</a>-->&nbsp;]
+				</p>
+			</div>
 		</div>
 
-		<div class="footer">
-			<ul>
-				<li><a href="privacy.html">Impressum und Datenschutz / Contact and Privacy</a></li>
-			</ul>
-		</div>
+		<div class="footer english"><a href="privacy.html">Imprint and Privacy Policy</a></div><div class="footer german"><a href="privacy.html">Impressum und Datenschutz</a></div>
+
+		<script>initLanguage();</script>
 	</body>
 </html>
