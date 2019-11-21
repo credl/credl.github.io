@@ -60,7 +60,7 @@ function initLanguage() {
 	applyLanguage(lang);
 }
 
-function includeHTML() {
+function includeExtHtml() {
 		/*
 	var divs, div, i, exthtmlfile, xhttp;
 	// for all divs with ext-html attribute
