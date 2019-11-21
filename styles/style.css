@@ -217,7 +217,7 @@ td.softwarepic img {
 	cursor: pointer;
 }
 
-/* global menu */
+/* global menu and footer */
 
 div.menu {
 	position: sticky;
@@ -244,10 +244,6 @@ div.menu a:hover {
 	background-color: #111;
 }
 
-a.selectedbutton {
-	background-color: #77D;
-}
-
 div.pagebuttons {
 	float: left;
 }
@@ -257,12 +253,14 @@ div.langbuttons {
 	background-color: #667;
 }
 
-/* global footer */
+a.selectedbutton {
+	background-color: #77D;
+}
 
 div.footer {
 	position: fixed;
 	bottom: 0;
-	left: 0;
+	right: 0;
 	width: 100%;
 	list-style-type: none;
 	margin: 0;
@@ -271,26 +269,15 @@ div.footer {
 	background-color: #667;
 }
 
-div.footer ul {
-	margin: 0;
-	padding: 0;
-}
-
-div.footer li {
-	display: inline;
-	float: right;
-	margin: 0;
-	padding: 0;
-}
-
-div.footer li a {
+div.footer a {
 	display: block;
 	color: white;
 	text-align: center;
 	padding: 6px 16px;
 	text-decoration: none;
+	float: right;
 }
 
-div.footer li a:hover {
+div.footer a:hover {
 	background-color: #111;
 }

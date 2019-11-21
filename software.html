@@ -4,14 +4,14 @@
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="./styles/style.css" media="all" type="text/css">
-		<title>Christoph Redl</title>	
+		<title>Christoph Redl | Website</title>
 		<script src="./scripts/app.js"></script>
 	</head>
 	<body>
 		<div class="menu">
 			<div class="english">
 				<div class="pagebuttons">
-					<a href="index.html">Home</a><a href="information.html">Information</a><a href="publications.html">Publications</a><a href="software.html">Software</a>
+					<a href="index.html">Home</a><a href="information.html">Information</a><a href="publications.html">Publications</a><a class="selectedbutton" href="software.html">Software</a>
 				</div>
 				<div class="langbuttons">
 					<a class="selectedbutton" onclick="applyLanguage('english');">ENG</a><a onclick="applyLanguage('german');">GER</a>
@@ -19,7 +19,7 @@
 			</div>
 			<div class="german">
 				<div class="pagebuttons">
-					<a href="index.html">Start</a><a href="information.html">Informationen</a><a href="publications.html">Publikatioen</a><a href="software.html">Software</a>
+					<a href="index.html">Start</a><a href="information.html">Informationen</a><a href="publications.html">Publikatioen</a><a class="selectedbutton" href="software.html">Software</a>
 				</div>
 				<div class="langbuttons">
 					<a onclick="applyLanguage('english');">ENG</a><a class="selectedbutton" onclick="applyLanguage('german');">GER</a>
@@ -274,16 +274,7 @@
 			</script>
 		</div>
 		
-		<div class="footer english">
-			<ul>
-				<li><a href="privacy.html">Imprint and Privacy Policy</a></li>
-			</ul>
-		</div>
-		<div class="footer german">
-			<ul>
-				<li><a href="privacy.html">Impressum und Datenschutz</a></li>
-			</ul>
-		</div>
+		<div class="footer english"><a href="privacy.html">Imprint and Privacy Policy</a></div><div class="footer german"><a href="privacy.html">Impressum und Datenschutz</a></div>
 
 		<script>initLanguage();</script>
 	</body>
