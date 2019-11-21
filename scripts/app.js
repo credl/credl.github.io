@@ -36,7 +36,13 @@ function getCookie(cname) {
 function applyLanguage(selectedlanguage) {
 	//var selectedlanguage = getParameterByName('lang');
 	setCookie("language", selectedlanguage, 365);
-	if (selectedlanguage == null) { selectedlanguage = "english"; }
+	if (selectedlanguage == null) {
+		selectedlanguage = "english";
+	}
+	langbutton = document.getElementById("langbutton" + selectedlanguage);
+	if (langbutton) {
+		langbutton.setAttribute("class", "selectedbutton");
+	}
 
 	var languages = ["german", "english"];
 	for (language in languages) {
@@ -61,7 +67,7 @@ function initLanguage() {
 }
 
 function setPageButton(pageId) {
-	btn = document.getElementById("pageButton" + pageId);
+	btn = document.getElementById("pagebutton" + pageId);
 	if (btn) {
 		btn.setAttribute("class", "selectedbutton");
 	}
