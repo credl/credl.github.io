@@ -33,7 +33,12 @@ function getCookie(cname) {
 	return null;
 }
 						
-function applyLanguage(selectedlanguage) {
+function initLanguage() {
+	// default language
+	selectedlanguage = getCookie("language");
+	if (selectedlanguage == null) {
+		selectedlanguage = "english"; // default language
+	}
 	// cookie handling
 	setCookie("language", selectedlanguage, 365);
 	if (selectedlanguage == null) {
@@ -41,7 +46,7 @@ function applyLanguage(selectedlanguage) {
 	}
 
 	// select correct language button
-	langbuttons = document.getElementsById("langbutton*");
+	langbuttons = document.getElementsByClassName("langbutton");
 	for (i = 0; i < langbuttons.length; i++) {
 		if (langbuttons[i].getAttribute("id") === ("langbutton" + selectedlanguage)) {
 			langbutton.setAttribute("class", "selectedbutton");
@@ -64,19 +69,10 @@ function applyLanguage(selectedlanguage) {
 	}
 }
 
-function initLanguage() {
-	lang = getCookie("language");
-	if (lang == null) {
-		lang = "english"; // default language
-		setCookie("language", lang, 365);
-	}
-	applyLanguage(lang);
-}
-
 function setPageButton(pageId) {
 	btn = document.getElementById("pagebutton" + pageId);
 	if (btn) {
-		btn.setAttribute("class", "selectedbutton");
+		btn.setAttribute("class", "pagebutton selectedbutton");
 	}
 }
 
