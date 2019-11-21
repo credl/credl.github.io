@@ -59,3 +59,31 @@ function initLanguage() {
 	}
 	applyLanguage(lang);
 }
+
+function includeHTML() {
+	var divs, div, i, exthtmlfile, xhttp;
+	// for all divs with ext-html attribute
+	divs = document.getElementsByTagName("div");
+	for (i = 0; i < divs.length; i++) {
+		div = divs[i];
+		// extract ext-html attribute
+		exthtmlfile = elmnt.getAttribute("ext-html");
+		if (exthtmlfile) {
+			// HTTP request to this file
+			xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4) {
+					if (this.status == 200) {
+						elmnt.innerHTML = this.responseText;
+					} else if (this.status == 404) {
+						elmnt.innerHTML = "Menu page not found";
+					}
+					/* remove the ext-html attribute (non-recursive version of this function suffices) */
+					elmnt.removeAttribute("ext-html");
+				}
+			}
+			xhttp.open("GET", file, false);
+			xhttp.send();
+		}
+	}
+}
