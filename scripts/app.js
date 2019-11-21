@@ -60,6 +60,13 @@ function initLanguage() {
 	applyLanguage(lang);
 }
 
+function setPageButton(pageId) {
+	btn = document.getElementById("pageButton" + pageId);
+	if (btn) {
+		btn.class = "selectedbutton";		
+	}
+}
+
 function includeExtHtml() {
 	var divs, div, i, exthtmlfile, xhttp;
 	// for all divs with ext-html attribute

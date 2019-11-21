@@ -8,6 +8,7 @@
 		<script src="./scripts/app.js"></script>
 	</head>
 	<body>
+		<!--
 		<div class="menu">
 			<div class="english">
 				<div class="pagebuttons">
@@ -26,6 +27,8 @@
 				</div>
 			</div>
 		</div>
+		-->
+		<div class="menu" ext-html="./menu.html"/>
 
 		<div class="main">
 			<div class="content english">
@@ -157,8 +160,9 @@
 			</div>
 		</div>
 
-		<div class="footer english"><a href="privacy.html">Imprint and Privacy Policy</a></div><div class="footer german"><a href="privacy.html">Impressum und Datenschutz</a></div>
-
-		<script>initLanguage();</script>
+		<!--<div class="footer english"><a href="privacy.html">Imprint and Privacy Policy</a></div><div class="footer german"><a href="privacy.html">Impressum und Datenschutz</a></div>-->
+		<div class="footer" ext-html="./footer.html"/>
+		
+		<script>includeExtHtml(); initLanguage(); setPageButton("Information");</script>
 	</body>
 </html>

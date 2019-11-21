@@ -9,6 +9,7 @@
 	</head>
 
 	<body>
+		<!--
 		<div class="menu">
 			<div class="english">
 				<div class="pagebuttons">
@@ -27,6 +28,8 @@
 				</div>
 			</div>
 		</div>
+		-->
+		<div class="menu" ext-html="./menu.html"/>
 
 		<div class="main">
 			<div class="content english">
@@ -260,8 +263,9 @@
 			</div>
 		</div>
 
-		<div class="footer english"><a class="selectedbutton" href="privacy.html">Imprint and Privacy Policy</a></div><div class="footer german"><a class="selectedbutton" href="privacy.html">Impressum und Datenschutz</a></div>
+		<!--<div class="footer english"><a class="selectedbutton" href="privacy.html">Imprint and Privacy Policy</a></div><div class="footer german"><a class="selectedbutton" href="privacy.html">Impressum und Datenschutz</a></div>-->
+		<div class="footer" ext-html="./footer.html"/>
 
-		<script>initLanguage();</script>
+		<script>includeExtHtml(); initLanguage(); setPageButton("Privacy");</script>
 	</body>
 </html>
