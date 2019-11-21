@@ -82,7 +82,7 @@ function includeExtHtml() {
 					div.removeAttribute("ext-html");
 				}
 			}
-			xhttp.open("GET", file, false);
+			xhttp.open("GET", exthtmlfile, false);
 			xhttp.send();
 		}
 	}
