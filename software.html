@@ -250,9 +250,9 @@
 				}
 
 				// click on image does not close the modal
-				modalImg.onclick = function() {
-					alert("modal content");
-				}
+				modalImg..addEventListener("click", (event) => {
+					event.stopPropagation();
+				});
 
 				// when the user clicks on <span> (x), close the modal
 				span.onclick = function() {
