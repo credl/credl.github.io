@@ -11,30 +11,36 @@
 	<body>
 		<div class="menu">
 			<div class="english">
-				<ul>
-					<li><a href="index.html">Home</a></li>
-					<li><a href="information.html">Information</a></li>
-					<li><a href="publications.html">Publications</a></li>
-					<li><a href="software.html">Software</a></li>
-				</ul>
+				<div class="pagebuttons">
+					<ul>
+						<li><a href="index.html">Home</a></li>
+						<li><a href="information.html">Information</a></li>
+						<li><a href="publications.html">Publications</a></li>
+						<li><a href="software.html">Software</a></li>
+					</ul>
+				</div>
+				<div class="langbuttons">
+					<ul>
+						<li class="selectedbutton"><a onclick="applyLanguage('english');">ENG</a></li>
+						<li><a onclick="applyLanguage('german');">GER</a></li>
+					</ul>
+				</div>
 			</div>
 			<div class="german">
-				<ul>
-					<li><a href="index.html">Start</a></li>
-					<li><a href="information.html">Informationen</a></li>
-					<li><a href="publications.html">Publikationen</a></li>
-					<li><a href="software.html">Software</a></li>
-				</ul>
-			</div>
-		</div>
-		<div class="langmenu">
-			<div class="english">
-				<li class="selectedlang"><a onclick="applyLanguage('english');">ENG</a></li>
-				<li><a onclick="applyLanguage('german');">GER</a></li>
-			</div>
-			<div class="german">
-				<li><a onclick="applyLanguage('english');">ENG</a></li>
-				<li class="selectedlang"><a onclick="applyLanguage('german');">GER</a></li>
+				<div class="pagebuttons">
+					<ul>
+						<li><a href="index.html">Start</a></li>
+						<li><a href="information.html">Informationen</a></li>
+						<li><a href="publications.html">Publikatioen</a></li>
+						<li><a href="software.html">Software</a></li>
+					</ul>
+				</div>
+				<div class="langbuttons">
+					<ul>
+						<li><a onclick="applyLanguage('english');">ENG</a></li>
+						<li class="selectedbutton"><a onclick="applyLanguage('german');">DEU</a></li>
+					</ul>
+				</div>
 			</div>
 		</div>
 

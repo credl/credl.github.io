@@ -224,6 +224,7 @@ div.menu {
 	position: fixed;
 	top: 0;
 	left: 0;
+	width: 100%;
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
@@ -241,6 +242,7 @@ div.menu li {
 	float: left;
 	margin: 0;
 	padding: 0;
+	cursor: pointer;
 }
 
 div.menu li a {
@@ -255,9 +257,22 @@ div.menu li a:hover {
 	background-color: #111;
 }
 
-/* language menu */
+li.selectedbutton {
+	display: inline;
+	float: left;
+	margin: 0;
+	padding: 0;
+	background-color: #77D;
+}
 
-div.langmenu {
+div.pagebuttons li {
+	display: inline;
+	float: left;
+	margin: 0;
+	padding: 0;
+}
+
+div.langbuttons {
 	position: fixed;
 	top: 0;
 	right: 0;
@@ -268,36 +283,7 @@ div.langmenu {
 	background-color: #667;
 }
 
-div.langmenu ul {
-	margin: 0;
-	padding: 0;
-}
-
-div.langmenu li {
-	display: inline;
-	float: left;
-	margin: 0;
-	padding: 0;
-	cursor: pointer;
-}
-
-li.selectedlang {
-	display: inline;
-	float: left;
-	margin: 0;
-	padding: 0;
-	background-color: #77D;
-}
-
-div.langmenu li a {
-	display: block;
-	color: white;
-	text-align: center;
-	padding: 14px 16px;
-	text-decoration: none;
-}
-
-div.langmenu li a:hover {
+ul.langmenu li a:hover {
 	background-color: #111;
 }
 
