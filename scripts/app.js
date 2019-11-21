@@ -61,11 +61,11 @@ function initLanguage() {
 }
 
 function includeHTML() {
+		/*
 	var divs, div, i, exthtmlfile, xhttp;
 	// for all divs with ext-html attribute
 	divs = document.getElementsByTagName("div");
 	for (i = 0; i < divs.length; i++) {
-		/*
 		div = divs[i];
 		// extract ext-html attribute
 		exthtmlfile = div.getAttribute("ext-html");
@@ -86,6 +86,6 @@ function includeHTML() {
 			xhttp.open("GET", file, false);
 			xhttp.send();
 		}
-		*/
 	}
+		*/
 }
