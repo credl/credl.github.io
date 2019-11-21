@@ -34,8 +34,7 @@ a:active {
 
 div.main {
 	margin: 20px;
-	margin-top: 70px;
-	margin-bottom: 50px;	
+	margin-bottom: 50px;
 }
 
 div.content {
@@ -221,70 +220,41 @@ td.softwarepic img {
 /* global menu */
 
 div.menu {
-	position: fixed;
+	position: sticky;
 	top: 0;
 	left: 0;
-	width: 100%;
 	list-style-type: none;
-	margin: 0;
-	padding: 0;
 	overflow: hidden;
 	background-color: #667;
+	width: 100%;
+	z-index: 1;
 }
 
-div.menu ul {
-	margin: 0;
-	padding: 0;
-}
-
-div.menu li {
-	display: inline;
-	float: left;
-	margin: 0;
-	padding: 0;
-	cursor: pointer;
-}
-
-div.menu li a {
-	display: block;
+div.menu a {
 	color: white;
+	text-decoration: none;
+	cursor: pointer;
 	text-align: center;
 	padding: 14px 16px;
-	text-decoration: none;
+	float: left;
+
 }
 
-div.menu li a:hover {
+div.menu a:hover {
 	background-color: #111;
 }
 
-li.selectedbutton {
-	display: inline;
-	float: left;
-	margin: 0;
-	padding: 0;
+a.selectedbutton {
 	background-color: #77D;
 }
 
-div.pagebuttons li {
-	display: inline;
+div.pagebuttons {
 	float: left;
-	margin: 0;
-	padding: 0;
 }
 
 div.langbuttons {
-	position: fixed;
-	top: 0;
-	right: 0;
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
+	float: right;
 	background-color: #667;
-}
-
-ul.langmenu li a:hover {
-	background-color: #111;
 }
 
 /* global footer */
