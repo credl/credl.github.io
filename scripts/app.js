@@ -33,17 +33,20 @@ function getCookie(cname) {
 	return null;
 }
 						
-function initLanguage() {
-	// default language
-	selectedlanguage = getCookie("language");
-	if (selectedlanguage == null) {
-		selectedlanguage = "english"; // default language
+function initLanguage(changelanguage) {
+	// change language has first priority
+	if (changelanguage != null) {
+		selectedlanguage = changelanguage;
+	}else{
+		// language from cookies has second priority
+		selectedlanguage = getCookie("language");
+		if (selectedlanguage == null) {
+			// default language has third priority
+			selectedlanguage = "english";
+		}
 	}
-	// cookie handling
+	// keep cookie updated or create new cookie
 	setCookie("language", selectedlanguage, 365);
-	if (selectedlanguage == null) {
-		selectedlanguage = "english";
-	}
 
 	// select correct language button
 	langbuttons = document.getElementsByClassName("langbutton");
