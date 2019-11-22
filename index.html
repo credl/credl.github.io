@@ -2,12 +2,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
 
 	<head>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="./styles/style.css" media="all" type="text/css">
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<link rel="stylesheet" href="./styles/style.css" media="all" type="text/css"/>
+		<link rel="preload" href="./menu.html" as="document"/>
+		<link rel="preload" href="./footer.html" as="document"/>
 		<title>Christoph Redl | Website</title>
 		<script src="./scripts/app.js"></script>
 	</head>
 	<body>
+		<noscript>
+			<div class="warning">JavaScript must be enabled to display this page correctly!<br/><a href="./privacy.html">Imprint and Privacy Policy</a></div>
+		</noscript>
+	
+		<!--
 		<div class="menu">
 			<div class="english">
 				<div class="pagebuttons">
@@ -26,6 +33,8 @@
 				</div>
 			</div>
 		</div>
+		-->
+		<div class="menu" ext-html="./menu.html"></div>
 
 		<div class="main">
 			<div class="content english">
@@ -118,9 +127,10 @@
 				</div>
 			</div>
 		</div>
-		
-		<div class="footer english"><a href="privacy.html">Imprint and Privacy Policy</a></div><div class="footer german"><a href="privacy.html">Impressum und Datenschutz</a></div>
 
-		<script>initLanguage();</script>
+		<!--<div class="footer english"><a href="privacy.html">Imprint and Privacy Policy</a></div><div class="footer german"><a href="privacy.html">Impressum und Datenschutz</a></div>-->
+		<div class="footer" ext-html="./footer.html"></div>
+
+		<script>includeExtHtml(); initLanguage(); setPageButton("index");</script>
 	</body>
 </html>

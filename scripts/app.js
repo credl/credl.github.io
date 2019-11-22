@@ -8,6 +8,34 @@ function getParameterByName(name, url) {
 	return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
+function includeExtHtml() {
+	var divs, div, i, exthtmlfile, xhttp;
+	// for all divs with ext-html attribute
+	divs = document.getElementsByTagName("div");
+	for (i = 0; i < divs.length; i++) {
+		div = divs[i];
+		// extract ext-html attribute
+		exthtmlfile = div.getAttribute("ext-html");
+		if (exthtmlfile) {
+			// HTTP request to this file
+			xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4) {
+					if (this.status == 200) {
+						div.innerHTML = this.responseText;
+					} else if (this.status == 404) {
+						div.innerHTML = "Menu page not found";
+					}
+					// remove the ext-html attribute (non-recursive version of this function suffices)
+					div.removeAttribute("ext-html");
+				}
+			}
+			xhttp.open("GET", exthtmlfile, false);
+			xhttp.send();
+		}
+	}
+}
+
 function setCookie(cname, cvalue, exdays) {
 	var d = new Date();
 	d.setTime(d.getTime() + (exdays*24*60*60*1000));
@@ -32,12 +60,33 @@ function getCookie(cname) {
 	}
 	return null;
 }
-						
-function applyLanguage(selectedlanguage) {
-	//var selectedlanguage = getParameterByName('lang');
-	setCookie("language", selectedlanguage, 365);
-	if (selectedlanguage == null) { selectedlanguage = "english"; }
 
+function initLanguage(changelanguage) {
+	// change language has first priority
+	if (changelanguage != null) {
+		selectedlanguage = changelanguage;
+	}else{
+		// language from cookies has second priority
+		selectedlanguage = getCookie("language");
+		if (selectedlanguage == null) {
+			// default language has third priority
+			selectedlanguage = "english";
+		}
+	}
+	// keep cookie updated or create new cookie
+	setCookie("language", selectedlanguage, 365);
+
+	// select correct language button
+	langbuttons = document.getElementsByClassName("langbutton");
+	for (i = 0; i < langbuttons.length; i++) {
+		if (langbuttons[i].getAttribute("id") === ("langbutton" + selectedlanguage)) {
+			langbuttons[i].setAttribute("class", "langbutton selectedbutton");
+		}else{
+			langbuttons[i].setAttribute("class", "langbutton");			
+		}
+	}
+
+	// section visibility
 	var languages = ["german", "english"];
 	for (language in languages) {
 		var langdepsections = document.getElementsByClassName(languages[language]);
@@ -51,11 +100,15 @@ function applyLanguage(selectedlanguage) {
 	}
 }
 
-function initLanguage() {
-	lang = getCookie("language");
-	if (lang == null) {
-		lang = "english"; // default language
-		setCookie("language", lang, 365);
+function setPageButton(pageId) {
+	btn = document.getElementById("pagebutton" + pageId);
+	if (btn) {
+		btn.setAttribute("class", "pagebutton selectedbutton");
 	}
-	applyLanguage(lang);
+}
+
+function initPage(pageId) {
+	includeExtHtml();
+	initLanguage();
+	setPageButton(pageId);
 }
