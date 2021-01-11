@@ -8,4 +8,5 @@ bibtex2html pub-redl-2016.bib
 bibtex2html pub-redl-2017.bib
 bibtex2html pub-redl-2018.bib
 bibtex2html pub-redl-2019.bib
+bibtex2html pub-redl-2020.bib
 bibtex2html pub-redl-all.bib
