@@ -248,7 +248,7 @@ div.menu a {
 	transition: background 0.5s linear;
 }
 
-div.menu a:hover {
+div.menu a:hover not(.selectedbutton) {
 	background-color: #111;
 	transition: background 0.5s linear;
 }
@@ -263,10 +263,6 @@ div.langbuttons {
 }
 
 selectedbutton {
-	background-color: #77D;
-}
-
-selectedbutton a:hover {
 	background-color: #77D;
 }
 
