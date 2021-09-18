@@ -262,11 +262,11 @@ div.langbuttons {
 	background-color: #667;
 }
 
-a.selectedbutton {
+selectedbutton {
 	background-color: #77D;
 }
 
-a:hover.selectedbutton {
+selectedbutton a:hover {
 	background-color: #77D;
 }
 
@@ -289,8 +289,10 @@ div.footer a {
 	padding: 6px 16px;
 	text-decoration: none;
 	float: right;
+	transition: background 0.5s linear;
 }
 
 div.footer a:hover {
 	background-color: #111;
+	transition: background 0.5s linear;
 }
