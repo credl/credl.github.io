@@ -248,7 +248,7 @@ div.menu a {
 	transition: background 0.5s linear;
 }
 
-div.menu a:hover :not(a.selectedbutton) {
+div.menu a:hover :not(selectedbutton) {
 	background-color: #111;
 	transition: background 0.5s linear;
 }
