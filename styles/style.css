@@ -245,11 +245,12 @@ div.menu a {
 	text-align: center;
 	padding: 14px 16px;
 	float: left;
-
+	transition: background 0.5s linear;
 }
 
 div.menu a:hover {
 	background-color: #111;
+	transition: background 0.5s linear;
 }
 
 div.pagebuttons {
