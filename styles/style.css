@@ -288,7 +288,7 @@ div.footer a {
 	transition: background 0.5s linear;
 }
 
-div.footer a:hover {
+div.footer a:not(.selectedbutton):hover {
 	background-color: #111;
 	transition: background 0.5s linear;
 }
