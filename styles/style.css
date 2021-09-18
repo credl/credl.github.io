@@ -266,7 +266,7 @@ a.selectedbutton {
 	background-color: #77D;
 }
 
-a.selectedbutton:hover {
+a:hover.selectedbutton {
 	background-color: #77D;
 }
 
