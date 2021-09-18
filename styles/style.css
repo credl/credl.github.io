@@ -248,7 +248,11 @@ div.menu a {
 	transition: background 0.5s linear;
 }
 
-div.menu a:hover:not(selectedbutton) {
+a.selectedbutton {
+	background-color: #77D;
+}
+
+div.menu a:hover {
 	background-color: #111;
 	transition: background 0.5s linear;
 }
@@ -260,10 +264,6 @@ div.pagebuttons {
 div.langbuttons {
 	float: right;
 	background-color: #667;
-}
-
-a.selectedbutton {
-	background-color: #77D;
 }
 
 div.footer {
