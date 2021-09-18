@@ -266,6 +266,10 @@ a.selectedbutton {
 	background-color: #77D;
 }
 
+a.selectedbutton:hover {
+	background-color: #77D;
+}
+
 div.footer {
 	position: fixed;
 	bottom: 0;
