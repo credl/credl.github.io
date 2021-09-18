@@ -252,7 +252,7 @@ a.selectedbutton {
 	background-color: #77D;
 }
 
-div.menu a:hover {
+div.menu a:not(.selectedbutton):hover {
 	background-color: #111;
 	transition: background 0.5s linear;
 }
