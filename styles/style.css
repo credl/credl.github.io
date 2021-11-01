@@ -138,6 +138,50 @@ td.softwarepic img {
 	margin: 10px;
 }
 
+/* projects page */
+
+div.projects {
+	width: 100vw;
+	vertical-align: top;
+    display: table-cell;
+}
+
+div.projects table {
+	width: 100%;
+	border-collapse:collapse;
+}
+
+div.projects tr {
+	width: 100%;
+	vertical-align: top;
+}
+
+div.projects tr:nth-child(odd) {
+	background-color: #EEE;
+}
+
+div.projects tr:nth-child(even) {
+	background-color: #FFF;
+}
+
+td.projectname {
+	white-space: nowrap;
+}
+
+td.projectdurtation {
+	white-space: nowrap;
+}
+
+td.projecttext {
+	width: 100%;
+}
+
+td.softwarepic img {
+	width: 80%;
+	box-shadow: 5px 5px 20px 0px grey;
+	margin: 10px;
+}
+
 /* software page thumbnail preview */
 
 .modal {
