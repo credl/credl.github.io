@@ -172,6 +172,10 @@ td.projectdurtation {
 	white-space: nowrap;
 }
 
+td.projectlink {
+	white-space: nowrap;
+}
+
 td.projecttext {
 	width: 100%;
 }
