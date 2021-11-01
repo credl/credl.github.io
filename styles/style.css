@@ -148,12 +148,19 @@ div.projects {
 
 div.projects table {
 	width: 100%;
-	border-collapse:collapse;
 }
 
 div.projects tr {
 	width: 100%;
 	vertical-align: top;
+}
+
+div.projects td {
+	padding: 10px;
+}
+
+div.projects th {
+	padding: 10px;
 }
 
 div.projects tr:nth-child(odd) {
