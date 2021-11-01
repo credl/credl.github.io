@@ -161,6 +161,7 @@ div.projects td {
 
 div.projects th {
 	padding: 10px;
+	background-color: #CCC;
 }
 
 div.projects tr:nth-child(odd) {
