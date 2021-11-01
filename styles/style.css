@@ -164,20 +164,44 @@ div.projects tr:nth-child(even) {
 	background-color: #FFF;
 }
 
+th.projectname {
+	white-space: nowrap;
+	font-size: medium;
+}
+
+th.projectdurtation {
+	white-space: nowrap;
+	font-size: medium;
+}
+
+th.projectlink {
+	white-space: nowrap;
+	font-size: medium;
+}
+
+th.projecttext {
+	width: 100%;
+	font-size: medium;
+}
+
 td.projectname {
 	white-space: nowrap;
+	font-size: medium;
 }
 
 td.projectdurtation {
 	white-space: nowrap;
+	font-size: medium;
 }
 
 td.projectlink {
 	white-space: nowrap;
+	font-size: medium;
 }
 
 td.projecttext {
 	width: 100%;
+	font-size: medium;
 }
 
 td.softwarepic img {
