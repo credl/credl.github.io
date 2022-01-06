@@ -84,6 +84,8 @@ function initLanguage(changelanguage) {
 	// change language has first priority
 	if (changelanguage != null) {
 		selectedlanguage = changelanguage;
+		// keep cookie updated or create new cookie
+		setCookie("language", selectedlanguage, 365);
 	}else{
 		// language from cookies has second priority
 		selectedlanguage = getCookie("language");
@@ -92,8 +94,6 @@ function initLanguage(changelanguage) {
 			selectedlanguage = "english";
 		}
 	}
-	// keep cookie updated or create new cookie
-	setCookie("language", selectedlanguage, 365);
 
 	// select correct language button
 	langbuttons = document.getElementsByClassName("langbutton");
