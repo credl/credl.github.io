@@ -142,9 +142,9 @@ function acceptCookies() {
 }
 
 function initCookieNotice() {
-	if (getCookie("cookiesAccepted")) {
+	//if (getCookie("cookiesAccepted")) {
 		document.getElementById("cookienotices").setAttribute("style", "visibility: hidden;");
-	}
+	//}
 }
 
 function initPage(pageId) {
