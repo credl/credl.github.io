@@ -346,18 +346,35 @@ div.langbuttons {
 	background-color: #667;
 }
 
+div.bottomblock {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	width: 100%;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
 div.cookienotice {
 	background-color: #559;
 	border-radius: 7px;
-	position: fixed;
-	bottom: 5%;
-	width: 100%;
-	margin: 0%;
+	width: 98%;
+	margin-left: 1%;
+	margin-bottom: 1%;
 	z-index: 2;
 	color: white;
-	font-size: 14pt;
+	font-size: 18pt;
 	opacity: 80%;
-	text-align: center;
+	text-align: left;
+//	animation: cookienoticeanimation 2s infinite;
+}
+
+@keyframes cookienoticeanimation {
+  0% { background-color: #559; }
+  50% { background-color: black;}
+  100% { background-color: #559; }
 }
 
 div.cookienotice a {
@@ -365,8 +382,6 @@ div.cookienotice a {
 }
 
 div.footer {
-	position: fixed;
-	bottom: 0;
 	right: 0;
 	width: 100%;
 	list-style-type: none;
