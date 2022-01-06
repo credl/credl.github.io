@@ -346,6 +346,24 @@ div.langbuttons {
 	background-color: #667;
 }
 
+div.cookienotice {
+	background-color: #559;
+	border-radius: 7px;
+	position: fixed;
+	bottom: 5%;
+	width: 100%;
+	margin: 0%;
+	z-index: 2;
+	color: white;
+	font-size: 14pt;
+	opacity: 80%;
+	text-align: center;
+}
+
+div.cookienotice a {
+	color: black;	
+}
+
 div.footer {
 	position: fixed;
 	bottom: 0;
