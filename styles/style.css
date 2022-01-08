@@ -23,7 +23,7 @@ a {
 }
 
 a:hover {
-	color: #207;
+	color: #308;
 	font-weight: bold;
 }
 
@@ -329,7 +329,7 @@ div.menu a {
 }
 
 a.selectedbutton {
-	background-color: #207;
+	background-color: #308;
 }
 
 div.menu a:not(.selectedbutton):hover {
