@@ -23,7 +23,7 @@ a {
 }
 
 a:hover {
-	color: #308;
+	color: #330099;
 	font-weight: bold;
 }
 
@@ -329,11 +329,11 @@ div.menu a {
 }
 
 a.selectedbutton {
-	background-color: #308;
+	background-color: #330099;
 }
 
 div.menu a:not(.selectedbutton):hover {
-	background-color: #111;
+	background-color: #333333;
 	transition: background 0.5s linear;
 }
 
@@ -358,7 +358,7 @@ div.bottomblock {
 }
 
 div.cookienotice {
-	background-color: #75C;
+	background-color: #6633cc;
 	border-radius: 7px;
 	width: 98%;
 	margin-left: 1%;
@@ -374,7 +374,7 @@ div.cookienotice {
 @keyframes cookienoticeanimation {
   0% { background-color: #559; }
   50% { background-color: black;}
-  100% { background-color: #559; }
+  100% { background-color: #6633cc; }
 }
 
 div.cookienotice a {
