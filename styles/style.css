@@ -23,12 +23,13 @@ a {
 }
 
 a:hover {
-	color: #330099;
+	color: #333399;
 	font-weight: bold;
+	text-decoration-thickness: 2px;
 }
 
 a:active {
-	color: #F55;
+	color: #9966cc;
 	font-weight: bold;
 }
 
@@ -329,7 +330,7 @@ div.menu a {
 }
 
 a.selectedbutton {
-	background-color: #330099;
+	background-color: #333399;
 }
 
 div.menu a:not(.selectedbutton):hover {
@@ -358,7 +359,7 @@ div.bottomblock {
 }
 
 div.cookienotice {
-	background-color: #6633cc;
+	background-color: #3333FF;
 	border-radius: 7px;
 	width: 98%;
 	margin-left: 1%;
