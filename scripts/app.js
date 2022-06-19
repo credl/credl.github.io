@@ -143,7 +143,7 @@ function acceptCookies() {
 
 function initCookieNotice() {
 	if (getCookie("cookiesAccepted")) {
-		document.getElementById("cookienotices").setAttribute("style", "visibility: hidden;");
+		document.getElementById("cookienotices").setAttribute("style", "display: none;");
 	}
 }
 
