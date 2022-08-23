@@ -84,8 +84,11 @@ function initLanguage(changelanguage) {
 	// change language has first priority
 	if (changelanguage != null) {
 		selectedlanguage = changelanguage;
+		// only if user agreed with cookie notice:
 		// keep cookie updated or create new cookie
-		setCookie("language", selectedlanguage, 365);
+		if (getCookie("cookiesAccepted")) {
+			setCookie("language", selectedlanguage, 365);
+		}
 	}else{
 		// language from cookies has second priority
 		selectedlanguage = getCookie("language");
