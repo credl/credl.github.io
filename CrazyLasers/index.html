@@ -52,12 +52,12 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/carzylasers web build.loader.js";
+      var loaderUrl = buildUrl + "/lasersweep web build.loader.js";
       var config = {
         arguments: [],
-        dataUrl: buildUrl + "/carzylasers web build.data",
-        frameworkUrl: buildUrl + "/carzylasers web build.framework.js",
-        codeUrl: buildUrl + "/carzylasers web build.wasm",
+        dataUrl: buildUrl + "/lasersweep web build.data",
+        frameworkUrl: buildUrl + "/lasersweep web build.framework.js",
+        codeUrl: buildUrl + "/lasersweep web build.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "AdWien Technology Limited",
         productName: "Laser Sweep",
@@ -108,6 +108,7 @@
         canvas.style.height = "600px";
       }
 
+      canvas.style.background = "url('" + buildUrl + "/lasersweep web build.jpg') center / cover";
       document.querySelector("#unity-loading-bar").style.display = "block";
 
       var script = document.createElement("script");
