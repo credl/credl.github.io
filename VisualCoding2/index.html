@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>EnvisApp</title>
+<meta name="description" content="Visual UI editor: drag controls onto a form, nest them, export standalone HTML.">
+<link rel="stylesheet" href="css/style.css">
+<style id="cs"></style>
+<style id="us"></style>
+<style>#olist{padding:8px;display:flex;flex-direction:column;gap:4px;max-height:60vh;overflow:auto}#olist .app{display:flex;justify-content:space-between;gap:12px;text-align:left;padding:8px 10px;border-color:var(--ln)}#olist .app:hover{background:var(--ln)}#toast{position:fixed;inset:auto 16px 16px auto;margin:0;border:0;padding:10px 14px;border-radius:6px;font-size:13px;max-width:min(420px,90vw);color:#fff;box-shadow:0 6px 24px #0006}#toast.ok{background:#1f7a3d}#toast.err{background:#b3261e}#olist em{font-style:normal;color:var(--mut)}</style>
+</head>
+<body>
+<header>
+  <h1>Visual Coding <small style="font-weight:400;opacity:.6;font-size:11px" title="Build of the loaded scripts">v20261116a</small></h1>
+  <button class="b" data-a="newProject" title="Create a new project">New project</button><button class="b" data-a="new" title="New component (opens a new tab)">New component</button><button class="b" data-a="open" title="Open an app stored in your account (backend)">Open</button><button class="b" data-a="save" title="Save to your account (Ctrl+S)">Save</button><button class="b" data-a="saveAs" title="Save as a new app in your account">Save as</button>
+  <i></i>
+  <button class="b" data-a="openFile" title="Open a project from a .json file on this computer">Open file</button><button class="b" data-a="saveFile" title="Save to the .json file (asks only if there is none yet)">Save file</button><button class="b" data-a="saveFileAs" title="Save as a new .json file">Save file as</button><button class="b" data-a="imp" title="Use an exported page (or a project file) as components in this project">Import component</button>
+  <i></i>
+  <button class="b" data-a="undo" title="Ctrl+Z">Undo</button><button class="b" data-a="redo" title="Ctrl+Y">Redo</button>
+  <i></i>
+  <button class="b" data-a="cut" title="Ctrl+X">Cut</button><button class="b" data-a="copy" title="Ctrl+C">Copy</button><button class="b" data-a="paste" title="Ctrl+V">Paste</button><button class="b" data-a="dup" title="Ctrl+D">Duplicate</button><button class="b" data-a="del" title="Delete">Delete</button>
+  <i></i>
+  <button class="b" data-a="front">To front</button><button class="b" data-a="back">To back</button>
+  <label><input type="checkbox" id="snap" checked> Snap to grid</label>
+  <i></i>
+  <button class="b" data-a="code" title="F7">Code</button><button class="b" data-a="pv">Preview</button><button class="b" data-a="dbg" title="Run with breakpoints, stepping and variable watches">Debug</button><button class="b p" data-a="exp">Export HTML</button><button class="b" data-a="url" title="Whole app as a link">Export as URL</button>
+  <input type="file" id="file" accept=".json,application/json" hidden><input type="file" id="impf" accept=".html,.htm,.json,text/html,application/json" hidden>
+</header>
+<nav id="tabs"></nav>
+<main>
+  <aside id="tools" class="pn" data-p="tools"><div class="sh">Toolbox</div><div id="tb"></div><div class="note">Click a tool, then click or drag on the form. Or drag it straight onto the form. Double-click adds it to the selected container.</div></aside>
+  <div id="cv" class="pn" data-p="designer">
+    <div class="sh"><b>Designer</b></div>
+    <div class="designer-content">
+      <div id="win">
+        <div class="tt" id="ttl"></div>
+        <div id="stage"><div id="form" class="f ed grid" data-id="root"></div><div id="ov"></div></div>
+      </div>
+      <div class="note">Drag to move, handles to resize, drop onto a Panel or GroupBox to nest. Arrow keys nudge (Shift = 8px). Ctrl+C / X / V / D, Ctrl+Z / Y, Delete. Alt+←/→ switches component tab. Double-click a component instance to open it. Add a Container to a component to expose it; when you use that component elsewhere, drop controls onto its container.</div>
+    </div>
+  </div>
+  <aside class="pn" id="p-tree" data-p="tree"><div class="sh">UI tree</div><div id="tree"></div></aside>
+  <aside class="pn" id="p-props" data-p="props"><div class="sh">Properties</div><div id="props"></div></aside>
+
+  <aside class="pn win" id="cd" data-p="code">
+    <div class="sh"><b>Code</b><span class="sp"></span><button class="cl" type="button" title="Close" aria-label="Close code window">&times;</button></div>
+    <div class="tbr"><select id="co" class="sel" aria-label="Object"></select><select id="ce" class="sel" aria-label="Event"></select><span class="sp"></span><button class="b" id="cDbg" title="Run with the debugger">Debug</button><button class="b" id="cChk">Check</button></div>
+    <div id="vbw"><pre id="vbh" aria-hidden="true"></pre><div id="vbg" title="Click a line number to set a breakpoint"></div><textarea id="vb" spellcheck="false" wrap="off" placeholder="button1.addEventListener(&#39;click&#39;, function (event) {&#10;    label1.textContent = &#39;Hello, &#39; + textbox1.value;&#10;});"></textarea></div>
+    <pre id="cerr"></pre>
+  </aside>
+
+  <aside class="pn win" id="pv" data-p="pv">
+    <div class="sh"><b>Preview</b><span class="sp"></span><button class="b" id="pvR" type="button" title="Rebuild the preview from the current form">&#8635; Refresh</button><button class="cl" type="button" title="Close" aria-label="Close preview">&times;</button></div>
+    <iframe id="fr" sandbox="allow-scripts allow-modals"></iframe>
+  </aside>
+
+  <aside class="pn win" id="dbg" data-p="dbg">
+    <div class="sh"><b>Debugger</b><span class="sp"></span><button class="cl" type="button" title="Close (stops the debugger)" aria-label="Close debugger">&times;</button></div>
+    <div class="tbr">
+      <button class="b" id="dC" title="Continue (F5)" disabled>&#9654; Continue</button>
+      <button class="b" id="dP" title="Pause at the next statement" disabled>&#10074;&#10074; Pause</button>
+      <button class="b" id="dI" title="Step into (F11)" disabled>&#8595; Step into</button>
+      <button class="b" id="dO" title="Step over (F10)" disabled>&#8594; Step over</button>
+      <button class="b" id="dU" title="Step out (Shift+F11)" disabled>&#8593; Step out</button>
+      <button class="b" id="dS" title="Stop (Shift+F5)" disabled>&#9632; Stop</button>
+      <button class="b" id="dR" title="Restart with the current code">&#8635; Restart</button>
+      <label title="Pause on the first statement when the app starts"><input type="checkbox" id="dBrk"> Break at start</label>
+      <span id="dst" class="idle"></span>
+    </div>
+    <div id="dbody">
+      <section id="dleft"><div class="dtop"><span>Code</span><select id="ddoc" class="sel" aria-label="Component"></select><span class="hint">Click a line number to toggle a breakpoint</span></div><div id="dcode"></div></section>
+      <section id="dright"><div class="dtop"><span>App</span></div><div id="dfw"><iframe id="dfr" sandbox="allow-scripts allow-modals"></iframe><div id="dblk" hidden><span>Paused - the app is frozen until you continue</span></div></div></section>
+      <section class="dpn"><div class="dtop"><span>Locals</span></div><div class="dlist" id="dloc"></div></section>
+      <section class="dpn"><div class="dtop"><span>Watch</span></div><div class="dlist" id="dwv"></div><input id="dwin" type="text" placeholder="Add expression, press Enter" spellcheck="false" aria-label="Add watch expression"></section>
+      <section class="dpn"><div class="dtop"><span>Call stack</span></div><div class="dlist" id="dstk"></div></section>
+      <section class="dpn"><div class="dtop"><span>Breakpoints</span><button class="pb" id="dClr" title="Remove all breakpoints">Clear all</button></div><div class="dlist" id="dbpl"></div></section>
+    </div>
+  </aside>
+</main>
+
+<div id="toast" popover="manual" role="status"></div>
+<dialog id="od"><header><b>Open app</b><span class="hint" id="oinfo"></span><span class="sp"></span><button class="b" data-close>Close</button></header><div id="olist"></div></dialog>
+<dialog id="ex"><header><b>Exported HTML</b><span class="sp"></span><button class="b" id="exDl">Download</button><button class="b" id="exCp">Copy</button><button class="b" data-close>Close</button></header><textarea id="code" readonly spellcheck="false"></textarea></dialog>
+<dialog id="csd"><header><b>CSS</b><span class="hint">Applies to this form/component. Use classes via the HTML attribute "class".</span><span class="sp"></span><button class="b" data-close>Close</button></header><textarea id="cssv" spellcheck="false" placeholder=".big {&#10;  font-weight: 700;&#10;  border-radius: 8px;&#10;}"></textarea></dialog>
+<dialog id="ud"><header><b>App URL</b><span class="hint" id="uinfo"></span><span class="sp"></span><button class="b" id="uCp">Copy</button><button class="b" id="uGo">Open</button><button class="b" data-close>Close</button></header><textarea id="uv" readonly spellcheck="false"></textarea></dialog>
+<script src="js/util.js?v=20261115c"></script>
+<script src="js/api.js?v=20261116a"></script>
+<script src="js/defs.js?v=20261116k"></script>
+<script src="js/model.js?v=20261115c"></script>
+<script src="js/history.js?v=20261115c"></script>
+<script src="js/page.js?v=20261116i"></script>
+<script src="js/render.js?v=20261116k"></script>
+<script src="js/export.js?v=20261116i"></script>
+<script src="js/view.js?v=20261116l"></script>
+<script src="js/props.js?v=20261116l"></script>
+<script src="js/toolbox.js?v=20261116l"></script>
+<script src="js/canvas.js?v=20261115c"></script>
+<script src="js/tree.js?v=20261115c"></script>
+<script src="js/actions.js?v=20261116j"></script>
+<script src="js/languages.js?v=20261115c"></script>
+<script src="js/js-language.js?v=20261116d"></script>
+<script src="js/vb-language.js?v=20261115c"></script>
+<script src="js/codewin.js?v=20261115c"></script>
+<script src="js/js-instrument.js?v=20261115c"></script>
+<script src="js/debug.js?v=20261115c"></script>
+<script src="js/js-intellisense.js?v=20261115c"></script>
+<script src="js/vb-intellisense.js?v=20261116i"></script>
+<script src="js/layout.js?v=20261116k"></script>
+<script src="js/urlexp.js?v=20261115c"></script>
+<script src="js/import.js?v=20261116l"></script>
+<script src="js/main.js?v=20261115c"></script>
+<script>
+// Self-check: all scripts must be the same build (an outdated cached/misplaced file is the usual reason for odd behaviour).
+(function () {
+    const E = { 'api.js': '20261116a', 'actions.js': '20261115c', 'main.js': '20261115c' }, g = f => { try { return f(); } catch (e) { return 'not found'; } },
+        got = { 'api.js': g(() => Api.build), 'actions.js': g(() => ACTIONS_BUILD), 'main.js': g(() => MAIN_BUILD) },
+        fn = g(() => typeof A.openFile === 'function' && typeof A.saveFileAs === 'function');
+    console.info('Form Builder scripts:', got);
+    if (fn !== true || Object.keys(E).some(k => got[k] !== E[k]))
+        alert('Wrong JavaScript files were loaded (expected builds: ' + JSON.stringify(E) + ').\n\n'
+            + Object.entries(got).map(([k, v]) => k + ': ' + v).join('\n') + '\n\nLoaded from:\n'
+            + [...document.scripts].map(s => s.src).filter(s => /\/js\/(api|actions|main)\.js/.test(s)).join('\n'));
+})();
+</script>
+</body>
+</html>

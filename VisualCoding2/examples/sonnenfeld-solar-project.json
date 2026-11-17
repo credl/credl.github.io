@@ -1,0 +1,2554 @@
+{
+ "fb": 2,
+ "docs": [
+  {
+   "id": "d1",
+   "root": {
+    "id": "root",
+    "type": "form",
+    "name": "Sonnenfeld Solar",
+    "x": 0,
+    "y": 0,
+    "w": "100%",
+    "h": 4820,
+    "text": "Sonnenfeld Solar - Clean power for Austria",
+    "bg": "#fdf8ee",
+    "code": "' ===== Sonnenfeld Solar - website logic (VB-style) =====\n' Everything on this page that moves is driven by this code:\n'   - the bar chart on the canvas (cvChart) and the counters Stat1..Stat4\n'   - the solar calculator (sldArea, cboRegion, chkBattery)\n'   - the testimonial slider, the service search and the team filter\n' The components talk to the page through events: Svc1_Selected, Faq1_Opened, ContactForm1_Submitted.\n\nDim ticks As Integer\nDim grow As Double\nDim hot As Integer\nDim qi As Integer\nDim calcKwp As Double\nDim calcArea As Integer\n\nSub Form_Load()\n    grow = 0\n    hot = 0\n    qi = 0\n    cboRegion.ListIndex = 0\n    cboDept.ListIndex = 0\n    Recalc\n    ShowQuote\n    DrawChart\n    StartTimer 40\nEnd Sub\n\n' ---------- one timer drives all animation (40 ms) ----------\nSub Form_Timer()\n    ticks = ticks + 1\n    If grow < 1 Then\n        grow = grow + 0.04\n        If grow > 1 Then grow = 1\n        DrawChart\n    End If\n    Stat1.Advance\n    Stat2.Advance\n    Stat3.Advance\n    Stat4.Advance\n    If ticks Mod 150 = 0 Then NextQuote\nEnd Sub\n\n' ---------- bar chart on the canvas ----------\nFunction Installs(i As Integer) As Double\n    Select Case i\n        Case 1\n            Return 1.2\n        Case 2\n            Return 1.9\n        Case 3\n            Return 2.6\n        Case 4\n            Return 3.4\n        Case 5\n            Return 4.5\n        Case Else\n            Return 5.8\n    End Select\nEnd Function\n\nFunction YearOf(i As Integer) As Integer\n    Return 2018 + i\nEnd Function\n\nSub DrawChart()\n    Dim i As Integer\n    Dim bx As Integer\n    Dim bh As Double\n    cvChart.Clear\n    cvChart.DrawColor = \"#5f86a8\"\n    cvChart.DrawLine 4, 200, 476, 200\n    For i = 1 To 6\n        bx = 14 + (i - 1) * 78\n        bh = Installs(i) * 28 * grow\n        If i = hot Then\n            cvChart.DrawColor = \"#ffe08a\"\n        Else\n            cvChart.DrawColor = \"#ffb400\"\n        End If\n        cvChart.FillRect bx, 200 - bh, 52, bh\n        cvChart.DrawColor = \"#cfe3f5\"\n        cvChart.DrawText YearOf(i), bx + 9, 208\n    Next\nEnd Sub\n\nSub cvChart_MouseMove()\n    Dim i As Integer\n    i = Int((cvChart.MouseX - 14) / 78) + 1\n    If i < 1 Or i > 6 Then i = 0\n    If i <> hot Then\n        hot = i\n        DrawChart\n        If hot > 0 Then lblChartInfo.Caption = YearOf(hot) & \": \" & Installs(hot) & \" MWp installed\" Else lblChartInfo.Caption = \"Hover a bar for details\"\n    End If\nEnd Sub\n\nSub btnReplay_Click()\n    grow = 0\n    hot = 0\n    lblChartInfo.Caption = \"Hover a bar for details\"\n    Stat1.Replay\n    Stat2.Replay\n    Stat3.Replay\n    Stat4.Replay\nEnd Sub\n\n' ---------- solar calculator ----------\nFunction RegionYield() As Integer\n    Select Case cboRegion.ListIndex\n        Case 0\n            Return 1050\n        Case 1\n            Return 1100\n        Case 2\n            Return 1150\n        Case Else\n            Return 1000\n    End Select\nEnd Function\n\n' 12450 -> \"12 450\"\nFunction Grouped(v As Double) As String\n    Dim t As Long\n    Dim r As Integer\n    t = Round(v, 0)\n    If t < 1000 Then Return t\n    r = t Mod 1000\n    Return Int(t / 1000) & \" \" & Right(\"00\" & r, 3)\nEnd Function\n\nSub Recalc()\n    Dim area As Integer\n    Dim kwp As Double\n    Dim kwh As Double\n    Dim selfUse As Double\n    Dim saving As Double\n    Dim cost As Double\n    Dim payback As Double\n    area = 20 + sldArea.Value\n    kwp = Round(area / 6.5, 1)\n    kwh = kwp * RegionYield()\n    selfUse = 0.35\n    cost = kwp * 1650\n    If chkBattery.Checked Then\n        selfUse = 0.7\n        cost = cost + 4800\n    End If\n    saving = kwh * selfUse * 0.3 + kwh * (1 - selfUse) * 0.08\n    payback = cost / saving\n    calcArea = area\n    calcKwp = kwp\n    lblAreaVal.Caption = area & \" m2\"\n    lblSize.Caption = kwp & \" kWp\"\n    lblYield.Caption = Grouped(kwh) & \" kWh\"\n    lblSaving.Caption = \"EUR \" & Grouped(saving)\n    lblPayback.Caption = Round(payback, 1) & \" years\"\n    lblCo2.Caption = Grouped(kwh * 0.23) & \" kg\"\n    lblCost.Caption = \"EUR \" & Grouped(cost)\n    If payback < 10 Then lblPayback.ForeColor = \"#1e8449\" Else lblPayback.ForeColor = \"#b9770e\"\nEnd Sub\n\nSub sldArea_Change()\n    Recalc\nEnd Sub\n\nSub cboRegion_Change()\n    Recalc\nEnd Sub\n\nSub chkBattery_Change()\n    Recalc\nEnd Sub\n\nSub btnUseCalc_Click()\n    ContactForm1.Topic = \"Quote for a \" & calcKwp & \" kWp system (\" & calcArea & \" m2)\"\n    lblCalcNote.Caption = \"Added to the contact form at the bottom of the page.\"\nEnd Sub\n\n' ---------- testimonial slider ----------\nFunction QuoteText(i As Integer) As String\n    Select Case i\n        Case 0\n            Return \"We cut our electricity bill by two thirds, and the team was on our roof within a week.\"\n        Case 1\n            Return \"Planning, subsidy paperwork, installation: one contact person for everything. Exactly what a farm needs.\"\n        Case 2\n            Return \"Our 180 kWp carport system paid for itself faster than the calculation promised.\"\n        Case Else\n            Return \"Eight years on, the monitoring still tells me about a problem before I notice it.\"\n    End Select\nEnd Function\n\nFunction QuoteWho(i As Integer) As String\n    Select Case i\n        Case 0\n            Return \"Maria H., homeowner, Klosterneuburg\"\n        Case 1\n            Return \"Josef T., farmer, Waldviertel\"\n        Case 2\n            Return \"Dr. Elena K., managing director, Graz\"\n        Case Else\n            Return \"Peter and Anna S., Salzburg\"\n    End Select\nEnd Function\n\nFunction Dots(i As Integer) As String\n    Dim s As String\n    Dim k As Integer\n    s = \"\"\n    For k = 0 To 3\n        If k = i Then s = s & \"● \" Else s = s & \"○ \"\n    Next\n    Return s\nEnd Function\n\nSub ShowQuote()\n    lblQuote.Caption = QuoteText(qi)\n    lblWho.Caption = QuoteWho(qi)\n    lblDots.Caption = Dots(qi)\nEnd Sub\n\nSub NextQuote()\n    qi = (qi + 1) Mod 4\n    ticks = 1\n    ShowQuote\nEnd Sub\n\nSub btnNext_Click()\n    NextQuote\nEnd Sub\n\nSub btnPrev_Click()\n    qi = (qi + 3) Mod 4\n    ticks = 1\n    ShowQuote\nEnd Sub\n\n' ---------- services: pick a card, or search ----------\nSub PickService(t)\n    lblPicked.Caption = t & \" was added to your contact request.\"\n    ContactForm1.Topic = t\nEnd Sub\n\nSub Svc1_Selected(t)\n    PickService t\nEnd Sub\n\nSub Svc2_Selected(t)\n    PickService t\nEnd Sub\n\nSub Svc3_Selected(t)\n    PickService t\nEnd Sub\n\nSub Svc4_Selected(t)\n    PickService t\nEnd Sub\n\nSub Svc5_Selected(t)\n    PickService t\nEnd Sub\n\nSub Svc6_Selected(t)\n    PickService t\nEnd Sub\n\n\nFunction Hit(t As String, b As String, q As String) As Boolean\n    Return InStr(LCase(t & \" \" & b), q) > 0\nEnd Function\n\nSub txtSearch_Change()\n    Dim q As String\n    Dim n As Integer\n    q = LCase(Trim(txtSearch.Text))\n    Svc1.Visible = Hit(Svc1.Title, Svc1.Body, q)\n    Svc2.Visible = Hit(Svc2.Title, Svc2.Body, q)\n    Svc3.Visible = Hit(Svc3.Title, Svc3.Body, q)\n    Svc4.Visible = Hit(Svc4.Title, Svc4.Body, q)\n    Svc5.Visible = Hit(Svc5.Title, Svc5.Body, q)\n    Svc6.Visible = Hit(Svc6.Title, Svc6.Body, q)\n    n = 0\n    If Svc1.Visible Then n = n + 1\n    If Svc2.Visible Then n = n + 1\n    If Svc3.Visible Then n = n + 1\n    If Svc4.Visible Then n = n + 1\n    If Svc5.Visible Then n = n + 1\n    If Svc6.Visible Then n = n + 1\n    lblMatches.Caption = n & \" of 6 services\"\nEnd Sub\n\n' ---------- team filter ----------\nFunction ShowDept(d As String) As Boolean\n    Return (cboDept.Text = \"Everyone\") Or (cboDept.Text = d)\nEnd Function\n\nSub cboDept_Change()\n    Team1.Visible = ShowDept(Team1.Dept)\n    Team2.Visible = ShowDept(Team2.Dept)\n    Team3.Visible = ShowDept(Team3.Dept)\n    Team4.Visible = ShowDept(Team4.Dept)\n    Team5.Visible = ShowDept(Team5.Dept)\n    Team6.Visible = ShowDept(Team6.Dept)\n    Team7.Visible = ShowDept(Team7.Dept)\n    Team8.Visible = ShowDept(Team8.Dept)\nEnd Sub\n\n' ---------- FAQ accordion: opening one item closes the others ----------\nSub Faq1_Opened()\n    Faq2.Collapse\n    Faq3.Collapse\n    Faq4.Collapse\nEnd Sub\n\nSub Faq2_Opened()\n    Faq1.Collapse\n    Faq3.Collapse\n    Faq4.Collapse\nEnd Sub\n\nSub Faq3_Opened()\n    Faq1.Collapse\n    Faq2.Collapse\n    Faq4.Collapse\nEnd Sub\n\nSub Faq4_Opened()\n    Faq1.Collapse\n    Faq2.Collapse\n    Faq3.Collapse\nEnd Sub\n\n\n' ---------- contact form ----------\nSub ContactForm1_Submitted(who)\n    MsgBox \"Thank you, \" & who & \"! Your request is on its way (demo: nothing is really sent).\"\nEnd Sub\n",
+    "language": "vb",
+    "kids": [
+     {
+      "id": "n115",
+      "type": "comp",
+      "x": 0,
+      "y": 0,
+      "w": "100%",
+      "h": 72,
+      "kids": [],
+      "ref": "d2",
+      "name": "NavBar1"
+     },
+     {
+      "id": "n42",
+      "type": "panel",
+      "x": 0,
+      "y": 72,
+      "w": "100%",
+      "h": 520,
+      "kids": [
+       {
+        "id": "n39",
+        "type": "panel",
+        "x": "calc(50% + 280px)",
+        "y": -150,
+        "w": 520,
+        "h": 520,
+        "kids": [],
+        "css": [
+         [
+          "background",
+          "radial-gradient(circle,rgba(255,180,0,.45),rgba(255,180,0,0) 65%)"
+         ],
+         [
+          "border-radius",
+          "50%"
+         ],
+         [
+          "box-shadow",
+          "none"
+         ],
+         [
+          "pointer-events",
+          "none"
+         ]
+        ],
+        "name": "sunGlow"
+       },
+       {
+        "id": "n40",
+        "type": "html",
+        "x": "calc(max(0px, 50% - 600px) + 48px)",
+        "y": 56,
+        "w": 580,
+        "h": 360,
+        "kids": [],
+        "html": "<p style=\"margin:0 0 10px;font:700 13px system-ui;letter-spacing:.18em;text-transform:uppercase;color:#ffb400\">Solar &amp; storage · Vienna · since 2009</p><h1 style=\"margin:0 0 18px;font:800 56px/1.04 system-ui;color:#fff;letter-spacing:-.02em\">Sunshine,<br>put to work.</h1><p style=\"margin:0 0 28px;font:400 18px/1.6 system-ui;color:#cfe3f5;max-width:520px\">Sonnenfeld Solar plans, installs and maintains photovoltaic systems for homes, farms and companies across Austria: clean power you can count on, for 25 years and more.</p><p style=\"margin:0\"><a class=\"cta\" href=\"#calculator\" style=\"display:inline-block;padding:13px 26px;border-radius:999px;background:#ffb400;color:#0f2a43;font:700 15px system-ui;text-decoration:none;margin-right:12px\">Calculate your savings</a><a class=\"ghost\" href=\"#contact\" style=\"display:inline-block;padding:11px 24px;border-radius:999px;border:2px solid rgba(255,255,255,.55);color:#fff;font:700 15px system-ui;text-decoration:none\">Talk to an expert</a></p>",
+        "name": "heroText"
+       },
+       {
+        "id": "n38",
+        "type": "panel",
+        "x": "calc(max(0px, 50% - 600px) + 648px)",
+        "y": 40,
+        "w": 504,
+        "h": 360,
+        "kids": [
+         {
+          "id": "n34",
+          "type": "label",
+          "x": 24,
+          "y": 18,
+          "w": 456,
+          "h": 26,
+          "kids": [],
+          "text": "Installed capacity per year (MWp)",
+          "fs": 15,
+          "fg": "#ffffff",
+          "css": [
+           [
+            "font-weight",
+            "700"
+           ]
+          ],
+          "name": "lblChartTitle"
+         },
+         {
+          "id": "n35",
+          "type": "canvas",
+          "x": 12,
+          "y": 56,
+          "w": 480,
+          "h": 236,
+          "kids": [],
+          "css": [
+           [
+            "background",
+            "transparent"
+           ],
+           [
+            "box-shadow",
+            "none"
+           ]
+          ],
+          "name": "cvChart"
+         },
+         {
+          "id": "n36",
+          "type": "label",
+          "x": 24,
+          "y": 312,
+          "w": 300,
+          "h": 24,
+          "kids": [],
+          "text": "Hover a bar for details",
+          "fs": 14,
+          "fg": "#ffe08a",
+          "name": "lblChartInfo"
+         },
+         {
+          "id": "n37",
+          "type": "button",
+          "x": 352,
+          "y": 306,
+          "w": 128,
+          "h": 36,
+          "kids": [],
+          "text": "↻ Replay",
+          "attrs": [
+           [
+            "class",
+            "btn-ghost"
+           ]
+          ],
+          "fs": 13,
+          "name": "btnReplay"
+         }
+        ],
+        "attrs": [
+         [
+          "class",
+          "glass"
+         ]
+        ],
+        "name": "pnlChart"
+       },
+       {
+        "id": "n41",
+        "type": "html",
+        "x": "calc(max(0px, 50% - 600px) + 48px)",
+        "y": 440,
+        "w": 1104,
+        "h": 56,
+        "kids": [],
+        "html": "<div style=\"display:flex;gap:14px;flex-wrap:wrap;font:600 14px system-ui;color:#e6f0f8\"><span style=\"padding:8px 16px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18)\"><span style=\"color:#ffb400\">✔</span> 1,100+ installations</span><span style=\"padding:8px 16px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18)\"><span style=\"color:#ffb400\">✔</span> 25-year performance warranty</span><span style=\"padding:8px 16px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18)\"><span style=\"color:#ffb400\">✔</span> Subsidy paperwork included</span><span style=\"padding:8px 16px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18)\"><span style=\"color:#ffb400\">✔</span> Local team, 24 h service hotline</span></div>",
+        "name": "heroChips"
+       }
+      ],
+      "css": [
+       [
+        "background",
+        "linear-gradient(135deg,#0f2a43 0%,#1b4a73 55%,#2c6a8f 100%)"
+       ],
+       [
+        "border-radius",
+        "0"
+       ],
+       [
+        "box-shadow",
+        "none"
+       ]
+      ],
+      "name": "pnlHero"
+     },
+     {
+      "id": "n43",
+      "type": "comp",
+      "x": "calc(max(0px, 50% - 600px) + 48px)",
+      "y": 624,
+      "w": 264,
+      "h": 104,
+      "kids": [],
+      "ref": "d5",
+      "name": "Stat1",
+      "pv": {
+       "target": "1140",
+       "suffix": "+",
+       "legend": "installations since 2009"
+      },
+      "attrs": [
+       [
+        "class",
+        "card"
+       ]
+      ]
+     },
+     {
+      "id": "n44",
+      "type": "comp",
+      "x": "calc(max(0px, 50% - 600px) + 336px)",
+      "y": 624,
+      "w": 264,
+      "h": 104,
+      "kids": [],
+      "ref": "d5",
+      "name": "Stat2",
+      "pv": {
+       "target": "24",
+       "suffix": " MWp",
+       "legend": "solar capacity installed"
+      },
+      "attrs": [
+       [
+        "class",
+        "card"
+       ]
+      ]
+     },
+     {
+      "id": "n45",
+      "type": "comp",
+      "x": "calc(max(0px, 50% - 600px) + 624px)",
+      "y": 624,
+      "w": 264,
+      "h": 104,
+      "kids": [],
+      "ref": "d5",
+      "name": "Stat3",
+      "pv": {
+       "target": "5700",
+       "suffix": " t",
+       "legend": "CO2 avoided every year"
+      },
+      "attrs": [
+       [
+        "class",
+        "card"
+       ]
+      ]
+     },
+     {
+      "id": "n46",
+      "type": "comp",
+      "x": "calc(max(0px, 50% - 600px) + 912px)",
+      "y": 624,
+      "w": 240,
+      "h": 104,
+      "kids": [],
+      "ref": "d5",
+      "name": "Stat4",
+      "pv": {
+       "target": "98",
+       "suffix": "%",
+       "legend": "customers recommend us"
+      },
+      "attrs": [
+       [
+        "class",
+        "card"
+       ]
+      ]
+     },
+     {
+      "id": "n47",
+      "type": "html",
+      "x": "calc(max(0px, 50% - 600px) + 48px)",
+      "y": 784,
+      "w": 560,
+      "h": 360,
+      "kids": [],
+      "html": "<p style=\"margin:0 0 10px;font:700 13px system-ui;letter-spacing:.18em;text-transform:uppercase;color:#d98f00\">About us</p><h2 style=\"margin:0 0 12px;font:800 38px/1.1 system-ui;color:#0f2a43\">A family company that grew with the sun</h2><p style=\"margin:0 0 14px;font:400 16px/1.65 system-ui;color:#4a5f73\">Theresa Lindner started Sonnenfeld Solar in 2009 with one van, two ladders and a simple idea: a solar system should be planned like a good house, for the people who live in it.</p><p style=\"margin:0 0 14px;font:400 16px/1.65 system-ui;color:#4a5f73\">Today 32 engineers, installers and advisors work from Vienna and Graz. We still answer the phone ourselves, and we still look after every system we have ever built.</p><div style=\"display:flex;gap:28px;font:700 15px system-ui;color:#0f2a43;margin-top:6px\"><span><span style=\"color:#d98f00\">●</span> Honest planning</span><span><span style=\"color:#d98f00\">●</span> Clean installation</span><span><span style=\"color:#d98f00\">●</span> Lifelong service</span></div>",
+      "name": "about"
+     },
+     {
+      "id": "n48",
+      "type": "image",
+      "x": "calc(max(0px, 50% - 600px) + 656px)",
+      "y": 784,
+      "w": 496,
+      "h": 360,
+      "kids": [],
+      "src": "data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20496%20360%27%3E%20%3Cdefs%3E%3ClinearGradient%20id%3D%27sky%27%20x1%3D%270%27%20y1%3D%270%27%20x2%3D%270%27%20y2%3D%271%27%3E%3Cstop%20offset%3D%270%27%20stop-color%3D%27%23ffe3a3%27%2F%3E%3Cstop%20offset%3D%271%27%20stop-color%3D%27%23fff7e0%27%2F%3E%3C%2FlinearGradient%3E%20%3CradialGradient%20id%3D%27sun%27%20cx%3D%27.5%27%20cy%3D%27.5%27%20r%3D%27.5%27%3E%3Cstop%20offset%3D%270%27%20stop-color%3D%27%23ffd25a%27%2F%3E%3Cstop%20offset%3D%271%27%20stop-color%3D%27%23ffb400%27%2F%3E%3C%2FradialGradient%3E%3C%2Fdefs%3E%20%3Crect%20width%3D%27496%27%20height%3D%27360%27%20fill%3D%27url%28%23sky%29%27%2F%3E%20%3Cg%20stroke%3D%27%23ffb400%27%20stroke-width%3D%275%27%20stroke-linecap%3D%27round%27%3E%3Cpath%20d%3D%27M388%2040v-24M388%20140v24M338%2090h-24M438%2090h24M353%2055l-17-17M423%20125l17%2017M353%20125l-17%2017M423%2055l17-17%27%2F%3E%3C%2Fg%3E%20%3Ccircle%20cx%3D%27388%27%20cy%3D%2790%27%20r%3D%2742%27%20fill%3D%27url%28%23sun%29%27%2F%3E%20%3Cpath%20d%3D%27M0%20300%20Q120%20230%20250%20285%20T496%20270%20V360%20H0Z%27%20fill%3D%27%239fcf8a%27%2F%3E%20%3Cpath%20d%3D%27M0%20330%20Q150%20280%20300%20320%20T496%20310%20V360%20H0Z%27%20fill%3D%27%236fb36b%27%2F%3E%20%3Crect%20x%3D%27110%27%20y%3D%27190%27%20width%3D%27210%27%20height%3D%27125%27%20fill%3D%27%23fffdf6%27%20stroke%3D%27%230f2a43%27%20stroke-width%3D%274%27%2F%3E%20%3Cpath%20d%3D%27M90%20195%20L215%2095%20L340%20195Z%27%20fill%3D%27%23c4553a%27%20stroke%3D%27%230f2a43%27%20stroke-width%3D%274%27%20stroke-linejoin%3D%27round%27%2F%3E%20%3Cg%20fill%3D%27%231b4a73%27%20stroke%3D%27%238fb6d9%27%20stroke-width%3D%272%27%3E%20%3Cpath%20d%3D%27M160%20168%20L195%20138%20L228%20138%20L206%20168Z%27%2F%3E%3Cpath%20d%3D%27M210%20168%20L232%20138%20L265%20138%20L254%20168Z%27%2F%3E%20%3Cpath%20d%3D%27M180%20128%20L205%20108%20L225%20108%20L210%20128Z%27%20transform%3D%27translate%282%200%29%27%2F%3E%3C%2Fg%3E%20%3Crect%20x%3D%27140%27%20y%3D%27230%27%20width%3D%2748%27%20height%3D%2785%27%20fill%3D%27%230f2a43%27%2F%3E%3Crect%20x%3D%27232%27%20y%3D%27224%27%20width%3D%2760%27%20height%3D%2746%27%20fill%3D%27%23bfe3ff%27%20stroke%3D%27%230f2a43%27%20stroke-width%3D%274%27%2F%3E%20%3Cpath%20d%3D%27M232%20247h60M262%20224v46%27%20stroke%3D%27%230f2a43%27%20stroke-width%3D%273%27%2F%3E%20%3Cpath%20d%3D%27M330%20240h20v75h-20z%27%20fill%3D%27%230f2a43%27%2F%3E%3Cpath%20d%3D%27M340%20212c30%200%2030%2036%200%2036c-30%200-30-36%200-36z%27%20fill%3D%27%234a9d57%27%2F%3E%20%3C%2Fsvg%3E",
+      "css": [
+       [
+        "border-radius",
+        "24px"
+       ],
+       [
+        "box-shadow",
+        "0 14px 40px rgba(15,42,67,.2)"
+       ]
+      ],
+      "name": "imgAbout"
+     },
+     {
+      "id": "n55",
+      "type": "html",
+      "x": "calc(max(0px, 50% - 600px) + 48px)",
+      "y": 1200,
+      "w": 720,
+      "h": 112,
+      "kids": [],
+      "html": "<p style=\"margin:0 0 10px;font:700 13px system-ui;letter-spacing:.18em;text-transform:uppercase;color:#d98f00\">What we do</p><h2 style=\"margin:0 0 12px;font:800 38px/1.1 system-ui;color:#0f2a43\">From the first roof visit to the last bolt</h2>",
+      "name": "services"
+     },
+     {
+      "id": "n56",
+      "type": "label",
+      "x": "calc(max(0px, 50% - 600px) + 800px)",
+      "y": 1214,
+      "w": 352,
+      "h": 20,
+      "kids": [],
+      "text": "Search our services",
+      "fs": 13,
+      "fg": "var(--muted)",
+      "css": [
+       [
+        "font-weight",
+        "700"
+       ]
+      ],
+      "name": "lblSearchCap"
+     },
+     {
+      "id": "n57",
+      "type": "textbox",
+      "x": "calc(max(0px, 50% - 600px) + 800px)",
+      "y": 1238,
+      "w": 352,
+      "h": 40,
+      "kids": [],
+      "text": "",
+      "ph": "e.g. battery, charging, audit ...",
+      "name": "txtSearch"
+     },
+     {
+      "id": "n58",
+      "type": "label",
+      "x": "calc(max(0px, 50% - 600px) + 800px)",
+      "y": 1284,
+      "w": 352,
+      "h": 22,
+      "kids": [],
+      "text": "6 of 6 services",
+      "fs": 13,
+      "fg": "var(--muted)",
+      "name": "lblMatches"
+     },
+     {
+      "id": "n59",
+      "type": "comp",
+      "x": "calc(max(0px, 50% - 600px) + 48px)",
+      "y": 1328,
+      "w": 1104,
+      "h": 632,
+      "kids": [
+       {
+        "id": "n49",
+        "type": "comp",
+        "x": 0,
+        "y": 0,
+        "w": "100%",
+        "h": 300,
+        "kids": [],
+        "ref": "d3",
+        "name": "Svc1",
+        "pv": {
+         "icon": "☀",
+         "title": "Rooftop Solar",
+         "body": "Turnkey PV systems for houses, barns and commercial roofs: from the survey to the grid connection.",
+         "price": "from EUR 1 650 / kWp"
+        },
+        "attrs": [
+         [
+          "class",
+          "card"
+         ]
+        ],
+        "slot": "container1"
+       },
+       {
+        "id": "n50",
+        "type": "comp",
+        "x": 0,
+        "y": 0,
+        "w": "100%",
+        "h": 300,
+        "kids": [],
+        "ref": "d3",
+        "name": "Svc2",
+        "pv": {
+         "icon": "🔋",
+         "title": "Battery Storage",
+         "body": "Use more of your own power in the evening. Modular storage from 5 to 30 kWh with backup option.",
+         "price": "from EUR 4 800"
+        },
+        "attrs": [
+         [
+          "class",
+          "card"
+         ]
+        ],
+        "slot": "container1"
+       },
+       {
+        "id": "n51",
+        "type": "comp",
+        "x": 0,
+        "y": 0,
+        "w": "100%",
+        "h": 300,
+        "kids": [],
+        "ref": "d3",
+        "name": "Svc3",
+        "pv": {
+         "icon": "🚗",
+         "title": "EV Charging",
+         "body": "Wallboxes with load management that charge your car with surplus sun power first.",
+         "price": "from EUR 990"
+        },
+        "attrs": [
+         [
+          "class",
+          "card"
+         ]
+        ],
+        "slot": "container1"
+       },
+       {
+        "id": "n52",
+        "type": "comp",
+        "x": 0,
+        "y": 0,
+        "w": "100%",
+        "h": 300,
+        "kids": [],
+        "ref": "d3",
+        "name": "Svc4",
+        "pv": {
+         "icon": "🏢",
+         "title": "Commercial PV",
+         "body": "Large roof and carport systems with monitoring, power purchase and leasing models.",
+         "price": "on request"
+        },
+        "attrs": [
+         [
+          "class",
+          "card"
+         ]
+        ],
+        "slot": "container1"
+       },
+       {
+        "id": "n53",
+        "type": "comp",
+        "x": 0,
+        "y": 0,
+        "w": "100%",
+        "h": 300,
+        "kids": [],
+        "ref": "d3",
+        "name": "Svc5",
+        "pv": {
+         "icon": "🛠",
+         "title": "Service & Monitoring",
+         "body": "Yearly inspection, cleaning, remote monitoring and a fault hotline with 24 h response.",
+         "price": "from EUR 19 / month"
+        },
+        "attrs": [
+         [
+          "class",
+          "card"
+         ]
+        ],
+        "slot": "container1"
+       },
+       {
+        "id": "n54",
+        "type": "comp",
+        "x": 0,
+        "y": 0,
+        "w": "100%",
+        "h": 300,
+        "kids": [],
+        "ref": "d3",
+        "name": "Svc6",
+        "pv": {
+         "icon": "📋",
+         "title": "Energy Audit",
+         "body": "Independent analysis of your consumption with a clear roadmap and a subsidy check.",
+         "price": "EUR 290 flat"
+        },
+        "attrs": [
+         [
+          "class",
+          "card"
+         ]
+        ],
+        "slot": "container1"
+       }
+      ],
+      "ref": "d7",
+      "name": "gridServices",
+      "css": [
+       [
+        "overflow",
+        "visible"
+       ]
+      ]
+     },
+     {
+      "id": "n60",
+      "type": "label",
+      "x": "calc(max(0px, 50% - 600px) + 48px)",
+      "y": 1976,
+      "w": 1104,
+      "h": 28,
+      "kids": [],
+      "text": "Tip: press “Request” on a card and the topic is filled into the contact form for you.",
+      "fs": 15,
+      "fg": "#1e8449",
+      "css": [
+       [
+        "font-weight",
+        "700"
+       ]
+      ],
+      "name": "lblPicked"
+     },
+     {
+      "id": "n84",
+      "type": "panel",
+      "x": "calc(max(0px, 50% - 600px) + 48px)",
+      "y": 2024,
+      "w": 1104,
+      "h": 380,
+      "kids": [
+       {
+        "id": "n74",
+        "type": "html",
+        "x": 32,
+        "y": 24,
+        "w": 440,
+        "h": 96,
+        "kids": [],
+        "html": "<p style=\"margin:0 0 10px;font:700 13px system-ui;letter-spacing:.18em;text-transform:uppercase;color:#d98f00\">Solar calculator</p><h2 style=\"margin:0 0 12px;font:800 30px/1.1 system-ui;color:#0f2a43\">What could your roof earn?</h2>",
+        "name": "calcHead"
+       },
+       {
+        "id": "n75",
+        "type": "label",
+        "x": 32,
+        "y": 134,
+        "w": 300,
+        "h": 22,
+        "kids": [],
+        "text": "Usable roof area",
+        "fs": 14,
+        "css": [
+         [
+          "font-weight",
+          "700"
+         ]
+        ],
+        "name": "lblAreaCap"
+       },
+       {
+        "id": "n76",
+        "type": "label",
+        "x": 340,
+        "y": 134,
+        "w": 120,
+        "h": 22,
+        "kids": [],
+        "text": "60 m2",
+        "fs": 14,
+        "css": [
+         [
+          "font-weight",
+          "700"
+         ],
+         [
+          "justify-content",
+          "flex-end"
+         ],
+         [
+          "text-align",
+          "right"
+         ]
+        ],
+        "name": "lblAreaVal"
+       },
+       {
+        "id": "n77",
+        "type": "slider",
+        "x": 32,
+        "y": 160,
+        "w": 428,
+        "h": 28,
+        "kids": [],
+        "text": "40",
+        "name": "sldArea"
+       },
+       {
+        "id": "n78",
+        "type": "label",
+        "x": 32,
+        "y": 204,
+        "w": 300,
+        "h": 22,
+        "kids": [],
+        "text": "Region",
+        "fs": 14,
+        "css": [
+         [
+          "font-weight",
+          "700"
+         ]
+        ],
+        "name": "lblRegionCap"
+       },
+       {
+        "id": "n79",
+        "type": "select",
+        "x": 32,
+        "y": 230,
+        "w": 428,
+        "h": 38,
+        "kids": [],
+        "opts": "Vienna and Lower Austria\nStyria and Burgenland\nCarinthia and Tyrol\nUpper Austria and Salzburg",
+        "name": "cboRegion"
+       },
+       {
+        "id": "n80",
+        "type": "checkbox",
+        "x": 32,
+        "y": 282,
+        "w": 428,
+        "h": 28,
+        "kids": [],
+        "text": "Add battery storage (+ EUR 4 800)",
+        "checked": false,
+        "name": "chkBattery"
+       },
+       {
+        "id": "n81",
+        "type": "button",
+        "x": 32,
+        "y": 326,
+        "w": 264,
+        "h": 40,
+        "kids": [],
+        "text": "Use this in my quote",
+        "attrs": [
+         [
+          "class",
+          "btn-primary"
+         ]
+        ],
+        "fs": 15,
+        "name": "btnUseCalc"
+       },
+       {
+        "id": "n82",
+        "type": "html",
+        "x": 312,
+        "y": 332,
+        "w": 150,
+        "h": 28,
+        "kids": [],
+        "html": "<a href=\"#contact\" style=\"font:700 14px/28px system-ui;color:#0f2a43\">to the form ↓</a>",
+        "name": "calcLink"
+       },
+       {
+        "id": "n83",
+        "type": "panel",
+        "x": 520,
+        "y": 24,
+        "w": 552,
+        "h": 332,
+        "kids": [
+         {
+          "id": "n61",
+          "type": "label",
+          "x": 28,
+          "y": 24,
+          "w": 240,
+          "h": 20,
+          "kids": [],
+          "text": "System size",
+          "fs": 12,
+          "fg": "var(--muted)",
+          "css": [
+           [
+            "text-transform",
+            "uppercase"
+           ],
+           [
+            "letter-spacing",
+            ".08em"
+           ],
+           [
+            "font-weight",
+            "700"
+           ]
+          ],
+          "name": "capSize"
+         },
+         {
+          "id": "n62",
+          "type": "label",
+          "x": 28,
+          "y": 46,
+          "w": 240,
+          "h": 34,
+          "kids": [],
+          "text": "-",
+          "fs": 24,
+          "fg": "#0f2a43",
+          "css": [
+           [
+            "font-weight",
+            "700"
+           ]
+          ],
+          "name": "lblSize"
+         },
+         {
+          "id": "n63",
+          "type": "label",
+          "x": 300,
+          "y": 24,
+          "w": 240,
+          "h": 20,
+          "kids": [],
+          "text": "Yearly yield",
+          "fs": 12,
+          "fg": "var(--muted)",
+          "css": [
+           [
+            "text-transform",
+            "uppercase"
+           ],
+           [
+            "letter-spacing",
+            ".08em"
+           ],
+           [
+            "font-weight",
+            "700"
+           ]
+          ],
+          "name": "capYield"
+         },
+         {
+          "id": "n64",
+          "type": "label",
+          "x": 300,
+          "y": 46,
+          "w": 240,
+          "h": 34,
+          "kids": [],
+          "text": "-",
+          "fs": 24,
+          "fg": "#0f2a43",
+          "css": [
+           [
+            "font-weight",
+            "700"
+           ]
+          ],
+          "name": "lblYield"
+         },
+         {
+          "id": "n65",
+          "type": "label",
+          "x": 28,
+          "y": 112,
+          "w": 240,
+          "h": 20,
+          "kids": [],
+          "text": "Savings per year",
+          "fs": 12,
+          "fg": "var(--muted)",
+          "css": [
+           [
+            "text-transform",
+            "uppercase"
+           ],
+           [
+            "letter-spacing",
+            ".08em"
+           ],
+           [
+            "font-weight",
+            "700"
+           ]
+          ],
+          "name": "capSaving"
+         },
+         {
+          "id": "n66",
+          "type": "label",
+          "x": 28,
+          "y": 134,
+          "w": 240,
+          "h": 44,
+          "kids": [],
+          "text": "-",
+          "fs": 34,
+          "fg": "#1e8449",
+          "css": [
+           [
+            "font-weight",
+            "700"
+           ]
+          ],
+          "name": "lblSaving"
+         },
+         {
+          "id": "n67",
+          "type": "label",
+          "x": 300,
+          "y": 112,
+          "w": 240,
+          "h": 20,
+          "kids": [],
+          "text": "Payback time",
+          "fs": 12,
+          "fg": "var(--muted)",
+          "css": [
+           [
+            "text-transform",
+            "uppercase"
+           ],
+           [
+            "letter-spacing",
+            ".08em"
+           ],
+           [
+            "font-weight",
+            "700"
+           ]
+          ],
+          "name": "capPayback"
+         },
+         {
+          "id": "n68",
+          "type": "label",
+          "x": 300,
+          "y": 134,
+          "w": 240,
+          "h": 44,
+          "kids": [],
+          "text": "-",
+          "fs": 34,
+          "fg": "#0f2a43",
+          "css": [
+           [
+            "font-weight",
+            "700"
+           ]
+          ],
+          "name": "lblPayback"
+         },
+         {
+          "id": "n69",
+          "type": "label",
+          "x": 28,
+          "y": 212,
+          "w": 240,
+          "h": 20,
+          "kids": [],
+          "text": "CO2 avoided per year",
+          "fs": 12,
+          "fg": "var(--muted)",
+          "css": [
+           [
+            "text-transform",
+            "uppercase"
+           ],
+           [
+            "letter-spacing",
+            ".08em"
+           ],
+           [
+            "font-weight",
+            "700"
+           ]
+          ],
+          "name": "capCo2"
+         },
+         {
+          "id": "n70",
+          "type": "label",
+          "x": 28,
+          "y": 234,
+          "w": 240,
+          "h": 34,
+          "kids": [],
+          "text": "-",
+          "fs": 24,
+          "fg": "#0f2a43",
+          "css": [
+           [
+            "font-weight",
+            "700"
+           ]
+          ],
+          "name": "lblCo2"
+         },
+         {
+          "id": "n71",
+          "type": "label",
+          "x": 300,
+          "y": 212,
+          "w": 240,
+          "h": 20,
+          "kids": [],
+          "text": "Estimated investment",
+          "fs": 12,
+          "fg": "var(--muted)",
+          "css": [
+           [
+            "text-transform",
+            "uppercase"
+           ],
+           [
+            "letter-spacing",
+            ".08em"
+           ],
+           [
+            "font-weight",
+            "700"
+           ]
+          ],
+          "name": "capCost"
+         },
+         {
+          "id": "n72",
+          "type": "label",
+          "x": 300,
+          "y": 234,
+          "w": 240,
+          "h": 34,
+          "kids": [],
+          "text": "-",
+          "fs": 24,
+          "fg": "#0f2a43",
+          "css": [
+           [
+            "font-weight",
+            "700"
+           ]
+          ],
+          "name": "lblCost"
+         },
+         {
+          "id": "n73",
+          "type": "label",
+          "x": 28,
+          "y": 288,
+          "w": 500,
+          "h": 32,
+          "kids": [],
+          "text": "Indicative values: the final offer follows a roof survey.",
+          "fs": 13,
+          "fg": "var(--muted)",
+          "css": [
+           [
+            "font-style",
+            "italic"
+           ]
+          ],
+          "name": "lblCalcNote"
+         }
+        ],
+        "attrs": [
+         [
+          "class",
+          "results"
+         ]
+        ],
+        "bg": "#ffffff",
+        "name": "pnlResult"
+       }
+      ],
+      "attrs": [
+       [
+        "class",
+        "calc"
+       ]
+      ],
+      "name": "calculator"
+     },
+     {
+      "id": "n90",
+      "type": "panel",
+      "x": "calc(max(0px, 50% - 600px) + 48px)",
+      "y": 2444,
+      "w": 1104,
+      "h": 232,
+      "kids": [
+       {
+        "id": "n85",
+        "type": "label",
+        "x": 100,
+        "y": 26,
+        "w": 904,
+        "h": 110,
+        "kids": [],
+        "text": "",
+        "fs": 24,
+        "fg": "#ffffff",
+        "css": [
+         [
+          "line-height",
+          "1.4"
+         ],
+         [
+          "font-weight",
+          "600"
+         ],
+         [
+          "justify-content",
+          "center"
+         ],
+         [
+          "text-align",
+          "center"
+         ]
+        ],
+        "name": "lblQuote"
+       },
+       {
+        "id": "n86",
+        "type": "label",
+        "x": 100,
+        "y": 148,
+        "w": 904,
+        "h": 26,
+        "kids": [],
+        "text": "",
+        "fs": 15,
+        "fg": "#ffb400",
+        "css": [
+         [
+          "font-weight",
+          "700"
+         ],
+         [
+          "justify-content",
+          "center"
+         ],
+         [
+          "text-align",
+          "center"
+         ]
+        ],
+        "name": "lblWho"
+       },
+       {
+        "id": "n87",
+        "type": "label",
+        "x": 400,
+        "y": 186,
+        "w": 304,
+        "h": 28,
+        "kids": [],
+        "text": "",
+        "fs": 16,
+        "fg": "#ffe08a",
+        "css": [
+         [
+          "justify-content",
+          "center"
+         ],
+         [
+          "text-align",
+          "center"
+         ]
+        ],
+        "name": "lblDots"
+       },
+       {
+        "id": "n88",
+        "type": "button",
+        "x": 24,
+        "y": 94,
+        "w": 46,
+        "h": 46,
+        "kids": [],
+        "text": "‹",
+        "attrs": [
+         [
+          "class",
+          "btn-round"
+         ]
+        ],
+        "name": "btnPrev"
+       },
+       {
+        "id": "n89",
+        "type": "button",
+        "x": 1034,
+        "y": 94,
+        "w": 46,
+        "h": 46,
+        "kids": [],
+        "text": "›",
+        "attrs": [
+         [
+          "class",
+          "btn-round"
+         ]
+        ],
+        "name": "btnNext"
+       }
+      ],
+      "attrs": [
+       [
+        "class",
+        "quotes"
+       ]
+      ],
+      "name": "pnlQuotes"
+     },
+     {
+      "id": "n99",
+      "type": "html",
+      "x": "calc(max(0px, 50% - 600px) + 48px)",
+      "y": 2724,
+      "w": 700,
+      "h": 100,
+      "kids": [],
+      "html": "<p style=\"margin:0 0 10px;font:700 13px system-ui;letter-spacing:.18em;text-transform:uppercase;color:#d98f00\">Our team</p><h2 style=\"margin:0 0 12px;font:800 38px/1.1 system-ui;color:#0f2a43\">The people on your roof</h2>",
+      "name": "team"
+     },
+     {
+      "id": "n100",
+      "type": "label",
+      "x": "calc(max(0px, 50% - 600px) + 836px)",
+      "y": 2750,
+      "w": 70,
+      "h": 36,
+      "kids": [],
+      "text": "Show:",
+      "fs": 14,
+      "fg": "var(--muted)",
+      "css": [
+       [
+        "font-weight",
+        "700"
+       ],
+       [
+        "justify-content",
+        "flex-end"
+       ]
+      ],
+      "name": "lblDeptCap"
+     },
+     {
+      "id": "n101",
+      "type": "select",
+      "x": "calc(max(0px, 50% - 600px) + 916px)",
+      "y": 2750,
+      "w": 236,
+      "h": 38,
+      "kids": [],
+      "opts": "Everyone\nManagement\nEngineering\nService",
+      "name": "cboDept"
+     },
+     {
+      "id": "n102",
+      "type": "comp",
+      "x": "calc(max(0px, 50% - 600px) + 48px)",
+      "y": 2840,
+      "w": 1104,
+      "h": 624,
+      "kids": [
+       {
+        "id": "n91",
+        "type": "comp",
+        "x": 0,
+        "y": 0,
+        "w": "100%",
+        "h": 300,
+        "kids": [],
+        "ref": "d4",
+        "name": "Team1",
+        "pv": {
+         "person": "Theresa Lindner",
+         "role": "Managing Director",
+         "dept": "Management",
+         "bio": "Founded Sonnenfeld in 2009 after ten years in grid engineering. Still joins the first roof survey of every big project.",
+         "tone": "#ffb400"
+        },
+        "attrs": [
+         [
+          "class",
+          "card"
+         ]
+        ],
+        "slot": "container1"
+       },
+       {
+        "id": "n92",
+        "type": "comp",
+        "x": 0,
+        "y": 0,
+        "w": "100%",
+        "h": 300,
+        "kids": [],
+        "ref": "d4",
+        "name": "Team2",
+        "pv": {
+         "person": "Markus Eder",
+         "role": "Head of Engineering",
+         "dept": "Engineering",
+         "bio": "Designs our PV and storage systems. Believes a good plan is one the installer never has to question.",
+         "tone": "#8fd3c4"
+        },
+        "attrs": [
+         [
+          "class",
+          "card"
+         ]
+        ],
+        "slot": "container1"
+       },
+       {
+        "id": "n93",
+        "type": "comp",
+        "x": 0,
+        "y": 0,
+        "w": "100%",
+        "h": 300,
+        "kids": [],
+        "ref": "d4",
+        "name": "Team3",
+        "pv": {
+         "person": "Sofia Petrovic",
+         "role": "Lead Installer",
+         "dept": "Engineering",
+         "bio": "Has mounted more than 400 roofs and still prefers the view from the top. Trains our apprentices.",
+         "tone": "#ffcf99"
+        },
+        "attrs": [
+         [
+          "class",
+          "card"
+         ]
+        ],
+        "slot": "container1"
+       },
+       {
+        "id": "n94",
+        "type": "comp",
+        "x": 0,
+        "y": 0,
+        "w": "100%",
+        "h": 300,
+        "kids": [],
+        "ref": "d4",
+        "name": "Team4",
+        "pv": {
+         "person": "Daniel Wolf",
+         "role": "Customer Advisor",
+         "dept": "Service",
+         "bio": "Explains subsidies in plain German, English and Hungarian, and never says “it depends” without saying on what.",
+         "tone": "#b9d4f5"
+        },
+        "attrs": [
+         [
+          "class",
+          "card"
+         ]
+        ],
+        "slot": "container1"
+       },
+       {
+        "id": "n95",
+        "type": "comp",
+        "x": 0,
+        "y": 0,
+        "w": "100%",
+        "h": 300,
+        "kids": [],
+        "ref": "d4",
+        "name": "Team5",
+        "pv": {
+         "person": "Aylin Demir",
+         "role": "Project Manager",
+         "dept": "Management",
+         "bio": "Keeps scaffolding, cranes, inspectors and customers in the same week. Her spreadsheets are famous.",
+         "tone": "#f5b9c8"
+        },
+        "attrs": [
+         [
+          "class",
+          "card"
+         ]
+        ],
+        "slot": "container1"
+       },
+       {
+        "id": "n96",
+        "type": "comp",
+        "x": 0,
+        "y": 0,
+        "w": "100%",
+        "h": 300,
+        "kids": [],
+        "ref": "d4",
+        "name": "Team6",
+        "pv": {
+         "person": "Lukas Brandt",
+         "role": "Grid and Permits",
+         "dept": "Engineering",
+         "bio": "Talks to grid operators so you do not have to. Knows every form number by heart.",
+         "tone": "#d4c2f5"
+        },
+        "attrs": [
+         [
+          "class",
+          "card"
+         ]
+        ],
+        "slot": "container1"
+       },
+       {
+        "id": "n97",
+        "type": "comp",
+        "x": 0,
+        "y": 0,
+        "w": "100%",
+        "h": 300,
+        "kids": [],
+        "ref": "d4",
+        "name": "Team7",
+        "pv": {
+         "person": "Hannah Reiter",
+         "role": "Service Technician",
+         "dept": "Service",
+         "bio": "Answers the 24 h hotline on weekends and drives a van full of spare inverters.",
+         "tone": "#ffe08a"
+        },
+        "attrs": [
+         [
+          "class",
+          "card"
+         ]
+        ],
+        "slot": "container1"
+       },
+       {
+        "id": "n98",
+        "type": "comp",
+        "x": 0,
+        "y": 0,
+        "w": "100%",
+        "h": 300,
+        "kids": [],
+        "ref": "d4",
+        "name": "Team8",
+        "pv": {
+         "person": "Felix Aigner",
+         "role": "Monitoring Specialist",
+         "dept": "Service",
+         "bio": "Reads your system's data every morning and calls you before a fault becomes a problem.",
+         "tone": "#a8e0a0"
+        },
+        "attrs": [
+         [
+          "class",
+          "card"
+         ]
+        ],
+        "slot": "container1"
+       }
+      ],
+      "ref": "d7",
+      "name": "gridTeam",
+      "pv": {
+       "columns": "4"
+      },
+      "css": [
+       [
+        "overflow",
+        "visible"
+       ]
+      ]
+     },
+     {
+      "id": "n107",
+      "type": "html",
+      "x": "calc(max(0px, 50% - 600px) + 48px)",
+      "y": 3516,
+      "w": 700,
+      "h": 96,
+      "kids": [],
+      "html": "<p style=\"margin:0 0 10px;font:700 13px system-ui;letter-spacing:.18em;text-transform:uppercase;color:#d98f00\">Questions</p><h2 style=\"margin:0 0 12px;font:800 38px/1.1 system-ui;color:#0f2a43\">Good to know</h2>",
+      "name": "faq"
+     },
+     {
+      "id": "n108",
+      "type": "comp",
+      "x": "calc(max(0px, 50% - 600px) + 48px)",
+      "y": 3624,
+      "w": 1104,
+      "h": 340,
+      "kids": [
+       {
+        "id": "n103",
+        "type": "comp",
+        "x": 0,
+        "y": 0,
+        "w": "100%",
+        "h": 56,
+        "kids": [],
+        "ref": "d6",
+        "name": "Faq1",
+        "pv": {
+         "question": "How long does an installation take?",
+         "answer": "Most homes need one or two days on the roof. From signed offer to grid connection it is usually six to ten weeks, mostly waiting for the grid operator."
+        },
+        "attrs": [
+         [
+          "class",
+          "card"
+         ]
+        ],
+        "slot": "container1"
+       },
+       {
+        "id": "n104",
+        "type": "comp",
+        "x": 0,
+        "y": 0,
+        "w": "100%",
+        "h": 56,
+        "kids": [],
+        "ref": "d6",
+        "name": "Faq2",
+        "pv": {
+         "question": "Is there a subsidy?",
+         "answer": "Yes, federal and regional programmes exist. We check your eligibility and prepare the application with you; it is included in our price."
+        },
+        "attrs": [
+         [
+          "class",
+          "card"
+         ]
+        ],
+        "slot": "container1"
+       },
+       {
+        "id": "n105",
+        "type": "comp",
+        "x": 0,
+        "y": 0,
+        "w": "100%",
+        "h": 56,
+        "kids": [],
+        "ref": "d6",
+        "name": "Faq3",
+        "pv": {
+         "question": "What happens in winter or when it rains?",
+         "answer": "Panels still deliver 10 to 25 percent of their peak power on cloudy days. Your grid connection covers the rest, a battery bridges the evening."
+        },
+        "attrs": [
+         [
+          "class",
+          "card"
+         ]
+        ],
+        "slot": "container1"
+       },
+       {
+        "id": "n106",
+        "type": "comp",
+        "x": 0,
+        "y": 0,
+        "w": "100%",
+        "h": 56,
+        "kids": [],
+        "ref": "d6",
+        "name": "Faq4",
+        "pv": {
+         "question": "What if something breaks?",
+         "answer": "You get a 25-year performance warranty on modules, 10 years on inverters and a service hotline that answers within 24 hours."
+        },
+        "attrs": [
+         [
+          "class",
+          "card"
+         ]
+        ],
+        "slot": "container1"
+       }
+      ],
+      "ref": "d8",
+      "name": "stackFaq",
+      "css": [
+       [
+        "overflow",
+        "visible"
+       ]
+      ]
+     },
+     {
+      "id": "n109",
+      "type": "html",
+      "x": "calc(max(0px, 50% - 600px) + 48px)",
+      "y": 4004,
+      "w": 700,
+      "h": 100,
+      "kids": [],
+      "html": "<p style=\"margin:0 0 10px;font:700 13px system-ui;letter-spacing:.18em;text-transform:uppercase;color:#d98f00\">Contact</p><h2 style=\"margin:0 0 12px;font:800 38px/1.1 system-ui;color:#0f2a43\">Let’s talk about your roof</h2>",
+      "name": "contact"
+     },
+     {
+      "id": "n110",
+      "type": "comp",
+      "x": "calc(max(0px, 50% - 600px) + 48px)",
+      "y": 4116,
+      "w": 640,
+      "h": 470,
+      "kids": [],
+      "ref": "d9",
+      "name": "ContactForm1",
+      "pv": {
+       "topic": "General question"
+      },
+      "attrs": [
+       [
+        "class",
+        "card"
+       ]
+      ]
+     },
+     {
+      "id": "n111",
+      "type": "frame",
+      "x": "calc(max(0px, 50% - 600px) + 728px)",
+      "y": 4116,
+      "w": 424,
+      "h": 262,
+      "kids": [],
+      "url": "https://www.openstreetmap.org/export/embed.html?bbox=16.3590%2C48.1960%2C16.3800%2C48.2060&layer=mapnik&marker=48.2008%2C16.3697",
+      "css": [
+       [
+        "border-radius",
+        "18px"
+       ],
+       [
+        "overflow",
+        "hidden"
+       ],
+       [
+        "box-shadow",
+        "0 6px 24px rgba(15,42,67,.12)"
+       ]
+      ],
+      "name": "mapFrame"
+     },
+     {
+      "id": "n112",
+      "type": "html",
+      "x": "calc(max(0px, 50% - 600px) + 728px)",
+      "y": 4396,
+      "w": 424,
+      "h": 190,
+      "kids": [],
+      "html": "<div style=\"font:15px/1.7 system-ui;color:#4a5f73\"><b style=\"color:#0f2a43\">Sonnenfeld Solar GmbH</b><br>Solargasse 12, 1040 Vienna<br>+43 1 555 0100<br>hello@sonnenfeld-solar.example<br><span style=\"color:#8a9bab\">Mon–Fri 8:00–17:00 · hotline 24 h</span></div>",
+      "name": "contactInfo"
+     },
+     {
+      "id": "n114",
+      "type": "panel",
+      "x": 0,
+      "y": 4640,
+      "w": "100%",
+      "h": 180,
+      "kids": [
+       {
+        "id": "n113",
+        "type": "html",
+        "x": "calc(max(0px, 50% - 600px) + 48px)",
+        "y": 32,
+        "w": 1104,
+        "h": 120,
+        "kids": [],
+        "html": "<div style=\"display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px;font:14px/1.8 system-ui;color:#9fb6cc\"><div><div style=\"font:800 22px system-ui;color:#fff;margin-bottom:8px\"><span style=\"color:#ffb400\">☀</span> Sonnenfeld <span style=\"color:#ffb400\">Solar</span></div>Clean power for Austria since 2009.<br><span style=\"color:#6f89a1\">Sonnenfeld Solar is a fictional company, made as a demo page for the Visual Coding tool.</span></div><div><b style=\"color:#fff\">Explore</b><br><a href=\"#about\" style=\"color:#9fb6cc;text-decoration:none\">About</a><br><a href=\"#services\" style=\"color:#9fb6cc;text-decoration:none\">Services</a><br><a href=\"#team\" style=\"color:#9fb6cc;text-decoration:none\">Team</a></div><div><b style=\"color:#fff\">Contact</b><br>+43 1 555 0100<br>hello@sonnenfeld-solar.example<br><a href=\"#app\" style=\"color:#9fb6cc;text-decoration:none\">↑ Back to top</a></div></div>",
+        "name": "footerText"
+       }
+      ],
+      "css": [
+       [
+        "background",
+        "#0f2a43"
+       ],
+       [
+        "border-radius",
+        "0"
+       ],
+       [
+        "box-shadow",
+        "none"
+       ]
+      ],
+      "name": "pnlFooter"
+     }
+    ],
+    "css": "/* The page is a full-width form (width 100%); the content column is 1200 px and centred with calc(). */\nmin-width: 1200px;\n/* Design tokens: usable everywhere on the page, also in the \"CSS style\" rows of single controls */\n--navy: #0f2a43;\n--amber: #ffb400;\n--muted: #5b6f82;\nfont-family: \"Segoe UI\", system-ui, -apple-system, sans-serif;\ncolor: var(--navy);\nscroll-margin-top: 0;\n\n/* buttons: put the class name in the HTML attribute \"class\" of a button */\n.btn-primary {\n  border: 0; border-radius: 999px; cursor: pointer;\n  background: var(--amber); color: var(--navy); font-weight: 700;\n  transition: transform .15s, filter .15s;\n}\n.btn-primary:hover { transform: translateY(-2px); filter: brightness(1.08); }\n.btn-ghost {\n  border: 2px solid rgba(255,255,255,.55); border-radius: 999px; cursor: pointer;\n  background: transparent; color: #fff; font-weight: 700;\n}\n.btn-ghost:hover { background: rgba(255,255,255,.12); }\n.btn-round {\n  border: 0; border-radius: 50%; cursor: pointer; font-size: 22px; line-height: 1;\n  background: rgba(255,255,255,.14); color: #fff;\n}\n.btn-round:hover { background: var(--amber); color: var(--navy); }\n\n/* surfaces */\n.card {\n  border-radius: 18px; background: #fff;\n  box-shadow: 0 6px 24px rgba(15,42,67,.10);\n  transition: transform .2s, box-shadow .2s;\n}\n.card:hover { transform: translateY(-4px); box-shadow: 0 16px 36px rgba(15,42,67,.18); }\n.glass {\n  border-radius: 22px; box-shadow: none;\n  background: rgba(255,255,255,.09); border: 1px solid rgba(255,255,255,.2);\n}\n.calc { border-radius: 26px; box-shadow: none; background: linear-gradient(120deg, #ffe7a8, #ffd25a); }\n.quotes { border-radius: 26px; box-shadow: none; background: linear-gradient(120deg, #0f2a43, #1f5580); }\n.results { border-radius: 20px; box-shadow: 0 8px 28px rgba(15,42,67,.16); }\n.pic { border-radius: 24px; box-shadow: 0 14px 40px rgba(15,42,67,.2); }\n\n/* inline anchor links inside HTML controls */\n.cta:hover { filter: brightness(1.08); }\n.ghost:hover { background: rgba(255,255,255,.12); }\na { transition: color .15s; }\n\n/* form fields: one look for every textbox, combobox and textarea on the page, also inside components */\ninput[type=text], select, textarea {\n  border: 1px solid #c9d6e2; border-radius: 10px; background: #fff;\n  padding: 0 12px; outline: none;\n}\ntextarea { padding: 10px 12px; }\ninput[type=text]:focus, select:focus, textarea:focus { border-color: var(--amber); box-shadow: 0 0 0 3px rgba(255,180,0,.3); }\ninput[type=range], input[type=checkbox] { accent-color: var(--amber); }\n\n.muted { color: var(--muted); }\n"
+   },
+   "bp": []
+  },
+  {
+   "id": "d2",
+   "root": {
+    "id": "root",
+    "type": "form",
+    "name": "NavBar",
+    "x": 0,
+    "y": 0,
+    "w": "100%",
+    "h": 72,
+    "text": "My form",
+    "bg": "#0f2a43",
+    "code": "' NavBar component: pure HTML + CSS, no code needed.\n",
+    "language": "vb",
+    "kids": [
+     {
+      "id": "n1",
+      "type": "html",
+      "x": "calc(max(0px, 50% - 600px) + 24px)",
+      "y": 14,
+      "w": 280,
+      "h": 44,
+      "kids": [],
+      "html": "<style>html{scroll-behavior:smooth} body{justify-content:flex-start !important}</style><div style=\"display:flex;align-items:center;gap:10px;height:44px;color:#fff;font:800 22px system-ui;letter-spacing:.01em\"><span style=\"font-size:30px;color:#ffb400\">☀</span><span>Sonnenfeld <span style=\"color:#ffb400\">Solar</span></span></div>",
+      "name": "navLogo"
+     },
+     {
+      "id": "n2",
+      "type": "html",
+      "x": "calc(max(0px, 50% - 600px) + 330px)",
+      "y": 14,
+      "w": 640,
+      "h": 44,
+      "kids": [],
+      "html": "<nav class=\"nav\" style=\"display:flex;gap:30px;height:44px;align-items:center;font:600 15px system-ui\"><a href=\"#about\" style=\"color:#cfe3f5;text-decoration:none\">About</a><a href=\"#services\" style=\"color:#cfe3f5;text-decoration:none\">Services</a><a href=\"#calculator\" style=\"color:#cfe3f5;text-decoration:none\">Calculator</a><a href=\"#team\" style=\"color:#cfe3f5;text-decoration:none\">Team</a><a href=\"#faq\" style=\"color:#cfe3f5;text-decoration:none\">FAQ</a><a href=\"#contact\" style=\"color:#cfe3f5;text-decoration:none\">Contact</a></nav>",
+      "name": "navLinks"
+     },
+     {
+      "id": "n3",
+      "type": "html",
+      "x": "calc(max(0px, 50% - 600px) + 1000px)",
+      "y": 17,
+      "w": 176,
+      "h": 38,
+      "kids": [],
+      "html": "<a class=\"cta\" href=\"#contact\" style=\"display:block;box-sizing:border-box;text-align:center;padding:9px 0;border-radius:999px;background:#ffb400;color:#0f2a43;font:700 15px system-ui;text-decoration:none\">Get a free quote</a>",
+      "name": "navCta"
+     }
+    ],
+    "css": "/* NavBar */\n.nav a:hover { color: #ffb400 !important; }\n"
+   },
+   "bp": []
+  },
+  {
+   "id": "d3",
+   "root": {
+    "id": "root",
+    "type": "form",
+    "name": "ServiceCard",
+    "x": 0,
+    "y": 0,
+    "w": 352,
+    "h": 300,
+    "text": "My form",
+    "bg": "#ffffff",
+    "code": "' ServiceCard component\n' Properties: Icon, Title, Body, Price     Event: Selected(title)\nPublic Event Selected(title)\n\nSub Icon_Change()\n    lblIcon.Caption = Icon\nEnd Sub\n\nSub Title_Change()\n    lblTitle.Caption = Title\nEnd Sub\n\nSub Body_Change()\n    lblBody.Caption = Body\nEnd Sub\n\nSub Price_Change()\n    lblPrice.Caption = Price\nEnd Sub\n\nSub btnSelect_Click()\n    RaiseEvent Selected(Title)\nEnd Sub\n",
+    "language": "vb",
+    "kids": [
+     {
+      "id": "n4",
+      "type": "label",
+      "x": 28,
+      "y": 24,
+      "w": 72,
+      "h": 64,
+      "kids": [],
+      "text": "☀",
+      "fs": 34,
+      "css": [
+       [
+        "justify-content",
+        "center"
+       ],
+       [
+        "text-align",
+        "center"
+       ]
+      ],
+      "attrs": [
+       [
+        "class",
+        "tile"
+       ]
+      ],
+      "name": "lblIcon"
+     },
+     {
+      "id": "n5",
+      "type": "label",
+      "x": 28,
+      "y": 104,
+      "w": 296,
+      "h": 30,
+      "kids": [],
+      "text": "Service",
+      "fs": 20,
+      "css": [
+       [
+        "font-weight",
+        "700"
+       ]
+      ],
+      "name": "lblTitle"
+     },
+     {
+      "id": "n6",
+      "type": "label",
+      "x": 28,
+      "y": 140,
+      "w": 296,
+      "h": 84,
+      "kids": [],
+      "text": "Short description of the service.",
+      "fs": 14,
+      "fg": "var(--muted)",
+      "css": [
+       [
+        "align-items",
+        "flex-start"
+       ],
+       [
+        "line-height",
+        "1.5"
+       ]
+      ],
+      "name": "lblBody"
+     },
+     {
+      "id": "n7",
+      "type": "label",
+      "x": 28,
+      "y": 236,
+      "w": 170,
+      "h": 28,
+      "kids": [],
+      "text": "from EUR 0",
+      "fs": 15,
+      "fg": "#b9770e",
+      "css": [
+       [
+        "font-weight",
+        "700"
+       ]
+      ],
+      "name": "lblPrice"
+     },
+     {
+      "id": "n8",
+      "type": "button",
+      "x": 204,
+      "y": 232,
+      "w": 120,
+      "h": 36,
+      "kids": [],
+      "text": "Request  ›",
+      "attrs": [
+       [
+        "class",
+        "btn-primary"
+       ]
+      ],
+      "fs": 14,
+      "name": "btnSelect"
+     }
+    ],
+    "css": "/* ServiceCard: the icon tile */\n.tile { border-radius: 18px; background: #fff3d1; }\n",
+    "props": [
+     [
+      "icon",
+      "☀"
+     ],
+     [
+      "title",
+      "Service"
+     ],
+     [
+      "body",
+      "Short description of the service."
+     ],
+     [
+      "price",
+      "from EUR 0"
+     ]
+    ]
+   },
+   "bp": []
+  },
+  {
+   "id": "d4",
+   "root": {
+    "id": "root",
+    "type": "form",
+    "name": "TeamCard",
+    "x": 0,
+    "y": 0,
+    "w": 258,
+    "h": 300,
+    "text": "My form",
+    "bg": "#ffffff",
+    "code": "' TeamCard component\n' Properties: Person, Role, Dept, Bio, Tone (avatar colour)\nDim showBio As Boolean\n\n' \"Theresa Lindner\" -> \"TL\"\nFunction Initials(s As String) As String\n    Dim p As Integer\n    p = InStr(s, \" \")\n    If p = 0 Then Return UCase(Left(s, 2))\n    Return UCase(Left(s, 1) & Mid(s, p + 1, 1))\nEnd Function\n\nSub Form_Load()\n    lblBio.Visible = False\nEnd Sub\n\nSub Person_Change()\n    lblPerson.Caption = Person\n    lblAvatar.Caption = Initials(Person)\nEnd Sub\n\nSub Role_Change()\n    lblRole.Caption = Role\nEnd Sub\n\nSub Dept_Change()\n    lblDept.Caption = UCase(Dept)\nEnd Sub\n\nSub Bio_Change()\n    lblBio.Caption = Bio\nEnd Sub\n\nSub Tone_Change()\n    lblAvatar.BackColor = Tone\nEnd Sub\n\nSub btnBio_Click()\n    showBio = Not showBio\n    lblBio.Visible = showBio\n    If showBio Then btnBio.Caption = \"Close bio\" Else btnBio.Caption = \"Read bio\"\nEnd Sub\n",
+    "language": "vb",
+    "kids": [
+     {
+      "id": "n9",
+      "type": "label",
+      "x": 79,
+      "y": 24,
+      "w": 100,
+      "h": 100,
+      "kids": [],
+      "text": "FL",
+      "fs": 34,
+      "bg": "#ffb400",
+      "css": [
+       [
+        "font-weight",
+        "700"
+       ],
+       [
+        "justify-content",
+        "center"
+       ],
+       [
+        "text-align",
+        "center"
+       ]
+      ],
+      "attrs": [
+       [
+        "class",
+        "avatar"
+       ]
+      ],
+      "name": "lblAvatar"
+     },
+     {
+      "id": "n10",
+      "type": "label",
+      "x": 12,
+      "y": 138,
+      "w": 234,
+      "h": 28,
+      "kids": [],
+      "text": "First Last",
+      "fs": 18,
+      "css": [
+       [
+        "font-weight",
+        "700"
+       ],
+       [
+        "justify-content",
+        "center"
+       ],
+       [
+        "text-align",
+        "center"
+       ]
+      ],
+      "name": "lblPerson"
+     },
+     {
+      "id": "n11",
+      "type": "label",
+      "x": 12,
+      "y": 166,
+      "w": 234,
+      "h": 22,
+      "kids": [],
+      "text": "Role",
+      "fs": 14,
+      "fg": "var(--muted)",
+      "css": [
+       [
+        "justify-content",
+        "center"
+       ],
+       [
+        "text-align",
+        "center"
+       ]
+      ],
+      "name": "lblRole"
+     },
+     {
+      "id": "n12",
+      "type": "label",
+      "x": 12,
+      "y": 192,
+      "w": 234,
+      "h": 20,
+      "kids": [],
+      "text": "DEPT",
+      "fs": 11,
+      "fg": "#b9770e",
+      "css": [
+       [
+        "letter-spacing",
+        ".14em"
+       ],
+       [
+        "font-weight",
+        "700"
+       ],
+       [
+        "justify-content",
+        "center"
+       ],
+       [
+        "text-align",
+        "center"
+       ]
+      ],
+      "name": "lblDept"
+     },
+     {
+      "id": "n13",
+      "type": "label",
+      "x": 10,
+      "y": 10,
+      "w": 238,
+      "h": 226,
+      "kids": [],
+      "text": "Short biography.",
+      "fs": 14,
+      "fg": "#0f2a43",
+      "bg": "#fff7e0",
+      "css": [
+       [
+        "padding",
+        "16px"
+       ],
+       [
+        "align-items",
+        "flex-start"
+       ],
+       [
+        "line-height",
+        "1.55"
+       ]
+      ],
+      "attrs": [
+       [
+        "class",
+        "bio"
+       ]
+      ],
+      "name": "lblBio"
+     },
+     {
+      "id": "n14",
+      "type": "button",
+      "x": 49,
+      "y": 250,
+      "w": 160,
+      "h": 34,
+      "kids": [],
+      "text": "Read bio",
+      "attrs": [
+       [
+        "class",
+        "btn-primary"
+       ]
+      ],
+      "fs": 13,
+      "name": "btnBio"
+     }
+    ],
+    "css": "/* TeamCard */\n.avatar { border-radius: 50%; color: #0f2a43; box-shadow: 0 6px 16px rgba(15,42,67,.18); }\n.bio { border-radius: 18px; }\n",
+    "props": [
+     [
+      "person",
+      "First Last"
+     ],
+     [
+      "role",
+      "Role"
+     ],
+     [
+      "dept",
+      "Dept"
+     ],
+     [
+      "bio",
+      "Short biography."
+     ],
+     [
+      "tone",
+      "#ffb400"
+     ]
+    ]
+   },
+   "bp": []
+  },
+  {
+   "id": "d5",
+   "root": {
+    "id": "root",
+    "type": "form",
+    "name": "StatCounter",
+    "x": 0,
+    "y": 0,
+    "w": 264,
+    "h": 104,
+    "text": "My form",
+    "bg": "#ffffff",
+    "code": "' StatCounter component: counts up to Target when the page calls Advance\n' Properties: Target, Suffix, Legend\nDim shown As Integer\n\nSub Legend_Change()\n    lblLegend.Caption = Legend\nEnd Sub\n\nSub Suffix_Change()\n    lblNum.Caption = shown & Suffix\nEnd Sub\n\nPublic Sub Advance()\n    Dim stp As Integer\n    If shown >= Target Then Exit Sub\n    stp = Int(Target / 60) + 1\n    shown = shown + stp\n    If shown > Target Then shown = Target\n    lblNum.Caption = shown & Suffix\nEnd Sub\n\nPublic Sub Replay()\n    shown = 0\n    lblNum.Caption = shown & Suffix\nEnd Sub\n\nPublic Function IsDone() As Boolean\n    Return shown >= Target\nEnd Function\n",
+    "language": "vb",
+    "kids": [
+     {
+      "id": "n15",
+      "type": "label",
+      "x": 20,
+      "y": 12,
+      "w": 228,
+      "h": 52,
+      "kids": [],
+      "text": "0",
+      "fs": 38,
+      "fg": "#d98f00",
+      "css": [
+       [
+        "font-weight",
+        "700"
+       ]
+      ],
+      "attrs": [
+       [
+        "class",
+        "num"
+       ]
+      ],
+      "name": "lblNum"
+     },
+     {
+      "id": "n16",
+      "type": "label",
+      "x": 20,
+      "y": 64,
+      "w": 228,
+      "h": 26,
+      "kids": [],
+      "text": "things counted",
+      "fs": 14,
+      "fg": "var(--muted)",
+      "name": "lblLegend"
+     }
+    ],
+    "css": "/* StatCounter */\n.num { letter-spacing: -.02em; }\n",
+    "props": [
+     [
+      "target",
+      "100"
+     ],
+     [
+      "suffix",
+      ""
+     ],
+     [
+      "legend",
+      "things counted"
+     ]
+    ]
+   },
+   "bp": []
+  },
+  {
+   "id": "d6",
+   "root": {
+    "id": "root",
+    "type": "form",
+    "name": "FaqItem",
+    "x": 0,
+    "y": 0,
+    "w": 1104,
+    "h": 56,
+    "text": "My form",
+    "bg": "#ffffff",
+    "code": "' FaqItem component: an accordion row that resizes itself\n' Properties: Question, Answer     Event: Opened     Public Sub: Collapse\nPublic Event Opened()\nDim isOpen As Boolean\n\nSub Question_Change()\n    btnQ.Caption = \"+   \" & Question\nEnd Sub\n\nSub Answer_Change()\n    lblA.Caption = Answer\nEnd Sub\n\nPublic Sub Collapse()\n    isOpen = False\n    Me.Height = 56\n    btnQ.Caption = \"+   \" & Question\nEnd Sub\n\nSub btnQ_Click()\n    If isOpen Then\n        Collapse\n    Else\n        isOpen = True\n        Me.Height = 136\n        btnQ.Caption = \"-   \" & Question\n        RaiseEvent Opened\n    End If\nEnd Sub\n",
+    "language": "vb",
+    "kids": [
+     {
+      "id": "n17",
+      "type": "label",
+      "x": 24,
+      "y": 60,
+      "w": 1056,
+      "h": 68,
+      "kids": [],
+      "text": "Answer.",
+      "fs": 15,
+      "fg": "var(--muted)",
+      "css": [
+       [
+        "align-items",
+        "flex-start"
+       ],
+       [
+        "line-height",
+        "1.55"
+       ]
+      ],
+      "name": "lblA"
+     },
+     {
+      "id": "n18",
+      "type": "button",
+      "x": 0,
+      "y": 0,
+      "w": 1104,
+      "h": 56,
+      "kids": [],
+      "text": "+   Question?",
+      "attrs": [
+       [
+        "class",
+        "faqq"
+       ]
+      ],
+      "css": [
+       [
+        "padding",
+        "0 24px"
+       ],
+       [
+        "font-weight",
+        "700"
+       ],
+       [
+        "color",
+        "#0f2a43"
+       ],
+       [
+        "border-radius",
+        "0"
+       ],
+       [
+        "background",
+        "transparent"
+       ]
+      ],
+      "fs": 17,
+      "name": "btnQ"
+     }
+    ],
+    "css": "/* FaqItem */\n.faqq { text-align: left; border: 0; background: transparent; cursor: pointer; }\n.faqq:hover { color: #d98f00; }\n",
+    "props": [
+     [
+      "question",
+      "Question?"
+     ],
+     [
+      "answer",
+      "Answer."
+     ]
+    ]
+   },
+   "bp": []
+  },
+  {
+   "id": "d7",
+   "root": {
+    "id": "root",
+    "type": "form",
+    "name": "CardGrid",
+    "x": 0,
+    "y": 0,
+    "w": 1104,
+    "h": 632,
+    "text": "My form",
+    "bg": "transparent",
+    "code": "' CardGrid: a layout component. Drop controls onto its container;\n' the container is a CSS grid whose columns and gap come from the properties.\n",
+    "language": "vb",
+    "kids": [
+     {
+      "id": "n19",
+      "type": "slot",
+      "x": 0,
+      "y": 0,
+      "w": "100%",
+      "h": "100%",
+      "kids": [],
+      "css": [
+       [
+        "display",
+        "grid"
+       ],
+       [
+        "grid-template-columns",
+        "repeat(var(--prop-columns, 3), 1fr)"
+       ],
+       [
+        "gap",
+        "var(--prop-gap, 24px)"
+       ],
+       [
+        "align-content",
+        "start"
+       ],
+       [
+        "overflow",
+        "visible"
+       ]
+      ],
+      "name": "container1"
+     }
+    ],
+    "props": [
+     [
+      "columns",
+      "3"
+     ],
+     [
+      "gap",
+      "24px"
+     ]
+    ]
+   },
+   "bp": []
+  },
+  {
+   "id": "d8",
+   "root": {
+    "id": "root",
+    "type": "form",
+    "name": "Stack",
+    "x": 0,
+    "y": 0,
+    "w": 1104,
+    "h": 340,
+    "text": "My form",
+    "bg": "transparent",
+    "code": "' Stack: a vertical flex layout. Children may change their own height (see FaqItem).\n",
+    "language": "vb",
+    "kids": [
+     {
+      "id": "n20",
+      "type": "slot",
+      "x": 0,
+      "y": 0,
+      "w": "100%",
+      "h": "100%",
+      "kids": [],
+      "css": [
+       [
+        "display",
+        "flex"
+       ],
+       [
+        "flex-direction",
+        "column"
+       ],
+       [
+        "gap",
+        "12px"
+       ],
+       [
+        "overflow",
+        "visible"
+       ]
+      ],
+      "name": "container1"
+     }
+    ]
+   },
+   "bp": []
+  },
+  {
+   "id": "d9",
+   "root": {
+    "id": "root",
+    "type": "form",
+    "name": "ContactForm",
+    "x": 0,
+    "y": 0,
+    "w": 640,
+    "h": 470,
+    "text": "My form",
+    "bg": "#ffffff",
+    "code": "' ContactForm component\n' Property: Topic     Event: Submitted(who)\nPublic Event Submitted(who)\n\nSub Form_Load()\n    lblCount.Caption = \"0 / 400\"\n    lblStatus.Caption = \"\"\nEnd Sub\n\nSub Topic_Change()\n    txtTopic.Text = Topic\nEnd Sub\n\nSub txtMessage_Change()\n    lblCount.Caption = Len(txtMessage.Text) & \" / 400\"\n    If Len(txtMessage.Text) > 400 Then lblCount.ForeColor = \"#c0392b\" Else lblCount.ForeColor = \"#6b7c8d\"\nEnd Sub\n\n' returns \"\" when everything is fine, otherwise the first problem\nFunction Problem() As String\n    If Len(Trim(txtName.Text)) < 2 Then Return \"Please enter your name.\"\n    If InStr(txtEmail.Text, \"@\") < 2 Or InStr(txtEmail.Text, \".\") = 0 Then Return \"Please enter a valid e-mail address.\"\n    If Len(Trim(txtMessage.Text)) < 10 Then Return \"Please describe your project in a few words.\"\n    If Len(txtMessage.Text) > 400 Then Return \"Your message is longer than 400 characters.\"\n    If Not chkConsent.Checked Then Return \"Please tick the consent box.\"\n    Return \"\"\nEnd Function\n\nSub btnSend_Click()\n    Dim msg As String\n    msg = Problem()\n    If msg <> \"\" Then\n        lblStatus.ForeColor = \"#c0392b\"\n        lblStatus.Caption = \"Not sent: \" & msg\n        Exit Sub\n    End If\n    lblStatus.ForeColor = \"#1e8449\"\n    lblStatus.Caption = \"Thank you! We will answer within one working day.\"\n    RaiseEvent Submitted(Trim(txtName.Text))\n    txtMessage.Clear\n    lblCount.Caption = \"0 / 400\"\nEnd Sub\n",
+    "language": "vb",
+    "kids": [
+     {
+      "id": "n21",
+      "type": "label",
+      "x": 28,
+      "y": 20,
+      "w": 584,
+      "h": 30,
+      "kids": [],
+      "text": "Tell us about your project",
+      "fs": 22,
+      "css": [
+       [
+        "font-weight",
+        "700"
+       ]
+      ],
+      "name": "lblHead"
+     },
+     {
+      "id": "n22",
+      "type": "label",
+      "x": 28,
+      "y": 62,
+      "w": 300,
+      "h": 20,
+      "kids": [],
+      "text": "Topic",
+      "fs": 13,
+      "fg": "var(--muted)",
+      "css": [
+       [
+        "font-weight",
+        "700"
+       ]
+      ],
+      "name": "lblTopicCap"
+     },
+     {
+      "id": "n23",
+      "type": "textbox",
+      "x": 28,
+      "y": 84,
+      "w": 584,
+      "h": 38,
+      "kids": [],
+      "text": "General question",
+      "ph": "What is it about?",
+      "name": "txtTopic"
+     },
+     {
+      "id": "n24",
+      "type": "label",
+      "x": 28,
+      "y": 134,
+      "w": 270,
+      "h": 20,
+      "kids": [],
+      "text": "Your name",
+      "fs": 13,
+      "fg": "var(--muted)",
+      "css": [
+       [
+        "font-weight",
+        "700"
+       ]
+      ],
+      "name": "lblNameCap"
+     },
+     {
+      "id": "n25",
+      "type": "textbox",
+      "x": 28,
+      "y": 156,
+      "w": 276,
+      "h": 38,
+      "kids": [],
+      "text": "",
+      "ph": "Maria Muster",
+      "name": "txtName"
+     },
+     {
+      "id": "n26",
+      "type": "label",
+      "x": 336,
+      "y": 134,
+      "w": 270,
+      "h": 20,
+      "kids": [],
+      "text": "E-mail",
+      "fs": 13,
+      "fg": "var(--muted)",
+      "css": [
+       [
+        "font-weight",
+        "700"
+       ]
+      ],
+      "name": "lblMailCap"
+     },
+     {
+      "id": "n27",
+      "type": "textbox",
+      "x": 336,
+      "y": 156,
+      "w": 276,
+      "h": 38,
+      "kids": [],
+      "text": "",
+      "ph": "maria@example.com",
+      "name": "txtEmail"
+     },
+     {
+      "id": "n28",
+      "type": "label",
+      "x": 28,
+      "y": 208,
+      "w": 300,
+      "h": 20,
+      "kids": [],
+      "text": "Message",
+      "fs": 13,
+      "fg": "var(--muted)",
+      "css": [
+       [
+        "font-weight",
+        "700"
+       ]
+      ],
+      "name": "lblMsgCap"
+     },
+     {
+      "id": "n29",
+      "type": "label",
+      "x": 472,
+      "y": 208,
+      "w": 140,
+      "h": 20,
+      "kids": [],
+      "text": "0 / 400",
+      "fs": 13,
+      "fg": "#6b7c8d",
+      "css": [
+       [
+        "justify-content",
+        "flex-end"
+       ],
+       [
+        "text-align",
+        "right"
+       ]
+      ],
+      "name": "lblCount"
+     },
+     {
+      "id": "n30",
+      "type": "textarea",
+      "x": 28,
+      "y": 230,
+      "w": 584,
+      "h": 110,
+      "kids": [],
+      "text": "",
+      "ph": "Roof type, location, yearly electricity use ...",
+      "name": "txtMessage"
+     },
+     {
+      "id": "n31",
+      "type": "checkbox",
+      "x": 28,
+      "y": 354,
+      "w": 584,
+      "h": 26,
+      "kids": [],
+      "text": "I agree that Sonnenfeld Solar may contact me about this request.",
+      "checked": false,
+      "name": "chkConsent"
+     },
+     {
+      "id": "n32",
+      "type": "button",
+      "x": 28,
+      "y": 398,
+      "w": 200,
+      "h": 46,
+      "kids": [],
+      "text": "Send request",
+      "attrs": [
+       [
+        "class",
+        "btn-primary"
+       ]
+      ],
+      "fs": 16,
+      "name": "btnSend"
+     },
+     {
+      "id": "n33",
+      "type": "label",
+      "x": 244,
+      "y": 398,
+      "w": 368,
+      "h": 46,
+      "kids": [],
+      "text": "",
+      "fs": 14,
+      "css": [
+       [
+        "font-weight",
+        "700"
+       ]
+      ],
+      "name": "lblStatus"
+     }
+    ],
+    "props": [
+     [
+      "topic",
+      "General question"
+     ]
+    ]
+   },
+   "bp": []
+  }
+ ],
+ "active": "d1"
+}

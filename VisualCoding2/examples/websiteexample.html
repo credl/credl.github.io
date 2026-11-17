@@ -1,0 +1,1247 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NOVA — Creative Digital Studio</title>
+
+<style>
+:root {
+    --bg: #090b13;
+    --surface: #111522;
+    --surface2: #181e30;
+    --primary: #9d83ff;
+    --secondary: #55e6c1;
+    --text: #f5f5fa;
+    --muted: #969db1;
+    --border: #282e40;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Inter, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button, input, textarea {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+.container {
+    width: min(1160px, 90%);
+    margin: auto;
+}
+
+/* Navigation */
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(9,11,19,.88);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--border);
+}
+
+nav {
+    height: 76px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 26px;
+    font-weight: 900;
+    letter-spacing: 3px;
+}
+
+.logo span {
+    color: var(--primary);
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.nav-links a {
+    color: var(--muted);
+    font-size: 14px;
+    transition: color .2s;
+}
+
+.nav-links a:hover {
+    color: white;
+}
+
+.nav-button, .primary-button {
+    background: var(--primary);
+    color: #fff;
+    padding: 12px 22px;
+    border: 0;
+    border-radius: 8px;
+    font-weight: 700;
+    transition: transform .2s, filter .2s;
+}
+
+.nav-button:hover, .primary-button:hover {
+    transform: translateY(-3px);
+    filter: brightness(1.15);
+}
+
+.menu-toggle {
+    display: none;
+    background: none;
+    border: 0;
+    color: white;
+    font-size: 25px;
+}
+
+/* Hero */
+
+.hero {
+    min-height: 670px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    right: -100px;
+    top: 20px;
+    background: radial-gradient(circle, #7353d855, transparent 70%);
+    pointer-events: none;
+}
+
+.hero-content {
+    max-width: 720px;
+    position: relative;
+    z-index: 1;
+}
+
+.eyebrow {
+    color: var(--secondary);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 22px;
+}
+
+.hero h1 {
+    font-size: clamp(45px, 7vw, 82px);
+    line-height: 1.06;
+    letter-spacing: -3px;
+    margin-bottom: 25px;
+}
+
+.gradient-text {
+    background: linear-gradient(90deg, #a88cff, #55e6c1);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.hero p {
+    color: var(--muted);
+    max-width: 560px;
+    font-size: 18px;
+    margin-bottom: 35px;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.secondary-button {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-weight: 700;
+}
+
+.secondary-button:hover {
+    border-color: var(--primary);
+}
+
+.hero-note {
+    margin-top: 50px;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+/* Sections */
+
+section {
+    padding: 100px 0;
+}
+
+.section-heading {
+    max-width: 650px;
+    margin-bottom: 55px;
+}
+
+.section-heading h2 {
+    font-size: clamp(32px, 5vw, 48px);
+    line-height: 1.15;
+    margin-bottom: 15px;
+}
+
+.section-heading p {
+    color: var(--muted);
+}
+
+/* Statistics */
+
+.stats {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+}
+
+.stat {
+    text-align: center;
+}
+
+.stat strong {
+    font-size: 40px;
+    display: block;
+    color: var(--secondary);
+}
+
+.stat span {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+/* Services */
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
+
+.service-card {
+    padding: 30px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    transition: transform .25s, border-color .25s;
+}
+
+.service-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--primary);
+}
+
+.service-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    font-size: 25px;
+    background: #9d83ff22;
+    margin-bottom: 25px;
+}
+
+.service-card h3 {
+    font-size: 21px;
+    margin-bottom: 12px;
+}
+
+.service-card p {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+/* Portfolio */
+
+.portfolio {
+    background: var(--surface);
+}
+
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
+
+.project {
+    overflow: hidden;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+}
+
+.project-art {
+    height: 260px;
+    display: grid;
+    place-items: center;
+    font-size: 65px;
+    position: relative;
+    overflow: hidden;
+}
+
+.art-one {
+    background: linear-gradient(135deg, #423276, #111c35);
+}
+
+.art-two {
+    background: linear-gradient(135deg, #12645f, #14253c);
+}
+
+.art-three {
+    background: linear-gradient(135deg, #a14b69, #352345);
+}
+
+.art-four {
+    background: linear-gradient(135deg, #b37a32, #30223d);
+}
+
+.project-art span {
+    filter: drop-shadow(0 10px 20px #0008);
+    transition: transform .3s;
+}
+
+.project:hover .project-art span {
+    transform: scale(1.2) rotate(-5deg);
+}
+
+.project-info {
+    padding: 24px;
+}
+
+.project-info h3 {
+    font-size: 21px;
+}
+
+.project-info p {
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: 7px;
+}
+
+/* About */
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 70px;
+    align-items: center;
+}
+
+.about-visual {
+    min-height: 370px;
+    background:
+        radial-gradient(circle at 30% 30%, #55e6c155, transparent 40%),
+        radial-gradient(circle at 75% 75%, #9d83ff88, transparent 50%),
+        var(--surface2);
+    border-radius: 20px;
+    display: grid;
+    place-items: center;
+    font-size: 100px;
+}
+
+.about-text h2 {
+    font-size: 42px;
+    line-height: 1.15;
+    margin-bottom: 22px;
+}
+
+.about-text p {
+    color: var(--muted);
+    margin-bottom: 18px;
+}
+
+/* Testimonials */
+
+.testimonials {
+    background: var(--surface);
+}
+
+.testimonial-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 32px;
+}
+
+.stars {
+    color: #ffcc67;
+    letter-spacing: 4px;
+    margin-bottom: 20px;
+}
+
+.testimonial-card blockquote {
+    font-size: 18px;
+    margin-bottom: 25px;
+}
+
+.person {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: var(--primary);
+    font-weight: bold;
+}
+
+.person small {
+    display: block;
+    color: var(--muted);
+}
+
+/* Pricing */
+
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
+
+.price-card {
+    padding: 30px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+}
+
+.price-card.featured {
+    border-color: var(--primary);
+    background: linear-gradient(145deg, #241d40, var(--surface));
+}
+
+.price-card h3 {
+    font-size: 20px;
+}
+
+.price {
+    font-size: 38px;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+.price small {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.price-card ul {
+    list-style: none;
+    margin: 25px 0;
+}
+
+.price-card li {
+    color: var(--muted);
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+}
+
+.price-card li::before {
+    content: "✓";
+    color: var(--secondary);
+    margin-right: 10px;
+}
+
+/* FAQ */
+
+.faq {
+    background: var(--surface);
+}
+
+.faq-list {
+    max-width: 800px;
+}
+
+.faq-item {
+    border-bottom: 1px solid var(--border);
+}
+
+.faq-question {
+    width: 100%;
+    background: none;
+    border: 0;
+    color: white;
+    text-align: left;
+    padding: 22px 0;
+    display: flex;
+    justify-content: space-between;
+    font-size: 17px;
+}
+
+.faq-answer {
+    color: var(--muted);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .3s, padding .3s;
+}
+
+.faq-item.active .faq-answer {
+    max-height: 150px;
+    padding-bottom: 22px;
+}
+
+/* Contact */
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+}
+
+.contact-info h2 {
+    font-size: 42px;
+    margin-bottom: 20px;
+}
+
+.contact-info p {
+    color: var(--muted);
+}
+
+.contact-form {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 30px;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    margin-bottom: 7px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 13px;
+    border-radius: 7px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: white;
+    outline: none;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: var(--primary);
+}
+
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.contact-form button {
+    width: 100%;
+}
+
+#reply {
+    color: var(--secondary);
+    margin-top: 15px;
+    min-height: 24px;
+    font-size: 14px;
+}
+
+/* Footer */
+
+footer {
+    padding: 45px 0;
+    background: #070910;
+    border-top: 1px solid var(--border);
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    gap: 25px;
+    flex-wrap: wrap;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.footer-links {
+    display: flex;
+    gap: 20px;
+}
+
+/* Responsive */
+
+@media(max-width: 800px) {
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 76px;
+        left: 0;
+        width: 100%;
+        padding: 25px;
+        background: var(--surface);
+        flex-direction: column;
+    }
+
+    .nav-links.open {
+        display: flex;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .services-grid,
+    .pricing-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .about-grid,
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width: 550px) {
+    section {
+        padding: 70px 0;
+    }
+
+    .services-grid,
+    .pricing-grid,
+    .portfolio-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero {
+        min-height: 580px;
+    }
+
+    .hero h1 {
+        letter-spacing: -2px;
+    }
+
+    .about-visual {
+        min-height: 260px;
+    }
+
+    .contact-info h2 {
+        font-size: 34px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <nav class="container">
+        <a href="#" class="logo">NO<span>V</span>A.</a>
+
+        <div class="nav-links" id="navLinks">
+            <a href="#services">Services</a>
+            <a href="#portfolio">Portfolio</a>
+            <a href="#about">About</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#contact">Contact</a>
+        </div>
+
+        <button class="nav-button" onclick="scrollToContact()">
+            Let's Talk
+        </button>
+
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+    </nav>
+</header>
+
+<main>
+
+<!-- HERO -->
+
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <div class="eyebrow">✦ Independent Digital Studio</div>
+
+            <h1>
+                We create digital
+                <span class="gradient-text">experiences</span>
+                that matter.
+            </h1>
+
+            <p>
+                We combine strategy, design and technology to help
+                ambitious businesses build meaningful digital products
+                and unforgettable brands.
+            </p>
+
+            <div class="hero-actions">
+                <button class="primary-button" onclick="scrollToContact()">
+                    Start a project →
+                </button>
+
+                <a href="#portfolio" class="secondary-button">
+                    Explore our work
+                </a>
+            </div>
+
+            <div class="hero-note">
+                ✦ Design · Development · Strategy · Innovation
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- STATISTICS -->
+
+<section class="stats">
+    <div class="container stats-grid">
+        <div class="stat">
+            <strong>120+</strong>
+            <span>Projects delivered</span>
+        </div>
+        <div class="stat">
+            <strong>45</strong>
+            <span>Happy clients</span>
+        </div>
+        <div class="stat">
+            <strong>12</strong>
+            <span>Creative specialists</span>
+        </div>
+        <div class="stat">
+            <strong>8</strong>
+            <span>Years of experience</span>
+        </div>
+    </div>
+</section>
+
+<!-- SERVICES -->
+
+<section id="services">
+    <div class="container">
+        <div class="section-heading">
+            <div class="eyebrow">What we do</div>
+            <h2>Everything you need to grow digitally.</h2>
+            <p>
+                From the first idea to the final product, we help
+                turn ambitious concepts into real experiences.
+            </p>
+        </div>
+
+        <div class="services-grid">
+
+            <div class="service-card">
+                <div class="service-icon">✦</div>
+                <h3>UI / UX Design</h3>
+                <p>
+                    Intuitive interfaces and thoughtful user experiences
+                    that make complex products feel simple.
+                </p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">⌘</div>
+                <h3>Web Development</h3>
+                <p>
+                    Modern, scalable and high-performance websites
+                    built with reliable technologies.
+                </p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">◈</div>
+                <h3>Brand Identity</h3>
+                <p>
+                    Distinctive visual identities that communicate
+                    your values and make your brand memorable.
+                </p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">◎</div>
+                <h3>Digital Strategy</h3>
+                <p>
+                    Research-driven strategies that align your
+                    digital presence with your business goals.
+                </p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">▣</div>
+                <h3>Mobile Applications</h3>
+                <p>
+                    Powerful mobile experiences designed for
+                    usability, performance and engagement.
+                </p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">↗</div>
+                <h3>Growth & Analytics</h3>
+                <p>
+                    Better insights, smarter decisions and
+                    measurable improvements to your digital products.
+                </p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- PORTFOLIO -->
+
+<section class="portfolio" id="portfolio">
+    <div class="container">
+        <div class="section-heading">
+            <div class="eyebrow">Selected projects</div>
+            <h2>Ideas turned into reality.</h2>
+            <p>
+                A selection of projects that demonstrate our
+                approach to design, technology and creativity.
+            </p>
+        </div>
+
+        <div class="portfolio-grid">
+
+            <div class="project">
+                <div class="project-art art-one">
+                    <span>◈</span>
+                </div>
+                <div class="project-info">
+                    <h3>Orbit Finance</h3>
+                    <p>Fintech · Web Application · UI Design</p>
+                </div>
+            </div>
+
+            <div class="project">
+                <div class="project-art art-two">
+                    <span>✿</span>
+                </div>
+                <div class="project-info">
+                    <h3>Verde Living</h3>
+                    <p>E-Commerce · Branding · Development</p>
+                </div>
+            </div>
+
+            <div class="project">
+                <div class="project-art art-three">
+                    <span>✧</span>
+                </div>
+                <div class="project-info">
+                    <h3>Studio Bloom</h3>
+                    <p>Creative Agency · Website · Identity</p>
+                </div>
+            </div>
+
+            <div class="project">
+                <div class="project-art art-four">
+                    <span>◉</span>
+                </div>
+                <div class="project-info">
+                    <h3>Momentum</h3>
+                    <p>Fitness · Mobile Application · UX</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT -->
+
+<section id="about">
+    <div class="container about-grid">
+        <div class="about-visual">✦</div>
+
+        <div class="about-text">
+            <div class="eyebrow">Who we are</div>
+            <h2>Small team. Big ideas. Real impact.</h2>
+
+            <p>
+                NOVA is an independent digital studio bringing together
+                designers, developers and strategists.
+            </p>
+
+            <p>
+                We believe great digital products emerge when
+                creativity meets engineering. That's why we work
+                closely with our clients at every stage.
+            </p>
+
+            <p>
+                Our goal is not simply to deliver projects.
+                We build long-term partnerships and create
+                solutions that make a difference.
+            </p>
+
+            <button class="primary-button" onclick="scrollToContact()">
+                Work with us →
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- TESTIMONIALS -->
+
+<section class="testimonials">
+    <div class="container">
+        <div class="section-heading">
+            <div class="eyebrow">Client feedback</div>
+            <h2>Good work. Great relationships.</h2>
+        </div>
+
+        <div class="testimonial-card">
+            <div class="stars">★★★★★</div>
+
+            <blockquote>
+                "Working with NOVA completely transformed our digital
+                presence. They understood our vision, challenged our
+                assumptions and delivered something better than we
+                originally imagined."
+            </blockquote>
+
+            <div class="person">
+                <div class="avatar">JD</div>
+                <div>
+                    <strong>James Davis</strong>
+                    <small>CEO, Orbit Finance</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PRICING -->
+
+<section id="pricing">
+    <div class="container">
+        <div class="section-heading">
+            <div class="eyebrow">Simple pricing</div>
+            <h2>Choose your starting point.</h2>
+            <p>
+                Flexible packages for different needs and ambitions.
+            </p>
+        </div>
+
+        <div class="pricing-grid">
+
+            <div class="price-card">
+                <h3>Starter</h3>
+                <div class="price">€990 <small>/ project</small></div>
+                <p>For small businesses getting started.</p>
+
+                <ul>
+                    <li>Landing page design</li>
+                    <li>Responsive layout</li>
+                    <li>Basic SEO</li>
+                    <li>Contact form</li>
+                </ul>
+
+                <button class="secondary-button"
+                    onclick="selectPlan('Starter')">
+                    Choose Starter
+                </button>
+            </div>
+
+            <div class="price-card featured">
+                <div class="eyebrow">Most popular</div>
+                <h3>Professional</h3>
+                <div class="price">€2,990 <small>/ project</small></div>
+                <p>For growing companies.</p>
+
+                <ul>
+                    <li>Custom website design</li>
+                    <li>Advanced interactions</li>
+                    <li>CMS integration</li>
+                    <li>SEO optimization</li>
+                    <li>Analytics integration</li>
+                </ul>
+
+                <button class="primary-button"
+                    onclick="selectPlan('Professional')">
+                    Choose Professional
+                </button>
+            </div>
+
+            <div class="price-card">
+                <h3>Enterprise</h3>
+                <div class="price">Custom</div>
+                <p>For complex digital products.</p>
+
+                <ul>
+                    <li>Custom application</li>
+                    <li>Advanced integrations</li>
+                    <li>Dedicated team</li>
+                    <li>Priority support</li>
+                    <li>Ongoing development</li>
+                </ul>
+
+                <button class="secondary-button"
+                    onclick="selectPlan('Enterprise')">
+                    Contact us
+                </button>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- FAQ -->
+
+<section class="faq">
+    <div class="container">
+        <div class="section-heading">
+            <div class="eyebrow">FAQ</div>
+            <h2>Frequently asked questions.</h2>
+        </div>
+
+        <div class="faq-list">
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    How long does a typical project take?
+                    <span>+</span>
+                </button>
+                <div class="faq-answer">
+                    Most website projects take between four and
+                    eight weeks, depending on complexity and scope.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    Can you work with our existing team?
+                    <span>+</span>
+                </button>
+                <div class="faq-answer">
+                    Absolutely. We regularly collaborate with
+                    internal development, marketing and design teams.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    Do you offer ongoing support?
+                    <span>+</span>
+                </button>
+                <div class="faq-answer">
+                    Yes. We offer maintenance, monitoring and
+                    continuous development services.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    How do we get started?
+                    <span>+</span>
+                </button>
+                <div class="faq-answer">
+                    Simply send us a message using the contact form.
+                    We'll arrange an initial conversation.
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+
+<section id="contact">
+    <div class="container contact-grid">
+
+        <div class="contact-info">
+            <div class="eyebrow">Get in touch</div>
+            <h2>Let's create something extraordinary.</h2>
+
+            <p>
+                Have an idea, a challenge or just want to say hello?
+                We'd love to hear from you.
+            </p>
+            <br>
+            <p>✉ hello@nova-studio.example</p>
+            <p>⌖ Vienna, Austria</p>
+            <p>◷ Monday – Friday, 09:00 – 17:00</p>
+        </div>
+
+        <form class="contact-form" onsubmit="submitForm(event)">
+
+            <div class="form-group">
+                <label for="name">Your name</label>
+                <input id="name" type="text"
+                    placeholder="John Doe" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input id="email" type="email"
+                    placeholder="john@example.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="subject">Subject</label>
+                <input id="subject" type="text"
+                    placeholder="Website project">
+            </div>
+
+            <div class="form-group">
+                <label for="message">Your message</label>
+                <textarea id="message"
+                    placeholder="Tell us about your project..."
+                    required></textarea>
+            </div>
+
+            <button class="primary-button" type="submit">
+                Send message →
+            </button>
+
+            <div id="reply"></div>
+        </form>
+
+    </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+
+<footer>
+    <div class="container footer-content">
+        <div>
+            <a href="#" class="logo">NO<span>V</span>A.</a>
+            <p>© 2026 NOVA Creative Studio. All rights reserved.</p>
+        </div>
+
+        <div class="footer-links">
+            <a href="#services">Services</a>
+            <a href="#portfolio">Portfolio</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+
+// Communication with the importing application
+function showReply(text) {
+    document.getElementById('reply').textContent = text;
+}
+
+// Navigation
+function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('open');
+}
+
+function scrollToContact() {
+    document.getElementById('contact').scrollIntoView({
+        behavior: 'smooth'
+    });
+}
+
+// FAQ accordion
+function toggleFaq(button) {
+    const item = button.parentElement;
+    const wasActive = item.classList.contains('active');
+
+    document.querySelectorAll('.faq-item').forEach(faq => {
+        faq.classList.remove('active');
+        faq.querySelector('.faq-question span').textContent = '+';
+    });
+
+    if (!wasActive) {
+        item.classList.add('active');
+        button.querySelector('span').textContent = '−';
+    }
+}
+
+// Pricing
+function selectPlan(plan) {
+    document.getElementById('subject').value =
+        'Interested in the ' + plan + ' package';
+
+    scrollToContact();
+
+    document.getElementById('name').focus();
+}
+
+// Contact form
+function submitForm(event) {
+    event.preventDefault();
+
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const subject = document.getElementById('subject').value;
+    const message = document.getElementById('message').value;
+
+    showReply('Thank you, ' + name + '! Your message is ready.');
+
+    // Notify the importing application
+    if (typeof fbEmit === 'function') {
+        fbEmit('contact_submit', {
+            name: name,
+            email: email,
+            subject: subject,
+            message: message
+        });
+    }
+
+    console.log('Contact form submitted:', {
+        name, email, subject, message
+    });
+}
+
+</script>
+
+</body>
+</html>

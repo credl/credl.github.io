@@ -1,0 +1,154 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Calculator</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .calculator {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px #0002;
+            width: 280px;
+        }
+
+        #display {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 15px;
+            font-size: 28px;
+            text-align: right;
+            margin-bottom: 12px;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+
+        button {
+            padding: 18px 5px;
+            font-size: 20px;
+            border: none;
+            border-radius: 6px;
+            background: #e5e5e5;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #d0d0d0;
+        }
+
+        button.operator {
+            background: #ffd27f;
+        }
+
+        button.equals {
+            background: #80cfa0;
+        }
+
+        #reply {
+            margin-top: 15px;
+            text-align: center;
+            color: #444;
+            min-height: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="calculator">
+        <input id="display" type="text" value="0" readonly>
+
+        <div class="buttons">
+            <button onclick="clearDisplay()">C</button>
+            <button onclick="append('/')">/</button>
+            <button onclick="append('*')">*</button>
+            <button class="operator" onclick="append('-')">-</button>
+
+            <button onclick="append('7')">7</button>
+            <button onclick="append('8')">8</button>
+            <button onclick="append('9')">9</button>
+            <button class="operator" onclick="append('+')">+</button>
+
+            <button onclick="append('4')">4</button>
+            <button onclick="append('5')">5</button>
+            <button onclick="append('6')">6</button>
+            <button onclick="append('.')">.</button>
+
+            <button onclick="append('1')">1</button>
+            <button onclick="append('2')">2</button>
+            <button onclick="append('3')">3</button>
+            <button class="equals" onclick="calculate()">=</button>
+
+            <button onclick="append('0')" style="grid-column: span 2">0</button>
+            <button onclick="backspace()">⌫</button>
+        </div>
+
+        <div id="reply"></div>
+    </div>
+
+    <script>
+        const display = document.getElementById("display");
+
+        function showReply(text) {
+            document.getElementById('reply').textContent = text;
+        }
+
+        function append(value) {
+            if (display.value === "0" || display.value === "Error")
+                display.value = "";
+
+            display.value += value;
+        }
+
+        function clearDisplay() {
+            display.value = "0";
+            showReply("");
+        }
+
+        function backspace() {
+            display.value = display.value.slice(0, -1) || "0";
+        }
+
+        function calculate() {
+            try {
+                if (!/^[0-9+\-*/.() ]+$/.test(display.value))
+                    throw new Error();
+
+                const result = Function(
+                    '"use strict"; return (' + display.value + ')'
+                )();
+
+                if (!Number.isFinite(result))
+                    throw new Error();
+
+                display.value = String(result);
+                showReply("Result: " + result);
+            }
+            catch {
+                display.value = "Error";
+                showReply("Invalid calculation!");
+            }
+        }
+		
+		function getCalculatorValue() {
+			return display.value;
+		}
+    </script>
+</body>
+</html>

@@ -1,0 +1,170 @@
+{
+ "fb": 2,
+ "docs": [
+  {
+   "id": "d1",
+   "root": {
+    "id": "root",
+    "type": "form",
+    "name": "MyApp",
+    "x": 0,
+    "y": 0,
+    "w": 1512,
+    "h": 936,
+    "text": "My form",
+    "bg": "",
+    "code": "Sub app21_Click()\n    \nEnd Sub\n\nSub button1_Click()\n    button1.Left = button1.Left + 5\nEnd Sub\n\nSub Counter1_Changed(v)\n    MsgBox \"Counter 1 value: \" + Counter1.GetValue()\nEnd Sub\n\nSub Counter2_Changed(v)\n    MsgBox \"Counter 2 value: \" + v\n    Counter1.Left = Counter1.Left + 5\nEnd Sub\n",
+    "kids": [
+     {
+      "id": "n21",
+      "type": "comp",
+      "x": 152,
+      "y": 32,
+      "w": 976,
+      "h": 280,
+      "kids": [
+       {
+        "id": "n22",
+        "type": "button",
+        "x": 72,
+        "y": 56,
+        "w": 96,
+        "h": 30,
+        "kids": [],
+        "text": "Button",
+        "slot": "container1",
+        "name": "button1"
+       }
+      ],
+      "ref": "d3",
+      "name": "Counter1",
+      "pv": {
+       "background": "green"
+      }
+     },
+     {
+      "id": "n31",
+      "type": "comp",
+      "x": 208,
+      "y": 328,
+      "w": 976,
+      "h": 248,
+      "kids": [
+       {
+        "id": "n32",
+        "type": "button",
+        "x": 72,
+        "y": 56,
+        "w": 96,
+        "h": 30,
+        "kids": [],
+        "text": "Button",
+        "slot": "container1",
+        "name": "button2"
+       }
+      ],
+      "ref": "d3",
+      "name": "Counter2"
+     },
+     {
+      "id": "n33",
+      "type": "comp",
+      "x": 136,
+      "y": 592,
+      "w": 1032,
+      "h": 240,
+      "kids": [
+       {
+        "id": "n34",
+        "type": "button",
+        "x": 72,
+        "y": 56,
+        "w": 96,
+        "h": 30,
+        "kids": [],
+        "text": "Button",
+        "slot": "container1",
+        "name": "button3"
+       }
+      ],
+      "ref": "d3",
+      "name": "component1"
+     }
+    ]
+   }
+  },
+  {
+   "id": "d3",
+   "root": {
+    "id": "root",
+    "type": "form",
+    "name": "Counter",
+    "x": 0,
+    "y": 0,
+    "w": 1232,
+    "h": 544,
+    "text": "My form",
+    "bg": "",
+    "code": "Public Event Changed(value)\nDim n As Integer\n\nSub BtnIncrement_Click()\n    n = n + 1\n    LblCount.Caption = n\n    RaiseEvent Changed(n)\nEnd Sub\n\nPublic Sub Reset()\n    n = 0\n    LblCount.Caption = 0\nEnd Sub\n\nPublic Function GetValue()\n    Return LblCount.Caption\nEnd Function\n\nSub Background_Change()\n    BtnIncrement.BackColor = Background\nEnd Sub\n\nSub Form_Load()\n    \nEnd Sub\n",
+    "kids": [
+     {
+      "id": "n18",
+      "type": "slot",
+      "x": 8,
+      "y": 8,
+      "w": 232,
+      "h": 224,
+      "kids": [],
+      "name": "container1"
+     },
+     {
+      "id": "n20",
+      "type": "slot",
+      "x": 248,
+      "y": 8,
+      "w": 256,
+      "h": 224,
+      "kids": [],
+      "name": "container2"
+     },
+     {
+      "id": "n28",
+      "type": "button",
+      "x": 552,
+      "y": 120,
+      "w": "150px",
+      "h": 64,
+      "kids": [],
+      "text": "++",
+      "name": "BtnIncrement",
+      "attrs": [
+       [
+        "class",
+        "big"
+       ]
+      ]
+     },
+     {
+      "id": "n29",
+      "type": "label",
+      "x": 576,
+      "y": 56,
+      "w": 120,
+      "h": 22,
+      "kids": [],
+      "text": "0",
+      "name": "LblCount"
+     }
+    ],
+    "props": [
+     [
+      "Background",
+      "red"
+     ]
+    ],
+    "css": ".big {\n  background-color: #ffcc00;\n}"
+   }
+  }
+ ],
+ "active": "d1"
+}

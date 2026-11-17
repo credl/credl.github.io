@@ -1,0 +1,121 @@
+{
+ "fb": 2,
+ "docs": [
+  {
+   "id": "d1",
+   "root": {
+    "id": "root",
+    "type": "form",
+    "name": "form1",
+    "x": 0,
+    "y": 0,
+    "w": 400,
+    "h": 440,
+    "text": "Tetris",
+    "bg": "#e3e7ee",
+    "code": "' ===== Tetris =====\n' The board is ONE string: 10 columns x 20 rows, one character per cell.\n' \".\" = empty, \"1\"..\"7\" = a locked block (the digit selects its colour).\n' Controls on the form: Canvas1 (200 x 400), lblScore, lblHelp, cmdNew, cmdLeft, cmdRight, cmdRotate, cmdDown, cmdDrop\n\nConst W = 10\nConst H = 20\nConst CELL = 20\n\nDim board As String\nDim shp As String      ' current piece as a size x size grid of \"X\" and \".\"\nDim n As Integer       ' size of that grid\nDim px As Integer      ' column / row of the grid's top-left corner on the board\nDim py As Integer\nDim pk As Integer      ' colour number of the current piece (1..7)\nDim score As Integer\nDim lines As Integer\nDim playing As Boolean\nDim over As Boolean\n\nSub Form_Load()\n    board = Replace(Space(W * H), \" \", \".\")\n    Draw\nEnd Sub\n\n' ---------- buttons ----------\nSub cmdNew_Click()\n    board = Replace(Space(W * H), \" \", \".\")\n    score = 0\n    lines = 0\n    over = False\n    playing = True\n    NewPiece\n    StartTimer Speed()\n    Draw\nEnd Sub\n\nSub cmdLeft_Click()\n    MoveBy(-1)\nEnd Sub\n\nSub cmdRight_Click()\n    MoveBy(1)\nEnd Sub\n\nSub cmdRotate_Click()\n    Dim t As String\n    If Not playing Then Exit Sub\n    t = Rotated(shp, n)\n    If Not Hits(t, n, px, py) Then\n        shp = t\n    ElseIf Not Hits(t, n, px - 1, py) Then\n        shp = t\n        px = px - 1\n    ElseIf Not Hits(t, n, px + 1, py) Then\n        shp = t\n        px = px + 1\n    ElseIf Not Hits(t, n, px - 2, py) Then\n        shp = t\n        px = px - 2\n    ElseIf Not Hits(t, n, px + 2, py) Then\n        shp = t\n        px = px + 2\n    End If\n    Draw\nEnd Sub\n\nSub cmdDown_Click()\n    If playing Then Tick\nEnd Sub\n\nSub cmdDrop_Click()\n    If Not playing Then Exit Sub\n    Do While Not Hits(shp, n, px, py + 1)\n        py = py + 1\n    Loop\n    Tick\nEnd Sub\n\n' ---------- keyboard: arrows move / rotate / step, Space drops, Enter starts ----------\nSub Form_KeyDown(KeyCode As Integer)\n    Select Case KeyCode\n        Case vbKeyLeft\n            MoveBy(-1)\n        Case vbKeyRight\n            MoveBy(1)\n        Case vbKeyUp\n            cmdRotate_Click\n        Case vbKeyDown\n            cmdDown_Click\n        Case vbKeySpace\n            cmdDrop_Click\n        Case vbKeyReturn\n            If Not playing Then cmdNew_Click\n    End Select\nEnd Sub\n\n' ---------- game logic ----------\nSub Form_Timer()\n    If playing Then Tick\nEnd Sub\n\n' One step down: move the piece, or lock it, clear full rows and start the next piece.\nSub Tick()\n    If Hits(shp, n, px, py + 1) Then\n        LockPiece\n        ClearLines\n        NewPiece\n    Else\n        py = py + 1\n    End If\n    Draw\nEnd Sub\n\nSub MoveBy(dx As Integer)\n    If Not playing Then Exit Sub\n    If Not Hits(shp, n, px + dx, py) Then px = px + dx\n    Draw\nEnd Sub\n\nSub NewPiece()\n    pk = Int(Rnd * 7) + 1\n    shp = PieceShape(pk)\n    n = Int(Sqr(Len(shp)))\n    px = Int((W - n) / 2)\n    py = 0\n    If Hits(shp, n, px, py) Then GameOver\nEnd Sub\n\nSub GameOver()\n    playing = False\n    over = True\n    StopTimer\nEnd Sub\n\nSub LockPiece()\n    Dim r, c, i\n    For r = 0 To n - 1\n        For c = 0 To n - 1\n            If Mid(shp, r * n + c + 1, 1) = \"X\" Then\n                i = (py + r) * W + px + c\n                board = Left(board, i) & pk & Mid(board, i + 2)\n            End If\n        Next c\n    Next r\nEnd Sub\n\nSub ClearLines()\n    Dim y As Integer\n    Dim cnt As Integer\n    cnt = 0\n    y = H - 1\n    Do While y >= 0\n        If InStr(Mid(board, y * W + 1, W), \".\") = 0 Then\n            ' remove row y, add an empty row on top (and look at the same y again)\n            board = Replace(Space(W), \" \", \".\") & Left(board, y * W) & Mid(board, y * W + W + 1)\n            cnt = cnt + 1\n        Else\n            y = y - 1\n        End If\n    Loop\n    If cnt > 0 Then\n        score = score + 100 * cnt * cnt\n        lines = lines + cnt\n        StartTimer Speed()\n    End If\nEnd Sub\n\n' Interval of the timer in ms: faster every 5 lines.\nFunction Speed() As Integer\n    Dim s As Integer\n    s = 500 - 40 * Int(lines / 5)\n    If s < 100 Then s = 100\n    Return s\nEnd Function\n\n' Would the grid s (size x size) collide with a wall, the floor or a locked block when placed at column cx, row cy?\nFunction Hits(s As String, size As Integer, cx As Integer, cy As Integer) As Boolean\n    Dim r, c, bx, by\n    For r = 0 To size - 1\n        For c = 0 To size - 1\n            If Mid(s, r * size + c + 1, 1) = \"X\" Then\n                bx = cx + c\n                by = cy + r\n                If bx < 0 Or bx >= W Or by >= H Then Return True\n                If by >= 0 Then\n                    If Mid(board, by * W + bx + 1, 1) <> \".\" Then Return True\n                End If\n            End If\n        Next c\n    Next r\n    Return False\nEnd Function\n\n' The grid turned 90 degrees clockwise.\nFunction Rotated(s As String, size As Integer) As String\n    Dim r, c, t\n    t = \"\"\n    For r = 0 To size - 1\n        For c = 0 To size - 1\n            t = t & Mid(s, (size - 1 - c) * size + r + 1, 1)\n        Next c\n    Next r\n    Return t\nEnd Function\n\n' The seven pieces (I, O, T, S, Z, J, L), row by row.\nFunction PieceShape(k As Integer) As String\n    If k = 1 Then Return \"....XXXX........\"\n    If k = 2 Then Return \"XXXX\"\n    If k = 3 Then Return \".X.XXX...\"\n    If k = 4 Then Return \".XXXX....\"\n    If k = 5 Then Return \"XX..XX...\"\n    If k = 6 Then Return \"X..XXX...\"\n    Return \"..XXXX...\"\nEnd Function\n\n' ---------- drawing: the whole picture is repainted in one go, so nothing flickers ----------\nSub DrawCell(cx As Integer, cy As Integer, k As Integer)\n    Canvas1.DrawColor = Mid(\"#00d8d8#e8d800#a040e0#40c840#e03030#3060f0#f09020\", (k - 1) * 7 + 1, 7)\n    Canvas1.FillRect cx * CELL + 1, cy * CELL + 1, CELL - 2, CELL - 2\nEnd Sub\n\nSub Draw()\n    Dim x, y, r, c, ch\n    Canvas1.Clear\n    Canvas1.DrawColor = \"#14181f\"\n    Canvas1.FillRect 0, 0, W * CELL, H * CELL\n    For y = 0 To H - 1\n        For x = 0 To W - 1\n            ch = Mid(board, y * W + x + 1, 1)\n            If ch <> \".\" Then DrawCell x, y, Val(ch)\n        Next x\n    Next y\n    If playing Then\n        For r = 0 To n - 1\n            For c = 0 To n - 1\n                If Mid(shp, r * n + c + 1, 1) = \"X\" Then DrawCell px + c, py + r, pk\n            Next c\n        Next r\n    End If\n    If over Then\n        Canvas1.DrawColor = \"#000000\"\n        Canvas1.FillRect 40, 170, 120, 40\n        Canvas1.DrawColor = \"#ffffff\"\n        Canvas1.DrawRect 40, 170, 120, 40\n        Canvas1.DrawText \"GAME OVER\", 62, 183\n    End If\n    lblScore.Caption = \"Score: \" & score & \"   Lines: \" & lines\nEnd Sub\n",
+    "kids": [
+     {
+      "id": "n9",
+      "type": "canvas",
+      "x": 20,
+      "y": 20,
+      "w": 200,
+      "h": 400,
+      "kids": [],
+      "name": "Canvas1"
+     },
+     {
+      "id": "n10",
+      "type": "label",
+      "x": 240,
+      "y": 20,
+      "w": 140,
+      "h": 40,
+      "kids": [],
+      "text": "Score: 0",
+      "name": "lblScore"
+     },
+     {
+      "id": "n11",
+      "type": "button",
+      "x": 240,
+      "y": 70,
+      "w": 140,
+      "h": 32,
+      "kids": [],
+      "text": "New game",
+      "name": "cmdNew"
+     },
+     {
+      "id": "n12",
+      "type": "button",
+      "x": 240,
+      "y": 130,
+      "w": 68,
+      "h": 32,
+      "kids": [],
+      "text": "< Left",
+      "name": "cmdLeft"
+     },
+     {
+      "id": "n13",
+      "type": "button",
+      "x": 312,
+      "y": 130,
+      "w": 68,
+      "h": 32,
+      "kids": [],
+      "text": "Right >",
+      "name": "cmdRight"
+     },
+     {
+      "id": "n14",
+      "type": "button",
+      "x": 240,
+      "y": 170,
+      "w": 140,
+      "h": 32,
+      "kids": [],
+      "text": "Rotate",
+      "name": "cmdRotate"
+     },
+     {
+      "id": "n15",
+      "type": "button",
+      "x": 240,
+      "y": 210,
+      "w": 140,
+      "h": 32,
+      "kids": [],
+      "text": "Down",
+      "name": "cmdDown"
+     },
+     {
+      "id": "n16",
+      "type": "button",
+      "x": 240,
+      "y": 250,
+      "w": 140,
+      "h": 32,
+      "kids": [],
+      "text": "Drop",
+      "name": "cmdDrop"
+     },
+     {
+      "id": "n17",
+      "type": "label",
+      "x": 240,
+      "y": 300,
+      "w": 140,
+      "h": 110,
+      "kids": [],
+      "text": "Keys:\nLeft / Right  move\nUp  rotate\nDown  step down\nSpace  drop\nEnter  new game",
+      "name": "lblHelp"
+     }
+    ]
+   }
+  }
+ ],
+ "active": "d1"
+}

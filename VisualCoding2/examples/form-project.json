@@ -1,0 +1,307 @@
+{
+ "fb": 2,
+ "docs": [
+  {
+   "id": "d1",
+   "root": {
+    "id": "root",
+    "type": "form",
+    "name": "MyApp",
+    "x": 0,
+    "y": 0,
+    "w": 1552,
+    "h": 888,
+    "text": "My form",
+    "bg": "",
+    "code": "Dim x As Double\nDim y As Double\nDim dx As Double\nDim dy As Double\nDim speed as Double\nDim running As Boolean\n\nSub Form_Load()\n    speed = 0.8    \nEnd Sub\n\nSub button6_Click()\n    button1.Left = button1.Left + 5\n    MsgBox(\"Hello World!\")\n    canvas1.DrawCircle(10,10,5)\nEnd Sub\n\nSub canvas1_Click()\n\nEnd Sub\n\nSub btnCircleWalk_Click()\n    If running Then\n        StopTimer\n        running = False\n        Button1.Caption = \"Start\"\n    Else\n        x = Canvas1.Width / 2\n        y = Canvas1.Height / 2\n        dx = 3\n        dy = 2\n        running = True\n        Button1.Caption = \"Stop\"\n        StartTimer 20\n    End If\nEnd Sub\n\nSub Form_Timer()\n    Const R = 12\n    ' wander: nudge the direction a little, keep the speed within limits\n    dx = dx + (Rnd - 0.5) * 0.8\n    dy = dy + (Rnd - 0.5) * 0.8\n    If dx > 4 Then dx = 4\n    If dx < -4 Then dx = -4\n    If dy > 4 Then dy = 4\n    If dy < -4 Then dy = -4\n    x = x + dx * speed\n    y = y + dy * speed\n    ' bounce off the edges\n    If x < R Then\n        x = R\n        dx = -dx\n    End If\n    If x > Canvas1.Width - R Then\n        x = Canvas1.Width - R\n        dx = -dx\n    End If\n    If y < R Then\n        y = R\n        dy = -dy\n    End If\n    If y > Canvas1.Height - R Then\n        y = Canvas1.Height - R\n        dy = -dy\n    End If\n    ' clear and redraw in the same step, so the screen never shows an empty canvas\n    Canvas1.Clear\n    Canvas1.DrawColor = \"#2a7\"\n    Canvas1.FillCircle x, y, R\nEnd Sub\n\nSub slider1_Change()\n    speed = slider1.value / 100\n    Counter2.SetValue(slider1.value)\nEnd Sub\n",
+    "kids": [
+     {
+      "id": "n33",
+      "type": "comp",
+      "x": 136,
+      "y": 592,
+      "w": 1032,
+      "h": 240,
+      "kids": [
+       {
+        "id": "n34",
+        "type": "button",
+        "x": 72,
+        "y": 56,
+        "w": 96,
+        "h": 30,
+        "kids": [],
+        "text": "Button",
+        "slot": "container1",
+        "name": "button3"
+       }
+      ],
+      "ref": "d3",
+      "name": "component1",
+      "pv": {
+       "background": "blue"
+      }
+     },
+     {
+      "id": "n21",
+      "type": "comp",
+      "x": 112,
+      "y": 24,
+      "w": 982,
+      "h": 280,
+      "kids": [
+       {
+        "id": "n22",
+        "type": "button",
+        "x": 48,
+        "y": 88,
+        "w": 85,
+        "h": 19,
+        "kids": [],
+        "text": "Button",
+        "slot": "container1",
+        "name": "button1"
+       },
+       {
+        "id": "n62",
+        "type": "button",
+        "x": 128,
+        "y": 152,
+        "w": 85,
+        "h": 40,
+        "kids": [],
+        "text": "Button",
+        "name": "button8",
+        "slot": "container1"
+       },
+       {
+        "id": "n52",
+        "type": "button",
+        "x": 104,
+        "y": 40,
+        "w": 127,
+        "h": 21,
+        "kids": [],
+        "text": "Button",
+        "name": "button5",
+        "slot": "container2"
+       },
+       {
+        "id": "n64",
+        "type": "panel",
+        "x": 48,
+        "y": 80,
+        "w": 176,
+        "h": 128,
+        "kids": [],
+        "bg": "#eef1f6",
+        "name": "panel2",
+        "slot": "container2"
+       }
+      ],
+      "ref": "d3",
+      "name": "Counter1",
+      "pv": {
+       "background": "green"
+      }
+     },
+     {
+      "id": "n31",
+      "type": "comp",
+      "x": 384,
+      "y": 328,
+      "w": 976,
+      "h": 248,
+      "kids": [
+       {
+        "id": "n32",
+        "type": "button",
+        "x": 32,
+        "y": 48,
+        "w": 96,
+        "h": 30,
+        "kids": [],
+        "text": "Button",
+        "slot": "container1",
+        "name": "button2"
+       },
+       {
+        "id": "n63",
+        "type": "select",
+        "x": 56,
+        "y": 88,
+        "w": 152,
+        "h": 32,
+        "kids": [],
+        "opts": "One\nTwo\nThree",
+        "slot": "container2",
+        "name": "combobox1",
+        "disabled": false,
+        "fs": ""
+       }
+      ],
+      "ref": "d3",
+      "name": "Counter2",
+      "bg": "#ffffff",
+      "fs": 20
+     },
+     {
+      "id": "n48",
+      "type": "panel",
+      "x": 88,
+      "y": 352,
+      "w": 272,
+      "h": 224,
+      "kids": [
+       {
+        "id": "n53",
+        "type": "button",
+        "x": 24,
+        "y": 40,
+        "w": 193,
+        "h": 32,
+        "kids": [],
+        "text": "Button",
+        "name": "button4"
+       },
+       {
+        "id": "n54",
+        "type": "button",
+        "x": 24,
+        "y": 104,
+        "w": 193,
+        "h": 48,
+        "kids": [],
+        "text": "Button",
+        "name": "button6",
+        "css": []
+       }
+      ],
+      "bg": "#ffffff",
+      "name": "panel1"
+     },
+     {
+      "id": "n65",
+      "type": "slider",
+      "x": 1192,
+      "y": 752,
+      "w": 304,
+      "h": 56,
+      "kids": [],
+      "text": "50",
+      "name": "slider1"
+     },
+     {
+      "id": "n66",
+      "type": "canvas",
+      "x": 1144,
+      "y": 24,
+      "w": 232,
+      "h": 136,
+      "kids": [],
+      "name": "canvas1",
+      "bg": "#cf2020"
+     },
+     {
+      "id": "n67",
+      "type": "button",
+      "x": 1144,
+      "y": 168,
+      "w": 232,
+      "h": 48,
+      "kids": [],
+      "text": "Let circle walk",
+      "name": "btnCircleWalk",
+      "css": []
+     }
+    ],
+    "props": [
+     [
+      "",
+      ""
+     ]
+    ]
+   },
+   "bp": []
+  },
+  {
+   "id": "d3",
+   "root": {
+    "id": "root",
+    "type": "form",
+    "name": "Counter",
+    "x": 0,
+    "y": 0,
+    "w": 1232,
+    "h": 544,
+    "text": "My form",
+    "bg": "#ffffff",
+    "code": "Sub Form_Load()\n    BtnIncrement.BackColor = Background\nEnd Sub\n\nPublic Sub SetValue(v as Integer)\n    LblCount.Text = v\nEnd Sub",
+    "kids": [
+     {
+      "id": "n18",
+      "type": "slot",
+      "x": 8,
+      "y": 8,
+      "w": 232,
+      "h": 224,
+      "kids": [],
+      "name": "container1",
+      "bg": "#ffffff"
+     },
+     {
+      "id": "n20",
+      "type": "slot",
+      "x": 248,
+      "y": 8,
+      "w": 256,
+      "h": 224,
+      "kids": [],
+      "name": "container2",
+      "bg": "#ffffff"
+     },
+     {
+      "id": "n28",
+      "type": "button",
+      "x": 552,
+      "y": 120,
+      "w": "150px",
+      "h": 64,
+      "kids": [],
+      "text": "++",
+      "name": "BtnIncrement",
+      "attrs": [
+       [
+        "class",
+        "big1"
+       ]
+      ],
+      "css": [],
+      "bg": "#ffffff"
+     },
+     {
+      "id": "n29",
+      "type": "label",
+      "x": 576,
+      "y": 56,
+      "w": 120,
+      "h": 22,
+      "kids": [],
+      "text": "0",
+      "name": "LblCount",
+      "attrs": [
+       [
+        "Value",
+        ""
+       ]
+      ]
+     }
+    ],
+    "props": [],
+    "css": ".big {\n  background-color: #ffcc00;\n}"
+   },
+   "bp": []
+  }
+ ],
+ "active": "d1"
+}

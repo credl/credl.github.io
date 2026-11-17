@@ -1,0 +1,121 @@
+{
+ "fb": 2,
+ "docs": [
+  {
+   "id": "d1",
+   "root": {
+    "id": "root",
+    "type": "form",
+    "name": "form1",
+    "x": 0,
+    "y": 0,
+    "w": 610,
+    "h": 420,
+    "text": "Muncher",
+    "bg": "#e3e7ee",
+    "code": "' ===== Muncher: a maze-chase game =====\n' Eat every dot while three bugs hunt you. A big dot lets you eat the bugs for a few seconds.\n' The maze is ONE string: 19 columns x 19 rows, one character per cell.\n'   \"#\" wall   \".\" dot   \"o\" big dot   \" \" empty floor.   Row 9 is a tunnel: leave on one side, enter on the other.\n' Bug data is packed into one string (no arrays): 5 fields per bug, 2 characters each, value + 20.\n'   fields: 0 = column, 1 = row, 2 = direction x, 3 = direction y, 4 = scared (1/0)\n' Controls on the form: Canvas1 (380 x 380), lblScore, lblLives, lblHelp, cmdNew, cmdUp, cmdLeft, cmdRight, cmdDown\n\nConst COLS = 19\nConst ROWS = 19\nConst CELL = 20\nConst OFS = 20\n\nDim maze As String\nDim gs As String\nDim px As Integer       ' player cell\nDim py As Integer\nDim pdx As Integer      ' direction the player is moving\nDim pdy As Integer\nDim ndx As Integer      ' direction the player wants to turn to (taken as soon as the way is free)\nDim ndy As Integer\nDim fx As Integer       ' direction the player is facing (for drawing)\nDim fy As Integer\nDim score As Integer\nDim hi As Integer\nDim lives As Integer\nDim level As Integer\nDim pellets As Integer\nDim fright As Integer   ' ticks of \"bugs are scared\" left\nDim tickN As Integer\nDim hold As Integer     ' ticks to wait (after a lost life / new level)\nDim playing As Boolean\nDim paused As Boolean\nDim over As Boolean\n\nSub Form_Load()\n    hi = 0\n    lives = 3\n    level = 1\n    InitMaze\n    ResetPositions\n    Draw\nEnd Sub\n\n' ---------- buttons ----------\nSub cmdNew_Click()\n    score = 0\n    lives = 3\n    level = 1\n    over = False\n    paused = False\n    InitMaze\n    ResetPositions\n    hold = 8\n    playing = True\n    StartTimer Speed()\n    Draw\nEnd Sub\n\nSub cmdUp_Click()\n    ndx = 0\n    ndy = -1\nEnd Sub\n\nSub cmdDown_Click()\n    ndx = 0\n    ndy = 1\nEnd Sub\n\nSub cmdLeft_Click()\n    ndx = -1\n    ndy = 0\nEnd Sub\n\nSub cmdRight_Click()\n    ndx = 1\n    ndy = 0\nEnd Sub\n\n' ---------- keyboard: arrows steer, Space pauses, Enter starts ----------\nSub Form_KeyDown(KeyCode As Integer)\n    Select Case KeyCode\n        Case vbKeyLeft\n            cmdLeft_Click\n        Case vbKeyRight\n            cmdRight_Click\n        Case vbKeyUp\n            cmdUp_Click\n        Case vbKeyDown\n            cmdDown_Click\n        Case vbKeySpace\n            If playing Then\n                If paused Then\n                    paused = False\n                Else\n                    paused = True\n                End If\n                Draw\n            End If\n        Case vbKeyReturn\n            If Not playing Then cmdNew_Click\n    End Select\nEnd Sub\n\n' ---------- the game loop ----------\nSub Form_Timer()\n    If playing Then\n        If Not paused Then Tick\n    End If\nEnd Sub\n\nSub Tick()\n    Dim i\n    Dim mv As Boolean\n    If hold > 0 Then\n        hold = hold - 1\n        Draw\n        Exit Sub\n    End If\n    tickN = tickN + 1\n    MovePlayer\n    CheckHits\n    If hold > 0 Or Not playing Then\n        Draw\n        Exit Sub\n    End If\n    If pellets = 0 Then\n        NextLevel\n        Draw\n        Exit Sub\n    End If\n    ' the bugs leave one after the other; they are a little slower than you, and much slower while scared\n    For i = 0 To 2\n        mv = True\n        If tickN < i * 12 Then mv = False\n        If (tickN Mod 4) = 3 Then mv = False\n        If fright > 0 Then\n            If (tickN Mod 2) = 0 Then mv = False\n        End If\n        If mv Then MoveBug i\n    Next i\n    CheckHits\n    If fright > 0 Then\n        fright = fright - 1\n        If fright = 0 Then SetScared 0\n    End If\n    Draw\nEnd Sub\n\nSub MovePlayer()\n    Dim c\n    ' turn if the wanted direction is free\n    If ndx <> 0 Or ndy <> 0 Then\n        If Not IsWall(px + ndx, py + ndy) Then\n            pdx = ndx\n            pdy = ndy\n        End If\n    End If\n    ' keep going while the way ahead is free\n    If pdx <> 0 Or pdy <> 0 Then\n        If Not IsWall(px + pdx, py + pdy) Then\n            px = WrapX(px + pdx)\n            py = py + pdy\n            fx = pdx\n            fy = pdy\n        End If\n    End If\n    c = Mid(maze, py * COLS + px + 1, 1)\n    If c = \".\" Then\n        SetCell px, py\n        score = score + 10\n        pellets = pellets - 1\n    ElseIf c = \"o\" Then\n        SetCell px, py\n        score = score + 50\n        pellets = pellets - 1\n        fright = 50 - 5 * level\n        If fright < 16 Then fright = 16\n        SetScared 1\n    End If\n    If score > hi Then hi = score\nEnd Sub\n\n' Move bug i by one cell. It never turns back (unless it is in a dead end) and picks the free direction that\n' brings it closest to its target: bug 0 targets you, bug 1 the cells ahead of you, bug 2 a random spot.\n' A scared bug just wanders.\nSub MoveBug(i As Integer)\n    Dim x, y, dx, dy, rdx, rdy\n    Dim d, ddx, ddy, nx, ny, tx, ty\n    Dim sc, bd, bdx, bdy\n    Dim found As Boolean\n    x = GetG(i, 0)\n    y = GetG(i, 1)\n    dx = GetG(i, 2)\n    dy = GetG(i, 3)\n    rdx = 0 - dx\n    rdy = 0 - dy\n    If i = 0 Then\n        tx = px\n        ty = py\n    ElseIf i = 1 Then\n        tx = px + 3 * pdx\n        ty = py + 3 * pdy\n    Else\n        tx = Int(Rnd * COLS)\n        ty = Int(Rnd * ROWS)\n    End If\n    bd = 999999\n    bdx = 0\n    bdy = 0\n    found = False\n    For d = 0 To 3\n        ddx = DirX(d)\n        ddy = DirY(d)\n        If Not IsWall(x + ddx, y + ddy) Then\n            If Not (ddx = rdx And ddy = rdy) Then\n                nx = WrapX(x + ddx)\n                ny = y + ddy\n                If GetG(i, 4) = 1 And fright > 0 Then\n                    sc = Rnd * 1000\n                Else\n                    sc = (nx - tx) * (nx - tx) + (ny - ty) * (ny - ty)\n                End If\n                If sc < bd Then\n                    bd = sc\n                    bdx = ddx\n                    bdy = ddy\n                    found = True\n                End If\n            End If\n        End If\n    Next d\n    If Not found Then\n        bdx = rdx\n        bdy = rdy\n    End If\n    SetG i, 0, WrapX(x + bdx)\n    SetG i, 1, y + bdy\n    SetG i, 2, bdx\n    SetG i, 3, bdy\nEnd Sub\n\n' Did a bug reach the player? A scared bug is eaten, otherwise the player loses a life.\nSub CheckHits()\n    Dim i\n    For i = 0 To 2\n        If GetG(i, 0) = px And GetG(i, 1) = py Then\n            If GetG(i, 4) = 1 And fright > 0 Then\n                score = score + 200\n                SetG i, 0, 9\n                SetG i, 1, 8\n                SetG i, 2, 0\n                SetG i, 3, 0\n                SetG i, 4, 0\n            Else\n                LoseLife\n                Exit Sub\n            End If\n        End If\n    Next i\nEnd Sub\n\nSub LoseLife()\n    lives = lives - 1\n    If lives <= 0 Then\n        GameOver\n    Else\n        ResetPositions\n        hold = 12\n    End If\nEnd Sub\n\nSub GameOver()\n    playing = False\n    over = True\n    StopTimer\nEnd Sub\n\nSub NextLevel()\n    level = level + 1\n    InitMaze\n    ResetPositions\n    hold = 15\n    StartTimer Speed()\nEnd Sub\n\n' Timer interval in ms: a bit faster on every level.\nFunction Speed() As Integer\n    Dim s As Integer\n    s = 150 - 10 * (level - 1)\n    If s < 80 Then s = 80\n    Return s\nEnd Function\n\n' ---------- setup ----------\nSub InitMaze()\n    Dim i\n    maze = \"\"\n    maze = maze & \"###################\"\n    maze = maze & \"#o.......#.......o#\"\n    maze = maze & \"#.##.###.#.###.##.#\"\n    maze = maze & \"#.................#\"\n    maze = maze & \"#.##.#.#####.#.##.#\"\n    maze = maze & \"#....#...#...#....#\"\n    maze = maze & \"####.### # ###.####\"\n    maze = maze & \"####.#       #.####\"\n    maze = maze & \"......       ......\"\n    maze = maze & \"####.#       #.####\"\n    maze = maze & \"####.# ##### #.####\"\n    maze = maze & \"#........#........#\"\n    maze = maze & \"#.##.###.#.###.##.#\"\n    maze = maze & \"#o.#...........#.o#\"\n    maze = maze & \"##.#.#.#####.#.#.##\"\n    maze = maze & \"#....#...#...#....#\"\n    maze = maze & \"#.######.#.######.#\"\n    maze = maze & \"#.................#\"\n    maze = maze & \"###################\"\n    pellets = 0\n    For i = 1 To Len(maze)\n        If Mid(maze, i, 1) = \".\" Or Mid(maze, i, 1) = \"o\" Then pellets = pellets + 1\n    Next i\nEnd Sub\n\nSub ResetPositions()\n    Dim i\n    px = 9\n    py = 13\n    pdx = 0\n    pdy = 0\n    ndx = 0\n    ndy = 0\n    fx = -1\n    fy = 0\n    fright = 0\n    tickN = 0\n    gs = Replace(Space(30), \" \", \"0\")\n    For i = 0 To 2\n        SetG i, 0, 8 + i\n        SetG i, 1, 8\n        SetG i, 2, 0\n        SetG i, 3, 0\n        SetG i, 4, 0\n    Next i\nEnd Sub\n\n' ---------- helpers ----------\nFunction GetG(i As Integer, f As Integer) As Integer\n    Return Val(Mid(gs, i * 10 + f * 2 + 1, 2)) - OFS\nEnd Function\n\nSub SetG(i As Integer, f As Integer, v As Integer)\n    Dim p\n    p = i * 10 + f * 2\n    gs = Left(gs, p) & (v + OFS) & Mid(gs, p + 3)\nEnd Sub\n\nSub SetScared(v As Integer)\n    Dim i\n    For i = 0 To 2\n        SetG i, 4, v\n    Next i\nEnd Sub\n\nSub SetCell(x As Integer, y As Integer)\n    Dim i\n    i = y * COLS + x\n    maze = Left(maze, i) & \" \" & Mid(maze, i + 2)\nEnd Sub\n\n' Columns wrap around (the tunnel); rows do not.\nFunction WrapX(x As Integer) As Integer\n    If x < 0 Then Return x + COLS\n    If x >= COLS Then Return x - COLS\n    Return x\nEnd Function\n\nFunction IsWall(x As Integer, y As Integer) As Boolean\n    If y < 0 Then Return True\n    If y >= ROWS Then Return True\n    If Mid(maze, y * COLS + WrapX(x) + 1, 1) = \"#\" Then Return True\n    Return False\nEnd Function\n\n' Directions 0 = up, 1 = right, 2 = down, 3 = left.\nFunction DirX(d As Integer) As Integer\n    If d = 1 Then Return 1\n    If d = 3 Then Return -1\n    Return 0\nEnd Function\n\nFunction DirY(d As Integer) As Integer\n    If d = 0 Then Return -1\n    If d = 2 Then Return 1\n    Return 0\nEnd Function\n\n' ---------- drawing: the whole picture is repainted in one go, so nothing flickers ----------\nSub Draw()\n    Dim x, y, ch, i\n    Canvas1.Clear\n    Canvas1.DrawColor = \"#0d1017\"\n    Canvas1.FillRect 0, 0, COLS * CELL, ROWS * CELL\n    For y = 0 To ROWS - 1\n        For x = 0 To COLS - 1\n            ch = Mid(maze, y * COLS + x + 1, 1)\n            If ch = \"#\" Then\n                Canvas1.DrawColor = \"#2f55e0\"\n                Canvas1.FillRect x * CELL + 4, y * CELL + 4, 12, 12\n                If x < COLS - 1 Then\n                    If IsWall(x + 1, y) Then Canvas1.FillRect x * CELL + 16, y * CELL + 4, 8, 12\n                End If\n                If y < ROWS - 1 Then\n                    If IsWall(x, y + 1) Then Canvas1.FillRect x * CELL + 4, y * CELL + 16, 12, 8\n                End If\n            ElseIf ch = \".\" Then\n                Canvas1.DrawColor = \"#ffe6a8\"\n                Canvas1.FillCircle x * CELL + 10, y * CELL + 10, 2\n            ElseIf ch = \"o\" Then\n                Canvas1.DrawColor = \"#ffd166\"\n                If (tickN Mod 2) = 0 Then\n                    Canvas1.FillCircle x * CELL + 10, y * CELL + 10, 6\n                Else\n                    Canvas1.FillCircle x * CELL + 10, y * CELL + 10, 4\n                End If\n            End If\n        Next x\n    Next y\n    For i = 0 To 2\n        DrawBug i\n    Next i\n    DrawPlayer\n    If over Then\n        Banner \"GAME OVER - press Enter\"\n    ElseIf paused Then\n        Banner \"PAUSED\"\n    ElseIf Not playing Then\n        Banner \"Press Enter to start\"\n    ElseIf hold > 0 Then\n        Banner \"READY!\"\n    End If\n    lblScore.Caption = \"Score: \" & score & \"   Best: \" & hi\n    lblLives.Caption = \"Lives: \" & lives & \"   Level: \" & level\nEnd Sub\n\n' The player: a round mint-green blob with two eyes and a mouth that opens and closes.\nSub DrawPlayer()\n    Dim cx, cy\n    cx = px * CELL + 10\n    cy = py * CELL + 10\n    Canvas1.DrawColor = \"#2ee6a6\"\n    Canvas1.FillCircle cx, cy, 8\n    Canvas1.DrawColor = \"#ffffff\"\n    Canvas1.FillCircle cx + fx - 4 * fy, cy + fy + 4 * fx, 3\n    Canvas1.FillCircle cx + fx + 4 * fy, cy + fy - 4 * fx, 3\n    Canvas1.DrawColor = \"#10202a\"\n    Canvas1.FillCircle cx + 2 * fx - 4 * fy, cy + 2 * fy + 4 * fx, 1.5\n    Canvas1.FillCircle cx + 2 * fx + 4 * fy, cy + 2 * fy - 4 * fx, 1.5\n    If (tickN Mod 2) = 0 Then\n        Canvas1.DrawColor = \"#0d1017\"\n        If fx <> 0 Then\n            Canvas1.FillRect cx + fx * 6 - 3, cy - 2, 6, 4\n        Else\n            Canvas1.FillRect cx - 2, cy + fy * 6 - 3, 4, 6\n        End If\n    End If\nEnd Sub\n\n' A bug: a round body with legs and feelers. Scared bugs turn blue and flash before they recover.\nSub DrawBug(i As Integer)\n    Dim cx, cy, col, bdx, bdy\n    Dim scared As Boolean\n    cx = GetG(i, 0) * CELL + 10\n    cy = GetG(i, 1) * CELL + 10\n    bdx = GetG(i, 2)\n    bdy = GetG(i, 3)\n    scared = False\n    If GetG(i, 4) = 1 Then\n        If fright > 0 Then scared = True\n    End If\n    If i = 0 Then\n        col = \"#ff5c8a\"\n    ElseIf i = 1 Then\n        col = \"#ffb347\"\n    Else\n        col = \"#5cd6ff\"\n    End If\n    If scared Then\n        col = \"#6f7cff\"\n        If fright < 14 And (fright Mod 2) = 0 Then col = \"#f2f2f2\"\n    End If\n    Canvas1.DrawColor = col\n    Canvas1.FillCircle cx, cy, 8\n    Canvas1.LineWidth = 2\n    Canvas1.DrawLine cx - 5, cy + 6, cx - 7, cy + 10\n    Canvas1.DrawLine cx + 5, cy + 6, cx + 7, cy + 10\n    Canvas1.DrawLine cx - 3, cy - 6, cx - 6, cy - 10\n    Canvas1.DrawLine cx + 3, cy - 6, cx + 6, cy - 10\n    Canvas1.LineWidth = 1\n    If scared Then\n        Canvas1.DrawColor = \"#101428\"\n        Canvas1.FillCircle cx - 3, cy - 1, 1.5\n        Canvas1.FillCircle cx + 3, cy - 1, 1.5\n        Canvas1.DrawLine cx - 4, cy + 4, cx + 4, cy + 4\n    Else\n        Canvas1.DrawColor = \"#ffffff\"\n        Canvas1.FillCircle cx - 3, cy - 1, 3\n        Canvas1.FillCircle cx + 3, cy - 1, 3\n        Canvas1.DrawColor = \"#101428\"\n        Canvas1.FillCircle cx - 3 + bdx, cy - 1 + bdy, 1.5\n        Canvas1.FillCircle cx + 3 + bdx, cy - 1 + bdy, 1.5\n    End If\nEnd Sub\n\nSub Banner(msg As String)\n    Dim w, bx\n    w = Len(msg) * 8 + 24\n    bx = Int((COLS * CELL - w) / 2)\n    Canvas1.DrawColor = \"#000000\"\n    Canvas1.FillRect bx, 170, w, 40\n    Canvas1.DrawColor = \"#ffffff\"\n    Canvas1.DrawRect bx, 170, w, 40\n    Canvas1.DrawText msg, bx + 12, 183\nEnd Sub\n",
+    "kids": [
+     {
+      "id": "n9",
+      "type": "canvas",
+      "x": 20,
+      "y": 20,
+      "w": 380,
+      "h": 380,
+      "kids": [],
+      "name": "Canvas1"
+     },
+     {
+      "id": "n10",
+      "type": "label",
+      "x": 420,
+      "y": 20,
+      "w": 170,
+      "h": 24,
+      "kids": [],
+      "text": "Score: 0",
+      "name": "lblScore"
+     },
+     {
+      "id": "n11",
+      "type": "label",
+      "x": 420,
+      "y": 46,
+      "w": 170,
+      "h": 24,
+      "kids": [],
+      "text": "Lives: 3   Level: 1",
+      "name": "lblLives"
+     },
+     {
+      "id": "n12",
+      "type": "button",
+      "x": 420,
+      "y": 84,
+      "w": 160,
+      "h": 32,
+      "kids": [],
+      "text": "New game",
+      "name": "cmdNew"
+     },
+     {
+      "id": "n13",
+      "type": "button",
+      "x": 480,
+      "y": 136,
+      "w": 60,
+      "h": 32,
+      "kids": [],
+      "text": "Up",
+      "name": "cmdUp"
+     },
+     {
+      "id": "n14",
+      "type": "button",
+      "x": 420,
+      "y": 172,
+      "w": 60,
+      "h": 32,
+      "kids": [],
+      "text": "Left",
+      "name": "cmdLeft"
+     },
+     {
+      "id": "n15",
+      "type": "button",
+      "x": 540,
+      "y": 172,
+      "w": 60,
+      "h": 32,
+      "kids": [],
+      "text": "Right",
+      "name": "cmdRight"
+     },
+     {
+      "id": "n16",
+      "type": "button",
+      "x": 480,
+      "y": 208,
+      "w": 60,
+      "h": 32,
+      "kids": [],
+      "text": "Down",
+      "name": "cmdDown"
+     },
+     {
+      "id": "n17",
+      "type": "label",
+      "x": 420,
+      "y": 262,
+      "w": 170,
+      "h": 130,
+      "kids": [],
+      "text": "Keys:\nArrows  steer\nSpace  pause\nEnter  new game\n\nEat all dots. Big dots\nmake the bugs scared.",
+      "name": "lblHelp"
+     }
+    ]
+   }
+  }
+ ],
+ "active": "d1"
+}

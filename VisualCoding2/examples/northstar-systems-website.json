@@ -1,0 +1,205 @@
+{
+  "fb": 2,
+  "docs": [
+    {
+      "id": "d1",
+      "root": {
+        "id": "root",
+        "type": "form",
+        "name": "Northstar Systems",
+        "x": 0,
+        "y": 0,
+        "w": 1200,
+        "h": 2100,
+        "text": "Northstar Systems — Digital Engineering",
+        "bg": "#0b0d12",
+        "code": "Dim submitted As Boolean\n\nSub Form_Load()\n    Me.Caption = \"Northstar Systems — Digital Engineering\"\n    lblStatus.Caption = \"We usually reply within two working days.\"\nEnd Sub\n\nSub btnSend_Click()\n    If Len(Trim(txtName.Text)) = 0 Then\n        MsgBox \"Please enter your name.\"\n        txtName.SetFocus\n    ElseIf Instr(txtEmail.Text, \"@\") = 0 Then\n        MsgBox \"Please enter a valid email address.\"\n        txtEmail.SetFocus\n    ElseIf Len(Trim(txtMessage.Text)) = 0 Then\n        MsgBox \"Please tell us a little about your project.\"\n        txtMessage.SetFocus\n    Else\n        lblStatus.Caption = \"Thanks, \" & txtName.Text & \"! Your enquiry is ready. (Demo form)\"\n        btnSend.Caption = \"Enquiry received ✓\"\n        submitted = True\n    End If\nEnd Sub\n",
+        "kids": [
+          {
+            "id": "n1",
+            "type": "html",
+            "name": "headerHtml",
+            "x": 0,
+            "y": 0,
+            "w": 1200,
+            "h": 92,
+            "kids": [],
+            "html": "\n<header class=\"site-header\">\n  <div class=\"brand\"><span class=\"brand-mark\">N</span><span>NORTHSTAR<span class=\"brand-light\"> / SYSTEMS</span></span></div>\n  <nav><a href=\"#about\">About</a><a href=\"#services\">Solutions</a><a href=\"#work\">Our approach</a><a href=\"#contact\">Contact</a></nav>\n  <a class=\"nav-cta\" href=\"#contact\">Let's talk <b>↗</b></a>\n</header>"
+          },
+          {
+            "id": "n2",
+            "type": "html",
+            "name": "heroHtml",
+            "x": 0,
+            "y": 92,
+            "w": 1200,
+            "h": 480,
+            "kids": [],
+            "html": "\n<section class=\"hero\">\n <div class=\"hero-copy\">\n  <div class=\"eyebrow\"><span></span> DIGITAL ENGINEERING · VIENNA & BEYOND</div>\n  <h1>Make complex<br><em>things work.</em></h1>\n  <p>We turn ambitious ideas into dependable digital products — combining thoughtful strategy, clear design and engineering that lasts.</p>\n  <div class=\"hero-actions\"><a class=\"button-primary\" href=\"#services\">Explore what we do <b>↗</b></a><a class=\"text-link\" href=\"#about\">Meet Northstar <span>→</span></a></div>\n  <div class=\"hero-foot\"><span>INDEPENDENT DIGITAL STUDIO</span><span>EST. 2018&nbsp; · &nbsp;AT / EU</span></div>\n </div>\n <div class=\"hero-art\"><div class=\"orbit orbit-one\"></div><div class=\"orbit orbit-two\"></div><div class=\"orbit orbit-three\"></div><div class=\"core\"><div class=\"core-inner\">N<span>✳</span></div></div><div class=\"art-tag tag-top\">IDEAS → IMPACT</div><div class=\"art-tag tag-bottom\">BUILT FOR WHAT'S NEXT</div><div class=\"art-dot dot-a\"></div><div class=\"art-dot dot-b\"></div></div>\n</section>"
+          },
+          {
+            "id": "n3",
+            "type": "html",
+            "name": "statsHtml",
+            "x": 0,
+            "y": 572,
+            "w": 1200,
+            "h": 140,
+            "kids": [],
+            "html": "\n<section class=\"stats\"><div><strong>8<span>+</span></strong><small>YEARS OF BUILDING</small></div><div><strong>42</strong><small>PROJECTS DELIVERED</small></div><div><strong>12</strong><small>COUNTRIES REACHED</small></div><div><strong>100<span>%</span></strong><small>INDEPENDENT THINKING</small></div></section>"
+          },
+          {
+            "id": "n4",
+            "type": "html",
+            "name": "aboutHtml",
+            "x": 0,
+            "y": 712,
+            "w": 1200,
+            "h": 290,
+            "kids": [],
+            "html": "\n<section class=\"intro\" id=\"about\"><div class=\"section-kicker\">01 / WHO WE ARE</div><div class=\"intro-main\"><h2>Small team.<br><em>Wide perspective.</em></h2><div><p class=\"lead\">Northstar Systems is an independent digital company for organisations ready to move forward.</p><p>We bring product thinking, design craft and pragmatic software engineering together. No black boxes, no buzzword bingo — just a curious team that takes ownership from the first sketch to the final release.</p><a class=\"under-link\" href=\"#contact\">A little more about us <span>↗</span></a></div></div></section>"
+          },
+          {
+            "id": "n5",
+            "type": "html",
+            "name": "servicesHtml",
+            "x": 0,
+            "y": 1002,
+            "w": 1200,
+            "h": 420,
+            "kids": [],
+            "html": "\n<section class=\"services\" id=\"services\"><div class=\"section-kicker\">02 / WHAT WE DO</div><div class=\"section-title\"><h2>From first question<br>to <em>working product.</em></h2><p>We connect the dots between your goals, your users and the technology that makes it happen.</p></div><div class=\"service-grid\">\n <article><div class=\"service-no\">01</div><div class=\"service-icon\">✳</div><h3>Digital strategy</h3><p>Find the right problem, shape a useful roadmap and make confident decisions before investing in technology.</p><a href=\"#contact\">Explore strategy <span>↗</span></a></article>\n <article><div class=\"service-no\">02</div><div class=\"service-icon\">⌘</div><h3>Product & experience</h3><p>Design clear, accessible experiences that make sophisticated services feel refreshingly simple.</p><a href=\"#contact\">Explore product design <span>↗</span></a></article>\n <article><div class=\"service-no\">03</div><div class=\"service-icon\">⌁</div><h3>Software engineering</h3><p>Build robust web platforms, integrations and prototypes with maintainability built in from day one.</p><a href=\"#contact\">Explore engineering <span>↗</span></a></article>\n</div></section>"
+          },
+          {
+            "id": "n6",
+            "type": "html",
+            "name": "approachHtml",
+            "x": 0,
+            "y": 1422,
+            "w": 1200,
+            "h": 260,
+            "kids": [],
+            "html": "\n<section class=\"approach\" id=\"work\"><div class=\"section-kicker\">03 / HOW WE WORK</div><div class=\"approach-grid\"><h2>Clarity at every<br><em>step of the way.</em></h2><div class=\"steps\"><div><b>01</b><span><strong>Listen & understand</strong><small>We start with context, not assumptions.</small></span></div><div><b>02</b><span><strong>Make & learn</strong><small>Short feedback loops turn ideas into evidence.</small></span></div><div><b>03</b><span><strong>Deliver & improve</strong><small>We stay close until the solution creates value.</small></span></div></div></div></section>"
+          },
+          {
+            "id": "n7",
+            "type": "html",
+            "name": "contactHeadingHtml",
+            "x": 0,
+            "y": 1682,
+            "w": 1200,
+            "h": 125,
+            "kids": [],
+            "html": "\n<section class=\"contact-heading\" id=\"contact\"><div class=\"section-kicker\">04 / START A CONVERSATION</div><h2>Have a challenge<br>worth <em>solving?</em></h2><p>Tell us a little about it. We’ll get back to you with a real person and a useful next step.</p></section>"
+          },
+          {
+            "id": "n8",
+            "type": "label",
+            "name": "lblName",
+            "x": 90,
+            "y": 1818,
+            "w": 90,
+            "h": 26,
+            "kids": [],
+            "text": "YOUR NAME"
+          },
+          {
+            "id": "n9",
+            "type": "textbox",
+            "name": "txtName",
+            "x": 90,
+            "y": 1845,
+            "w": 300,
+            "h": 42,
+            "kids": [],
+            "text": "",
+            "ph": "Alex Morgan"
+          },
+          {
+            "id": "n10",
+            "type": "label",
+            "name": "lblEmail",
+            "x": 420,
+            "y": 1818,
+            "w": 90,
+            "h": 26,
+            "kids": [],
+            "text": "EMAIL ADDRESS"
+          },
+          {
+            "id": "n11",
+            "type": "textbox",
+            "name": "txtEmail",
+            "x": 420,
+            "y": 1845,
+            "w": 300,
+            "h": 42,
+            "kids": [],
+            "text": "",
+            "ph": "alex@company.com"
+          },
+          {
+            "id": "n12",
+            "type": "label",
+            "name": "lblMessage",
+            "x": 750,
+            "y": 1818,
+            "w": 100,
+            "h": 26,
+            "kids": [],
+            "text": "YOUR MESSAGE"
+          },
+          {
+            "id": "n13",
+            "type": "textarea",
+            "name": "txtMessage",
+            "x": 750,
+            "y": 1845,
+            "w": 360,
+            "h": 88,
+            "kids": [],
+            "text": "",
+            "ph": "What are you working on?"
+          },
+          {
+            "id": "n14",
+            "type": "button",
+            "name": "btnSend",
+            "x": 90,
+            "y": 1945,
+            "w": 230,
+            "h": 48,
+            "kids": [],
+            "text": "Send enquiry  ↗"
+          },
+          {
+            "id": "n15",
+            "type": "label",
+            "name": "lblStatus",
+            "x": 340,
+            "y": 1955,
+            "w": 650,
+            "h": 32,
+            "kids": [],
+            "text": "We usually reply within two working days."
+          },
+          {
+            "id": "n16",
+            "type": "html",
+            "name": "footerHtml",
+            "x": 0,
+            "y": 2010,
+            "w": 1200,
+            "h": 90,
+            "kids": [],
+            "html": "\n<footer class=\"site-footer\"><div class=\"brand\"><span class=\"brand-mark\">N</span><span>NORTHSTAR<span class=\"brand-light\"> / SYSTEMS</span></span></div><span>INDEPENDENT BY NATURE. PRACTICAL BY DESIGN.</span><span>© 2026 NORTHSTAR SYSTEMS</span></footer>"
+          }
+        ],
+        "language": "vb",
+        "css": "\n.f{font-family:Inter,Arial,sans-serif;color:#f1f2f5;background:#0b0d12;overflow:visible}\n.f .c.html{overflow:visible}\n.f .c.label{font-size:11px;letter-spacing:1.5px;font-weight:700;color:#9da5b5}\n.f .c.textbox,.f .c.textarea{border:1px solid #343a48;border-radius:7px;background:#151923;color:#f5f6f8;padding:11px 13px;font:14px Arial}\n.f .c.textbox:focus,.f .c.textarea:focus{outline:2px solid #b6f36b;border-color:#b6f36b}\n.f .c.button{background:#b6f36b;color:#11170b;border:0;border-radius:7px;font-weight:800;cursor:pointer}\n.f .c.button:hover{filter:brightness(1.08);transform:translateY(-2px)}\n.site-header{height:92px;padding:0 64px;display:flex;align-items:center;justify-content:space-between;background:#0b0d12;border-bottom:1px solid #242936}\n.brand{display:flex;align-items:center;gap:12px;font-size:14px;font-weight:900;letter-spacing:2px}\n.brand-mark{width:34px;height:34px;border-radius:9px;background:#b6f36b;color:#11170b;display:grid;place-items:center;font-size:20px}\n.brand-light{color:#81899a;font-weight:500}\n.site-header nav{display:flex;gap:34px}\n.site-header nav a,.text-link{color:#a9b0bd;text-decoration:none;font-size:13px}\n.site-header nav a:hover,.text-link:hover{color:#b6f36b}\n.nav-cta{background:#202631;border:1px solid #394151;border-radius:6px;padding:12px 17px;color:#f4f5f7;text-decoration:none;font-size:12px}\n.nav-cta b{color:#b6f36b;margin-left:12px}\n.hero{height:480px;position:relative;padding:62px 64px;background:radial-gradient(ellipse at 78% 50%,#1a2630 0%,#0b0d12 48%)}\n.hero-copy{position:relative;z-index:2;width:58%}\n.eyebrow,.section-kicker{font-size:10px;letter-spacing:2px;font-weight:800;color:#b6f36b}\n.eyebrow span{display:inline-block;width:7px;height:7px;border-radius:50%;background:#b6f36b;margin-right:10px}\n.hero h1{font-size:62px;line-height:1.02;letter-spacing:-3px;margin:24px 0 18px;font-weight:800}\nem{font-style:normal;color:#b6f36b}\n.hero-copy p{font-size:15px;line-height:1.8;color:#a2aab8;max-width:510px}\n.hero-actions{display:flex;align-items:center;gap:26px;margin-top:25px}\n.button-primary{display:inline-block;background:#b6f36b;color:#11170b;padding:14px 18px;border-radius:6px;text-decoration:none;font-size:12px;font-weight:800}\n.button-primary b{margin-left:15px}\n.text-link span{color:#b6f36b;margin-left:8px}\n.hero-foot{display:flex;gap:35px;margin-top:40px;font-size:9px;letter-spacing:1.6px;color:#6f7888}\n.hero-art{position:absolute;right:50px;top:20px;width:430px;height:430px}\n.orbit{position:absolute;border:1px solid #43505c;border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-25deg)}\n.orbit-one{width:390px;height:180px}.orbit-two{width:330px;height:330px;transform:translate(-50%,-50%) rotate(38deg)}.orbit-three{width:250px;height:390px;transform:translate(-50%,-50%) rotate(58deg)}\n.core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:150px;height:150px;border-radius:42px;background:linear-gradient(145deg,#d2ff92,#83bd4c);box-shadow:0 0 90px #a9ef6b44;display:grid;place-items:center;rotate:45deg}\n.core-inner{font-size:62px;font-weight:900;color:#17210f;rotate:-45deg}.core-inner span{font-size:23px;vertical-align:top}\n.art-tag{position:absolute;font-size:9px;letter-spacing:1.5px;color:#b6f36b;background:#151c20;border:1px solid #43534b;padding:9px 12px;border-radius:4px}\n.tag-top{top:45px;right:10px}.tag-bottom{bottom:40px;left:0}\n.art-dot{position:absolute;width:9px;height:9px;background:#b6f36b;border-radius:50%;box-shadow:0 0 18px #b6f36b}\n.dot-a{top:72px;left:68px}.dot-b{bottom:75px;right:60px}\n.stats{height:140px;background:#151a22;border-top:1px solid #2b323e;border-bottom:1px solid #2b323e;display:grid;grid-template-columns:repeat(4,1fr);align-items:center;padding:0 64px}\n.stats div{border-right:1px solid #303846;padding-left:35px}.stats div:first-child{padding-left:0}.stats div:last-child{border:0}\n.stats strong{display:block;font-size:34px;letter-spacing:-1px}.stats strong span{color:#b6f36b}.stats small{font-size:9px;letter-spacing:1.5px;color:#8791a1}\n.intro{height:290px;padding:54px 64px;background:#0e1118}\n.intro-main{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:25px}\n.intro h2,.section-title h2,.approach h2,.contact-heading h2{font-size:37px;line-height:1.12;letter-spacing:-1.5px;margin:0}\n.intro-main p{font-size:13px;line-height:1.8;color:#9ba4b3;margin:0 0 12px}.intro-main .lead{font-size:16px;color:#f0f2f4}\n.under-link{color:#b6f36b;font-size:11px;text-decoration:none;font-weight:700}.under-link span{margin-left:10px}\n.services{height:420px;padding:48px 64px;background:#151a22}\n.section-title{display:flex;justify-content:space-between;align-items:end;margin:18px 0 27px}\n.section-title p{width:340px;color:#9ba4b3;font-size:12px;line-height:1.7}\n.service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}\n.service-grid article{height:220px;padding:19px 21px;background:#1b222d;border:1px solid #303947;border-radius:8px;position:relative}\n.service-no{position:absolute;right:18px;top:17px;color:#748091;font-size:10px}\n.service-icon{font-size:23px;color:#b6f36b;margin-bottom:10px}\n.service-grid h3{font-size:16px;margin:0 0 9px}.service-grid p{font-size:11px;line-height:1.65;color:#9ba4b3;min-height:55px}\n.service-grid a{font-size:10px;color:#b6f36b;text-decoration:none;font-weight:700}.service-grid a span{margin-left:8px}\n.approach{height:260px;padding:43px 64px;background:#0e1118}\n.approach-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:24px}\n.steps>div{display:flex;gap:18px;padding:9px 0;border-bottom:1px solid #29313d}\n.steps b{font-size:11px;color:#b6f36b}.steps strong{display:block;font-size:12px}.steps small{display:block;color:#8e98a8;font-size:10px;margin-top:4px}\n.contact-heading{height:125px;padding:15px 64px 0;background:#151a22}\n.contact-heading h2{font-size:27px;display:inline-block;margin:12px 25px 0 0;vertical-align:middle}\n.contact-heading p{display:inline-block;max-width:290px;color:#9ba4b3;font-size:11px;line-height:1.6;vertical-align:middle}\n.site-footer{height:90px;padding:0 64px;display:flex;align-items:center;justify-content:space-between;background:#090b10;border-top:1px solid #2a303b}\n.site-footer>span{font-size:9px;letter-spacing:1.2px;color:#788292}\n"
+      },
+      "bp": []
+    }
+  ],
+  "active": "d1"
+}

@@ -1,0 +1,343 @@
+{
+ "fb": 2,
+ "docs": [
+  {
+   "id": "d1",
+   "root": {
+    "id": "root",
+    "type": "form",
+    "name": "Subcomponents App",
+    "x": 0,
+    "y": 0,
+    "w": 1512,
+    "h": 936,
+    "text": "My form",
+    "bg": "",
+    "code": "Sub app21_Click()\n    \nEnd Sub\n\nSub button1_Click()\n    button1.Left = button1.Left + 5\nEnd Sub\n\nSub Counter1_Changed(v)\n    MsgBox \"Counter 1 value: \" + Counter1.GetValue()\nEnd Sub\n\nSub Counter2_Changed(v)\n    MsgBox \"Counter 2 value: \" + v\n    Counter1.Left = Counter1.Left + 5\nEnd Sub\n",
+    "kids": [
+     {
+      "id": "n21",
+      "type": "comp",
+      "x": 16,
+      "y": 16,
+      "w": 760,
+      "h": 240,
+      "kids": [
+       {
+        "id": "n22",
+        "type": "button",
+        "x": 16,
+        "y": 32,
+        "w": 176,
+        "h": 30,
+        "kids": [],
+        "text": "Button within Counter 1",
+        "slot": "container1",
+        "name": "button1"
+       }
+      ],
+      "ref": "d3",
+      "name": "Counter1",
+      "pv": {
+       "background": "green"
+      }
+     },
+     {
+      "id": "n31",
+      "type": "comp",
+      "x": 16,
+      "y": 264,
+      "w": 760,
+      "h": 240,
+      "kids": [
+       {
+        "id": "n32",
+        "type": "button",
+        "x": 24,
+        "y": 136,
+        "w": 176,
+        "h": 30,
+        "kids": [],
+        "text": "Button within Counter 2",
+        "slot": "container1",
+        "name": "button2"
+       }
+      ],
+      "ref": "d3",
+      "name": "Counter2"
+     },
+     {
+      "id": "n33",
+      "type": "comp",
+      "x": 16,
+      "y": 512,
+      "w": 760,
+      "h": 240,
+      "kids": [
+       {
+        "id": "n34",
+        "type": "button",
+        "x": 56,
+        "y": 96,
+        "w": 184,
+        "h": 30,
+        "kids": [],
+        "text": "Button within Counter 3",
+        "slot": "container2",
+        "name": "button3"
+       }
+      ],
+      "ref": "d3",
+      "name": "component1",
+      "pv": {
+       "background": "blue"
+      }
+     }
+    ],
+    "language": "vb"
+   },
+   "bp": []
+  },
+  {
+   "id": "d3",
+   "root": {
+    "id": "root",
+    "type": "form",
+    "name": "Counter",
+    "x": 0,
+    "y": 0,
+    "w": 848,
+    "h": 240,
+    "text": "My form",
+    "bg": "",
+    "code": "Public Event Changed(value)\nDim n As Integer\n\nSub BtnIncrement_Click()\n    n = n + 1\n    LblCount.Caption = n\n    RaiseEvent Changed(n)\nEnd Sub\n\nPublic Sub Reset()\n    n = 0\n    LblCount.Caption = 0\nEnd Sub\n\nPublic Function GetValue()\n    Return LblCount.Caption\nEnd Function\n\nSub Background_Change()\n    BtnIncrement.BackColor = Background\nEnd Sub\n\nSub Form_Load()\n    \nEnd Sub\n",
+    "kids": [
+     {
+      "id": "n18",
+      "type": "slot",
+      "x": 8,
+      "y": 8,
+      "w": 232,
+      "h": 224,
+      "kids": [],
+      "name": "container1"
+     },
+     {
+      "id": "n20",
+      "type": "slot",
+      "x": 248,
+      "y": 8,
+      "w": 256,
+      "h": 224,
+      "kids": [],
+      "name": "container2"
+     },
+     {
+      "id": "n28",
+      "type": "button",
+      "x": 576,
+      "y": 8,
+      "w": 40,
+      "h": 24,
+      "kids": [],
+      "text": "++",
+      "name": "BtnIncrement",
+      "attrs": [
+       [
+        "class",
+        "big"
+       ]
+      ]
+     },
+     {
+      "id": "n29",
+      "type": "label",
+      "x": 512,
+      "y": 8,
+      "w": 64,
+      "h": 22,
+      "kids": [],
+      "text": "0",
+      "name": "LblCount"
+     }
+    ],
+    "props": [
+     [
+      "Background",
+      "red"
+     ]
+    ],
+    "css": ".big {\n  background-color: #ffcc00;\n}",
+    "language": "vb"
+   },
+   "bp": []
+  },
+  {
+   "id": "d5",
+   "root": {
+    "id": "root",
+    "type": "form",
+    "name": "JS Component",
+    "x": 0,
+    "y": 0,
+    "w": 264,
+    "h": 88,
+    "text": "My form",
+    "bg": "#ffa200",
+    "code": "button1.addEventListener('click', function (event) {\n    emit('Changed');\n});\n",
+    "language": "javascript",
+    "kids": [
+     {
+      "id": "n35",
+      "type": "button",
+      "x": "10%",
+      "y": "10%",
+      "w": "80%",
+      "h": "80%",
+      "kids": [],
+      "text": "Raise event from JS",
+      "name": "button1",
+      "bg": "#ffa200"
+     }
+    ]
+   },
+   "bp": []
+  },
+  {
+   "id": "d6",
+   "root": {
+    "id": "root",
+    "type": "form",
+    "name": "JS User",
+    "x": 0,
+    "y": 0,
+    "w": 640,
+    "h": 800,
+    "text": "My form",
+    "bg": "#fbff00",
+    "code": "js_component1.addEventListener('Changed', function (event) {\n    alert(\"Change event received tiggered from JS successfully received in JS\");\n});\n\nvb_component1.addEventListener('Changed', function (event) {\n    alert(\"Change event received tiggered from VB successfully received in JS\");\n});",
+    "language": "javascript",
+    "kids": [
+     {
+      "id": "n36",
+      "type": "comp",
+      "x": 150,
+      "y": 60,
+      "w": 250,
+      "h": 80,
+      "kids": [],
+      "ref": "d5",
+      "name": "js_component1"
+     },
+     {
+      "id": "n39",
+      "type": "label",
+      "x": 128,
+      "y": 24,
+      "w": 144,
+      "h": 32,
+      "kids": [],
+      "text": "JS User",
+      "name": "label2"
+     },
+     {
+      "id": "n43",
+      "type": "comp",
+      "x": 150,
+      "y": 140,
+      "w": 250,
+      "h": 80,
+      "kids": [],
+      "ref": "d8",
+      "name": "vb_component1"
+     }
+    ]
+   },
+   "bp": []
+  },
+  {
+   "id": "d7",
+   "root": {
+    "id": "root",
+    "type": "form",
+    "name": "VB User",
+    "x": 0,
+    "y": 0,
+    "w": 640,
+    "h": 420,
+    "text": "My form",
+    "bg": "#b3daff",
+    "code": "Sub js_component1_Changed()\n    MsgBox \"Change event trivvered from js successfully received in vb\"\nEnd Sub\n\nSub vb_component1_Changed()\n    MsgBox \"Change event trivvered from vb successfully received in vb\"\nEnd Sub\n",
+    "language": "vb",
+    "kids": [
+     {
+      "id": "n37",
+      "type": "comp",
+      "x": 150,
+      "y": 60,
+      "w": 250,
+      "h": 80,
+      "kids": [],
+      "ref": "d5",
+      "name": "js_component1"
+     },
+     {
+      "id": "n38",
+      "type": "label",
+      "x": 128,
+      "y": 24,
+      "w": 144,
+      "h": 32,
+      "kids": [],
+      "text": "VB User",
+      "name": "label1"
+     },
+     {
+      "id": "n44",
+      "type": "comp",
+      "x": 150,
+      "y": 140,
+      "w": 250,
+      "h": 80,
+      "kids": [],
+      "ref": "d8",
+      "name": "vb_component1"
+     }
+    ]
+   },
+   "bp": []
+  },
+  {
+   "id": "d8",
+   "root": {
+    "id": "root",
+    "type": "form",
+    "name": "VB Component",
+    "x": 0,
+    "y": 0,
+    "w": 272,
+    "h": 80,
+    "text": "My form",
+    "bg": "#006eff",
+    "code": "Public Event Changed()\n\nSub button1_Click()\n    RaiseEvent Changed()\nEnd Sub\n",
+    "language": "vb",
+    "kids": [
+     {
+      "id": "n42",
+      "type": "button",
+      "x": "10%",
+      "y": "10%",
+      "w": "80%",
+      "h": "80%",
+      "kids": [],
+      "text": "Raise event from VB",
+      "name": "button1",
+      "bg": "#006eff"
+     }
+    ]
+   },
+   "bp": []
+  }
+ ],
+ "active": "d1"
+}

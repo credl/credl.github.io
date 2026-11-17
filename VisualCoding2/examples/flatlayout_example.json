@@ -1,0 +1,311 @@
+{
+ "fb": 2,
+ "docs": [
+  {
+   "id": "d1",
+   "root": {
+    "id": "root",
+    "type": "form",
+    "name": "app1",
+    "x": 0,
+    "y": 0,
+    "w": 1288,
+    "h": 904,
+    "text": "100%",
+    "bg": "#ffc800",
+    "code": "",
+    "language": "javascript",
+    "kids": [
+     {
+      "id": "n4",
+      "type": "comp",
+      "x": 8,
+      "y": 8,
+      "w": 736,
+      "h": 384,
+      "kids": [
+       {
+        "id": "n14",
+        "type": "button",
+        "x": 0,
+        "y": 0,
+        "w": "100%",
+        "h": "100%",
+        "kids": [],
+        "text": "Button",
+        "slot": "ccontainer",
+        "name": "button1"
+       }
+      ],
+      "ref": "d2",
+      "name": "layout1",
+      "pv": {
+       "left": "100px",
+       "bottom": "30%",
+       "right": "30%",
+       "top": "20%"
+      }
+     },
+     {
+      "id": "n15",
+      "type": "comp",
+      "x": 816,
+      "y": 96,
+      "w": 368,
+      "h": 280,
+      "kids": [
+       {
+        "id": "n16",
+        "type": "button",
+        "x": 56,
+        "y": 88,
+        "w": 96,
+        "h": 30,
+        "kids": [],
+        "text": "Button",
+        "slot": "container1",
+        "name": "button2"
+       },
+       {
+        "id": "n17",
+        "type": "button",
+        "x": 224,
+        "y": 168,
+        "w": 96,
+        "h": 30,
+        "kids": [],
+        "text": "Button",
+        "slot": "container1",
+        "name": "button3"
+       },
+       {
+        "id": "n18",
+        "type": "textarea",
+        "x": 392,
+        "y": 0,
+        "w": 105,
+        "h": 112,
+        "kids": [],
+        "text": "",
+        "ph": "",
+        "slot": "container1",
+        "name": "textarea1"
+       }
+      ],
+      "ref": "d3",
+      "name": "flowlayout1"
+     },
+     {
+      "id": "n19",
+      "type": "comp",
+      "x": 160,
+      "y": 504,
+      "w": 872,
+      "h": 536,
+      "kids": [
+       {
+        "id": "n20",
+        "type": "button",
+        "x": 0,
+        "y": 0,
+        "w": "100%",
+        "h": "100%",
+        "kids": [],
+        "text": "Button",
+        "slot": "lcontainer",
+        "name": "button4"
+       }
+      ],
+      "ref": "d2",
+      "name": "flatlayout1",
+      "pv": {
+       "left": "500px"
+      }
+     }
+    ]
+   },
+   "bp": []
+  },
+  {
+   "id": "d2",
+   "root": {
+    "id": "root",
+    "type": "form",
+    "name": "FlatLayout",
+    "x": 0,
+    "y": 0,
+    "w": 784,
+    "h": 536,
+    "text": "My form",
+    "bg": "#009dff",
+    "code": "Sub Form_Load()\n    lcontainer.top = top\n    lcontainer.height = Me.Height - top - bottom\n\n    rcontainer.top = top\n    rcontainer.height = Me.Height - top - bottom\nEnd Sub\n",
+    "language": "vb",
+    "kids": [
+     {
+      "id": "n2",
+      "type": "slot",
+      "x": 0,
+      "y": "var(--prop-top, 100px)",
+      "w": "var(--prop-left, 100px)",
+      "h": "calc(100% - var(--prop-top, 100px) - var(--prop-bottom, 100px))",
+      "kids": [],
+      "name": "lcontainer",
+      "bg": ""
+     },
+     {
+      "id": "n3",
+      "type": "slot",
+      "x": "calc(100% - var(--prop-right, 100px))",
+      "y": "var(--prop-top, 100px)",
+      "w": "var(--prop-right, 100px)",
+      "h": "calc(100% - var(--prop-top, 100px) - var(--prop-bottom, 100px))",
+      "kids": [],
+      "name": "rcontainer",
+      "bg": ""
+     },
+     {
+      "id": "n6",
+      "type": "slot",
+      "x": "var(--prop-left, 100px)",
+      "y": 0,
+      "w": "calc(100% - var(--prop-left, 100px) - var(--prop-right, 100px))",
+      "h": "var(--prop-top, 100px)",
+      "kids": [],
+      "name": "tcontainer",
+      "bg": ""
+     },
+     {
+      "id": "n7",
+      "type": "slot",
+      "x": "var(--prop-left, 100px)",
+      "y": "calc(100% - var(--prop-bottom, 100px))",
+      "w": "calc(100% - var(--prop-left, 100px) - var(--prop-right, 100px))",
+      "h": "var(--prop-bottom, 100px)",
+      "kids": [],
+      "name": "bcontainer",
+      "bg": ""
+     },
+     {
+      "id": "n8",
+      "type": "slot",
+      "x": 0,
+      "y": 0,
+      "w": "var(--prop-left, 100px)",
+      "h": "var(--prop-top, 100px)",
+      "kids": [],
+      "name": "ltcontainer",
+      "bg": ""
+     },
+     {
+      "id": "n9",
+      "type": "slot",
+      "x": 0,
+      "y": "calc(100% - var(--prop-bottom, 100px))",
+      "w": "var(--prop-left, 100px)",
+      "h": "var(--prop-bottom, 100px)",
+      "kids": [],
+      "name": "lbcontainer",
+      "bg": ""
+     },
+     {
+      "id": "n10",
+      "type": "slot",
+      "x": "calc(100% - var(--prop-right, 100px))",
+      "y": 0,
+      "w": "var(--prop-right, 100px)",
+      "h": "var(--prop-top, 100px)",
+      "kids": [],
+      "name": "lrcontainer",
+      "bg": ""
+     },
+     {
+      "id": "n11",
+      "type": "slot",
+      "x": "calc(100% - var(--prop-right, 100px))",
+      "y": "calc(100% - var(--prop-bottom, 100px))",
+      "w": "var(--prop-right, 100px)",
+      "h": "var(--prop-bottom, 100px)",
+      "kids": [],
+      "name": "container1",
+      "bg": ""
+     },
+     {
+      "id": "n12",
+      "type": "slot",
+      "x": "var(--prop-left, 100px)",
+      "y": "var(--prop-top, 100px)",
+      "w": "calc(100% - var(--prop-left, 100px) - var(--prop-right, 100px))",
+      "h": "calc(100% - var(--prop-top, 100px) - var(--prop-bottom, 100px))",
+      "kids": [],
+      "name": "ccontainer",
+      "bg": ""
+     }
+    ],
+    "props": [
+     [
+      "left",
+      "100px"
+     ],
+     [
+      "top",
+      "100px"
+     ],
+     [
+      "right",
+      "100px"
+     ],
+     [
+      "bottom",
+      "100px"
+     ]
+    ]
+   },
+   "bp": []
+  },
+  {
+   "id": "d3",
+   "root": {
+    "id": "root",
+    "type": "form",
+    "name": "FlowLayout",
+    "x": 0,
+    "y": 0,
+    "w": 640,
+    "h": 420,
+    "text": "My form",
+    "bg": "",
+    "code": "",
+    "language": "javascript",
+    "kids": [
+     {
+      "id": "n13",
+      "type": "slot",
+      "x": 0,
+      "y": 0,
+      "w": "100%",
+      "h": "100%",
+      "kids": [],
+      "name": "container1",
+      "css": [
+       [
+        "display",
+        "grid"
+       ],
+       [
+        "grid-template-columns",
+        "repeat(3, 1fr)"
+       ],
+       [
+        "gap",
+        "1px"
+       ]
+      ]
+     }
+    ],
+    "css": ""
+   },
+   "bp": []
+  }
+ ],
+ "active": "d2"
+}
